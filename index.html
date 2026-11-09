@@ -991,13 +991,14 @@ function connectBridge(url){
  bridgeStatus('接続中…');
  const sep=normalized.includes('?')?'&':'?';
  bridgeFrame.src=normalized+sep+'external=1&session='+encodeURIComponent(bridgeSession);
- bridgeTimer=setTimeout(()=>{if(!bridgeReady)bridgeStatus('接続失敗：通信ページから応答がありません');},12000);
+ bridgeFrame.onload=()=>{try{bridgeFrame.contentWindow.postMessage({channel:'work-schedule-bridge-v2',session:bridgeSession,type:'hello'},'*');}catch(e){}};
+ bridgeTimer=setTimeout(()=>{if(!bridgeReady)bridgeStatus('接続失敗：GAS通信ページから応答がありません（external=1 を確認）');},15000);
 }
 window.addEventListener('message',event=>{
  const msg=event.data;
  if(!msg||msg.channel!=='work-schedule-bridge-v2'||msg.session!==bridgeSession)return;
  // Apps Script HTML Service uses a sandboxed inner iframe on googleusercontent.com.
- if(!/^https:\/\/([a-z0-9-]+\.)*googleusercontent\.com$/i.test(event.origin))return;
+ if(!/^https:\/\/(?:([a-z0-9-]+\.)*googleusercontent\.com|script\.google\.com)$/i.test(event.origin))return;
  if(msg.type==='ready'){
   bridgeWindow=event.source;bridgeReady=true;clearTimeout(bridgeTimer);
   bridgeStatus('接続しました');load();return;
