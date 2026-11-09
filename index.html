@@ -990,7 +990,7 @@ function connectBridge(url){
  bridgePending.clear();clearTimeout(bridgeTimer);
  bridgeStatus('接続中…');
  const sep=normalized.includes('?')?'&':'?';
- bridgeFrame.src=normalized+sep+'bridge=1&session='+encodeURIComponent(bridgeSession);
+ bridgeFrame.src=normalized+sep+'external=1&session='+encodeURIComponent(bridgeSession);
  bridgeTimer=setTimeout(()=>{if(!bridgeReady)bridgeStatus('接続失敗：通信ページから応答がありません');},12000);
 }
 window.addEventListener('message',event=>{
