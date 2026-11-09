@@ -977,8 +977,8 @@ let bridgeWindow=null;let bridgeTimer=null;let bridgeSession='';
 const bridgeFrame=document.createElement('iframe');
 bridgeFrame.style.cssText='position:absolute;width:0;height:0;border:0;opacity:0;pointer-events:none';
 bridgeFrame.title='予定表データ通信';
-const DEFAULT_GAS_URL='https://script.google.com/macros/s/AKfycbxd2k97QvSzZLjjcUFn5NVduxkcOSXUgGjjt1Dctvcm-uPy7HadONshfN6ul7pS2aSk/exec';
-function bridgeUrl(){return localStorage.getItem('workScheduleGasUrl')||DEFAULT_GAS_URL;}
+const DEFAULT_GAS_URL='https://script.google.com/macros/s/AKfycbx9mefuT8ulNNbJEq52faXH-F83Celk9oemDqfvnGcJ12abpH2zkOFIcDl0qORO_Sgi/exec';
+function bridgeUrl(){return DEFAULT_GAS_URL;}
 function bridgeStatus(message){const el=document.getElementById('bridgeStatus');if(el)el.textContent=message;}
 function connectBridge(url){
  const normalized=url.trim();
