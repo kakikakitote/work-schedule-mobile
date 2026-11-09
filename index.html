@@ -1,0 +1,2176 @@
+<!DOCTYPE html>
+<html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>共有作業予定表（スマホ版）</title>
+<style>
+:root{font-family:system-ui,-apple-system,"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;color:#203044;background:#f3f6fa}*{box-sizing:border-box}body{margin:0}button,input,textarea,select{font:inherit}button{cursor:pointer}header{background:#172d46;color:white;padding:16px 22px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}h1{font-size:19px;margin:0}header small{color:#b8c9dc}.actions{display:flex;gap:8px;flex-wrap:wrap}button{border:1px solid #cbd5e1;background:white;color:#23354a;border-radius:8px;padding:9px 13px}button.primary{background:#2563eb;color:white;border-color:#2563eb}button.danger{color:#b91c1c;border-color:#fecaca}button:hover{filter:brightness(.96)}main{padding:18px;max-width:100%}.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px}.toolbar strong{font-size:20px;min-width:145px;text-align:center}.hint{font-size:12px;color:#64748b;margin-left:auto}.board-wrap{border:1px solid #d8e1eb;border-radius:12px;background:white;overflow:auto;max-height:calc(100vh - 200px);box-shadow:0 4px 20px #1b37500a}.board{border-collapse:separate;border-spacing:0;table-layout:fixed;width:max-content;min-width:100%}.board th,.board td{border-right:1px solid #e4eaf0;border-bottom:1px solid #e4eaf0;vertical-align:top}.board thead th{position:sticky;top:0;background:#eaf0f7;z-index:3;text-align:center;height:44px;font-size:12px;min-width:126px}.board th.person{position:sticky;left:0;z-index:4;width:135px;min-width:135px;background:#f7f9fc;text-align:left;padding:14px 12px;font-size:13px}.board thead th.person{z-index:5;background:#dfe9f4}.board td{width:126px;min-width:126px;height:104px;padding:5px;background:#fff}.board td.weekend{background:#fafbfd}.board td.today{background:#f0f7ff}.day-number{font-size:14px;font-weight:700}.weekday{display:block;color:#64748b;font-size:11px}.weekend .day-number{color:#b45309}.task{display:block;width:100%;border:0;border-left:3px solid #3b82f6;text-align:left;border-radius:5px;padding:6px 7px;margin:0 0 4px;font-size:12px;line-height:1.35;overflow-wrap:anywhere;background:#dbeafe;color:#1e40af}.task.green{background:#dcfce7;color:#166534;border-color:#22c55e}.task.orange{background:#ffedd5;color:#9a3412;border-color:#fb923c}.task.purple{background:#f3e8ff;color:#6b21a8;border-color:#a855f7}.task.red{background:#fee2e2;color:#991b1b;border-color:#ef4444}.add-cell{border:1px dashed #cbd5e1;background:transparent;color:#94a3b8;font-size:13px;width:100%;padding:3px;border-radius:5px}.add-cell:hover{background:#eef5ff;color:#2563eb}.status{font-size:12px;color:#64748b;margin-top:10px}dialog{border:0;border-radius:14px;padding:0;box-shadow:0 18px 80px #0004;width:min(480px,calc(100vw - 24px));max-height:90vh}dialog::backdrop{background:#14243c88}.dialog-head{padding:18px 20px;background:#f1f5f9;display:flex;justify-content:space-between;align-items:center}.dialog-head h2{font-size:17px;margin:0}.dialog-body{padding:18px 20px;overflow:auto;max-height:65vh}.field{display:block;margin-bottom:13px;font-size:13px;font-weight:600}.field input,.field textarea{width:100%;margin-top:6px;border:1px solid #cbd5e1;border-radius:7px;padding:9px;background:white}.field textarea{min-height:70px;resize:vertical}.date-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.people-choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:8px 0 14px}.people-choices label{font-size:13px;border:1px solid #e2e8f0;padding:8px;border-radius:7px}.colors{display:flex;gap:10px;margin:8px 0 15px}.colors label{display:flex;gap:3px;align-items:center;font-size:12px}.swatch{width:14px;height:14px;border-radius:4px;display:inline-block;background:var(--c)}.dialog-foot{padding:13px 20px;border-top:1px solid #e2e8f0;display:flex;justify-content:flex-end;gap:8px}.dialog-foot .danger{margin-right:auto}.empty{padding:20px}.muted{color:#64748b;font-size:12px}.person-input{display:block;width:100%;margin:8px 0;padding:10px;border:1px solid #cbd5e1;border-radius:7px}@media(max-width:600px){main{padding:10px}header{padding:12px}.toolbar strong{min-width:110px}.board-wrap{max-height:calc(100vh - 185px)}.board th.person{min-width:100px;width:100px;padding:10px 6px}.board td,.board thead th{min-width:118px;width:118px}.hint{margin-left:0}}
+.board{width:100%;min-width:950px}.board th.person{width:120px;min-width:120px}.board td{width:auto;min-width:110px}
+@page{size:A4 landscape;margin:9mm}
+@media print{html,body{background:white!important;color:black}header,.toolbar button,.toolbar .hint,.status,.add-cell,dialog{display:none!important}main{padding:0}.toolbar{margin:0 0 8px}.toolbar strong{font-size:16px}.board-wrap{max-height:none;overflow:visible;border:0;box-shadow:none}.board{width:100%!important;min-width:0!important;table-layout:fixed;border-collapse:collapse}.board th,.board td{position:static!important;border:1px solid #777!important}.board th.person{width:22mm!important;min-width:0!important;padding:5px!important}.board thead th,.board td{width:auto!important;min-width:0!important}.board td{height:18mm;padding:3px!important}.task{font-size:9px;line-height:1.25;padding:3px 4px;margin-bottom:2px;break-inside:avoid;print-color-adjust:exact;-webkit-print-color-adjust:exact}tr{break-inside:avoid}thead{display:table-header-group}}
+
+/* 月間は手書きの原表と同じ「担当者×日付」の横長マトリクス */
+.board.monthly{min-width:1900px;width:max-content}
+.board.monthly thead th{min-width:65px;width:65px;height:38px;padding:3px}
+.board.monthly td{min-width:65px;width:65px;height:86px;padding:2px}
+.board.monthly .person{min-width:120px;width:120px}
+.board.monthly .task{font-size:10px;line-height:1.2;padding:3px 2px;margin-bottom:2px}
+.board.monthly .add-cell{font-size:11px;padding:1px}
+.toolbar button[aria-pressed="true"]{background:#1d4ed8;color:#fff;border-color:#1d4ed8}
+@media print{
+ .board.monthly{min-width:0!important;width:100%!important}
+ .board.monthly thead th,.board.monthly td{min-width:0!important;width:auto!important;padding:1px!important}
+ .board.monthly .person{min-width:0!important;width:19mm!important;font-size:9px!important}
+ .board.monthly .task{font-size:6px!important;padding:1px!important;line-height:1.1!important}
+ .board.monthly td{height:14mm!important}
+}
+
+/* 月間は7日ごとに改行。各週に担当者行を繰り返す */
+.board-wrap{max-height:none;overflow:visible;background:transparent;border:0;box-shadow:none}
+.week-section{margin:0 0 18px;background:white;border:1px solid #d8e1eb;border-radius:9px;overflow-x:auto}
+.week-title{font-size:14px;padding:10px 12px;margin:0;background:#e9eff6;border-bottom:1px solid #d8e1eb}
+.board,.board.monthly{min-width:800px;width:100%;table-layout:fixed}
+.board.monthly thead th,.board.monthly td{min-width:0;width:auto;height:auto;padding:5px}
+.board.monthly td{height:65px}
+.board.monthly .person{width:120px;min-width:120px}
+.board.monthly .task{font-size:12px;line-height:1.3;padding:5px}
+.board .outside{background:#edf0f4!important}
+@media print{
+ .week-section{border:0;border-radius:0;overflow:visible;break-inside:avoid;margin-bottom:6mm}
+ .week-title{font-size:11px;padding:3px 0;background:white}
+ .board,.board.monthly{min-width:0!important;width:100%!important}
+ .board.monthly thead th,.board.monthly td{width:auto!important;padding:2px!important}
+ .board.monthly td{height:11mm!important}
+ .board.monthly .person{width:22mm!important;min-width:0!important}
+ .board.monthly .task{font-size:8px!important;padding:2px!important}
+}
+
+/* Fixed-height lanes keep multi-day work on the same horizontal line. */
+.board td{padding:5px 0!important}
+.task-lanes{display:flex;flex-direction:column;gap:3px}
+.task-slot,.task-span{height:28px;min-height:28px;box-sizing:border-box}
+.task-slot{display:block}
+.board .task-span{display:flex;align-items:center;width:100%;margin:0!important;padding:3px 7px!important;border-radius:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.board .task-span.continues-left{border-top-left-radius:0;border-bottom-left-radius:0;border-left:0;padding-left:7px!important}
+.board .task-span.continues-right{border-top-right-radius:0;border-bottom-right-radius:0}
+.board .add-cell{margin:5px 5px 0;width:calc(100% - 10px)}
+@media print{
+ .board .task-span{height:17px!important;min-height:17px!important;font-size:8px!important;padding:1px 3px!important}
+ .task-slot{height:17px!important;min-height:17px!important}
+ .task-lanes{gap:1px}
+ .board td{height:auto!important;padding:1px 0!important}
+}
+.field select{display:block;width:100%;margin-top:6px;border:1px solid #cbd5e1;border-radius:7px;padding:10px;background:#fff;color:#203044}.category-preview{display:flex;align-items:center;gap:8px;margin:-3px 0 15px;font-size:12px;color:#475569}#categorySwatch{width:16px;height:16px;border-radius:4px;background:#3b82f6}
+.category-row{display:flex;gap:7px;margin:9px 0;align-items:center}.category-row .category-name{min-width:0;flex:1;padding:9px;border:1px solid #cbd5e1;border-radius:7px}.category-row .category-color{width:105px;padding:9px;border:1px solid #cbd5e1;border-radius:7px}.category-remove{color:#b91c1c;padding:8px}.category-row select{background:white}@media(max-width:480px){.category-row .category-color{width:78px}.category-remove{padding:7px}}
+.task.gray{background:#e2e8f0;color:#334155;border-color:#64748b}.task.yellow{background:#fef9c3;color:#713f12;border-color:#eab308}.task.teal{background:#ccfbf1;color:#115e59;border-color:#0d9488}.task.pink{background:#fce7f3;color:#9d174d;border-color:#db2777}.task.cyan{background:#cffafe;color:#155e75;border-color:#0891b2}.task.brown{background:#f5e6d3;color:#78350f;border-color:#92400e}
+/* v2.0: sticky control bar, compact whole-month overview and one-sheet print */
+header{position:sticky;top:0;z-index:60}
+.toolbar{position:sticky;top:var(--header-height,76px);z-index:59;background:#f3f6fa;padding:10px 4px;margin:-8px -4px 12px;box-shadow:0 2px 7px #172d4614}
+.overview-mode .board-wrap{overflow:visible}
+.overview-mode .week-section{margin-bottom:5px;overflow:visible;border-radius:0}
+.overview-mode .week-title{font-size:11px;padding:3px 8px}
+.overview-mode .board,.overview-mode .board.monthly{min-width:0;width:100%;table-layout:fixed}
+.overview-mode .board.monthly .person{width:9%;min-width:0;font-size:10px;padding:3px 5px}
+.overview-mode .board.monthly td,.overview-mode .board.monthly thead th{width:13%;min-width:0;padding:1px!important;height:auto}
+.overview-mode .board thead th{height:22px;font-size:10px}
+.overview-mode .board .task-span,.overview-mode .task-slot{height:15px;min-height:15px;font-size:9px!important;padding:0 3px!important}
+.overview-mode .task-lanes{gap:1px}
+.overview-mode .board .add-cell{display:block;font-size:10px;padding:0!important;margin:1px 2px;width:calc(100% - 4px);height:14px;line-height:12px}
+.overview-mode .board.monthly td{height:22px}
+@page{size:A2 landscape;margin:7mm}
+@media print{
+ html,body{width:auto!important;height:auto!important;margin:0!important;background:white!important}
+ header,.toolbar button,.toolbar .hint,.status,dialog{display:none!important}
+ .toolbar{position:static!important;box-shadow:none!important;padding:0!important;margin:0 0 2mm!important}
+ .toolbar strong{font-size:15pt!important}
+ main{padding:0!important}
+ .board-wrap{overflow:visible!important;border:0!important;max-height:none!important}
+ .week-section{overflow:visible!important;border:0!important;border-radius:0!important;margin:0 0 1.8mm!important;break-inside:avoid!important;page-break-inside:avoid!important}
+ .week-title{font-size:8pt!important;line-height:1.1!important;padding:0 0 .5mm!important;margin:0!important;background:white!important}
+ .board,.board.monthly{width:100%!important;min-width:0!important;table-layout:fixed!important;border-collapse:collapse!important}
+ .board th,.board td{border:.3pt solid #777!important;position:static!important}
+ .board.monthly .person,.board th.person{width:10%!important;min-width:0!important;font-size:7pt!important;line-height:1!important;padding:1mm!important}
+ .board.monthly thead th{height:5mm!important;min-width:0!important;font-size:7pt!important;padding:0!important}
+ .board.monthly td,.board td{width:auto!important;min-width:0!important;height:5mm!important;min-height:5mm!important;padding:0!important;overflow:hidden!important}
+ .board .task-span,.board.monthly .task-span,.task-slot{height:3.3mm!important;min-height:3.3mm!important;max-height:3.3mm!important;font-size:6pt!important;line-height:1!important;padding:0 .5mm!important;border-radius:0!important;overflow:hidden!important;white-space:nowrap!important}
+ .task-lanes{gap:0!important;max-height:none!important;overflow:visible!important}
+ .board .add-cell{display:none!important}
+ .board td.today{background:#fff!important}
+ .board .outside{background:#edf0f4!important}
+ *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+}
+
+/* v2.1: distinctive inherited data, weekend separation, visible legend, drag controls */
+.category-legend{display:flex;gap:7px 13px;flex-wrap:wrap;align-items:center;padding:7px 12px;margin:0 0 10px;background:#fff;border:1px solid #d8e1eb;border-radius:9px;font-size:12px;position:sticky;top:calc(var(--header-height,76px) + 64px);z-index:48}
+.legend-item{display:inline-flex;align-items:center;gap:5px;white-space:nowrap}.legend-item i{display:inline-block;width:12px;height:12px;border-radius:3px;border:1px solid #0002}.imported-key i{background:#1f2937;border-color:#0f172a}
+.board th.sunday,.board td.sunday{background:#fff1f2!important}.board th.saturday,.board td.saturday{background:#eff6ff!important}.board th.sunday .day-number{color:#be123c}.board th.saturday .day-number{color:#1d4ed8}
+.board .task-span{cursor:grab;position:relative;gap:2px}.board .task-span:active{cursor:grabbing}.task-label{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;min-width:0}.resize-handle{font-size:14px;font-weight:900;cursor:ew-resize;flex:0 0 12px;text-align:center;border-radius:3px;user-select:none}.resize-handle:hover{background:#0002}.task.dragging{opacity:.45}
+.board .task-span.imported-task{background:#1f2937!important;color:#fff!important;border-color:#050a13!important;outline:1px solid #94a3b8;outline-offset:-1px}
+@media print{.category-legend{position:static!important;margin:0 0 1mm!important;padding:1mm!important;font-size:6pt!important;border:0!important}.legend-item i{width:7px;height:7px}.resize-handle{display:none!important}.board th.sunday,.board td.sunday{background:#fff1f2!important}.board th.saturday,.board td.saturday{background:#eff6ff!important}.board .task-span.imported-task{background:#1f2937!important;color:white!important}}
+.overview-mode .category-legend{position:static}
+/* Holiday marking takes priority over ordinary weekday/weekend coloring. */
+.board th.holiday,.board td.holiday{background:#fff0f3!important}
+.board th.holiday .day-number,.board th.holiday .weekday{color:#b91c1c!important}
+.holiday-name{display:block;color:#b91c1c;font-size:10px;line-height:1.15;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.board thead th.holiday{height:52px}
+@media print{.holiday-name{font-size:5pt!important}.board th.holiday,.board td.holiday{background:#fff0f3!important}}
+.wide-dialog{width:min(760px,calc(100vw - 24px))}.workdays-table{border-collapse:collapse;width:100%;font-size:13px}.workdays-table th,.workdays-table td{padding:10px;border-bottom:1px solid #e2e8f0;text-align:left}.workdays-table td:not(:first-child),.workdays-table th:not(:first-child){text-align:right}.workdays-table thead{background:#f1f5f9}.workdays-table tbody tr:hover{background:#f8fafc}.workdays-note{font-size:12px;color:#64748b;margin-top:12px}
+
+/* v2.5 reporting */
+#reportPage{padding:20px;min-height:85vh;background:#f3f6fa}#reportPage[hidden],#scheduleMain[hidden]{display:none!important}.report-head{display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap}.report-head h2{margin:0;font-size:23px}.report-head p{color:#64748b;margin:6px 0 15px}.report-filters{background:white;border:1px solid #d8e1eb;border-radius:10px;padding:15px;display:flex;flex-wrap:wrap;gap:12px;align-items:end}.report-filters label{display:flex;flex-direction:column;gap:5px;font-size:12px;font-weight:650;min-width:125px}.report-filters select,.report-filters input{border:1px solid #cbd5e1;border-radius:7px;padding:9px;max-width:200px;background:white;color:#203044}.report-filters label[hidden]{display:none}.report-actions{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}.report-summary{display:flex;gap:12px;flex-wrap:wrap;margin:10px 0}.report-kpi{background:white;border:1px solid #d8e1eb;border-radius:9px;padding:14px 18px;min-width:170px}.report-kpi strong{display:block;font-size:23px;margin-top:5px}.report-table-wrap{background:white;border:1px solid #d8e1eb;border-radius:10px;overflow:auto}.report-table{border-collapse:collapse;width:100%;min-width:850px;font-size:13px}.report-table th,.report-table td{border:1px solid #e2e8f0;padding:9px 11px;text-align:right;white-space:nowrap}.report-table th:first-child,.report-table td:first-child{text-align:left;position:sticky;left:0;background:#fff;z-index:1}.report-table thead th{background:#eaf0f7;position:sticky;top:0;z-index:2}.report-table thead th:first-child{z-index:3;background:#eaf0f7}.report-table tfoot{background:#f1f5f9;font-weight:700}.report-table .report-total{font-weight:700;background:#fff7ed}.report-cell{border:0;background:transparent;color:#1d4ed8;padding:0;text-decoration:underline;cursor:pointer}.report-details{background:white;border:1px solid #d8e1eb;border-radius:10px;margin:16px 0;padding:15px}.report-details h3{margin:0 0 10px}.report-details table{width:100%;border-collapse:collapse;font-size:12px}.report-details td,.report-details th{border-bottom:1px solid #e2e8f0;padding:7px;text-align:left}.report-details .detail-scroll{overflow:auto;max-height:330px}.report-print-title{display:none}
+@media print{body.report-print header,body.report-print #scheduleMain,body.report-print .report-actions,body.report-print .report-filters,body.report-print #reportBack,body.report-print #reportDetails,body.report-print #reportNotes{display:none!important}body.report-print #reportPage{display:block!important;padding:0;background:white;min-height:0}body.report-print .report-head p{margin-bottom:5px}body.report-print .report-table-wrap{overflow:visible;border:0}body.report-print .report-table{min-width:0;width:100%;font-size:8pt}body.report-print .report-table th,body.report-print .report-table td{padding:4px}body.report-print .report-summary{margin:6px 0}body.report-print .report-kpi{padding:5px;min-width:120px}body.report-print .report-kpi strong{font-size:13pt}@page{size:A3 landscape;margin:10mm}}
+
+#mobileMenuBtn,#mobileToolbarBtn{display:none}
+@media(max-width:700px){
+header{position:relative!important;top:auto!important;padding:10px 12px!important;gap:6px}header h1{font-size:17px}header small{font-size:10px}
+.actions{width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.actions button{min-width:0;padding:8px 3px;font-size:12px;white-space:nowrap}
+#mobileMenuBtn{display:block;grid-column:1}#reportBtn{grid-column:2}#newBtn{grid-column:3}
+.actions:not(.mobile-expanded) #shareBtn,.actions:not(.mobile-expanded) #refresh,.actions:not(.mobile-expanded) #peopleBtn,.actions:not(.mobile-expanded) #categoryBtn{display:none}
+.toolbar{position:relative!important;top:auto!important;z-index:10;box-shadow:none!important;margin:0 0 6px!important;padding:6px 0!important;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;align-items:center}
+.toolbar button{min-width:0;padding:8px 3px;font-size:12px;white-space:nowrap}.toolbar strong{grid-column:2/4;grid-row:1;font-size:17px;min-width:0!important;text-align:center}
+#prev{grid-column:1;grid-row:1}#next{grid-column:4;grid-row:1}#monthView{grid-column:1/3;grid-row:2}#weekView{grid-column:3/5;grid-row:2}#mobileToolbarBtn{display:block;grid-column:1/-1;grid-row:3}
+.toolbar:not(.mobile-expanded) #prevYear,.toolbar:not(.mobile-expanded) #nextYear,.toolbar:not(.mobile-expanded) #thisMonth,.toolbar:not(.mobile-expanded) #copyLastYear,.toolbar:not(.mobile-expanded) #workDaysBtn,.toolbar:not(.mobile-expanded) #overviewBtn,.toolbar:not(.mobile-expanded) #printBtn,.toolbar:not(.mobile-expanded) .hint{display:none}
+.toolbar.mobile-expanded #mobileToolbarBtn{grid-row:auto}.toolbar.mobile-expanded #prevYear,.toolbar.mobile-expanded #nextYear,.toolbar.mobile-expanded #thisMonth,.toolbar.mobile-expanded #copyLastYear,.toolbar.mobile-expanded #workDaysBtn,.toolbar.mobile-expanded #overviewBtn,.toolbar.mobile-expanded #printBtn{grid-column:span 2}.toolbar.mobile-expanded .hint{grid-column:1/-1;margin:0}
+.category-legend{position:static!important;top:auto!important;z-index:auto!important;gap:4px 9px;padding:6px;font-size:10px}main{padding:8px!important}.board-wrap{max-height:none!important;overflow:auto!important}
+}
+@media print{#mobileMenuBtn,#mobileToolbarBtn{display:none!important}}
+
+/* v2.7 monthly shared memo panel */
+.schedule-layout{display:flex;align-items:stretch;gap:12px;min-width:0}
+.schedule-left{flex:1 1 0;min-width:0}.schedule-left .board-wrap{width:100%}
+.memo-panel{width:clamp(245px,24vw,360px);flex:0 0 clamp(245px,24vw,360px);display:flex;flex-direction:column;max-height:calc(100vh - 185px);min-height:340px;border:1px solid #cbd5e1;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 18px #1b37500a}
+.memo-panel-head{display:flex;justify-content:space-between;align-items:center;padding:12px 13px;background:#eaf0f7;border-bottom:1px solid #d8e1eb}
+.memo-panel-head strong{font-size:15px}.memo-panel-head span{display:block;font-size:11px;color:#64748b;margin-top:3px}.memo-panel-head button{font-size:22px;padding:0 9px}
+.memo-items{flex:1;min-height:0;overflow:auto;padding:11px;display:flex;flex-direction:column;gap:9px}
+.memo-card{display:flex;align-items:flex-start;gap:7px;text-align:left;white-space:pre-wrap;overflow-wrap:anywhere;min-height:56px;width:100%;padding:11px;background:#fffbeb;border:1px solid #fde68a;border-radius:8px;color:#334155;font-size:13px;line-height:1.5}
+.memo-card:hover{background:#fef3c7}.memo-card-content{flex:1}.memo-empty{color:#64748b;font-size:13px;padding:12px 5px}
+.memo-add{margin:8px 11px 0;border:1px dashed #94a3b8;background:#f8fafc}.memo-help{font-size:11px;color:#64748b;padding:0 12px;margin:9px 0 12px}
+#memoReopen{margin:10px 0}.memo-collapsed .memo-panel{display:none}.memo-collapsed #memoReopen{display:inline-block!important}
+@media(max-width:800px){.schedule-layout{display:block}.memo-panel{width:100%;max-height:none;min-height:180px;margin-top:12px}.memo-items{max-height:320px}.memo-panel-head{position:static}}
+@media(max-width:700px){.actions{grid-template-columns:repeat(3,minmax(0,1fr))}.actions #memoQuickAdd{grid-column:span 1}.actions #newBtn{grid-column:span 1}.actions:not(.mobile-expanded) #memoQuickAdd{display:block}.actions #mobileMenuBtn{grid-column:1}.actions #reportBtn{grid-column:2}.actions #newBtn{grid-column:3}.actions:not(.mobile-expanded) #memoQuickAdd{grid-column:1/4}}
+@media print{.memo-panel,#memoReopen,#memoQuickAdd{display:none!important}.schedule-layout{display:block}.schedule-left{width:100%}}
+
+/* v2.8: Two separate add actions in every date/person cell */
+.cell-add-actions{display:grid;grid-template-columns:1fr;gap:3px;margin:5px 4px 2px}
+.board .cell-add-actions .add-cell,.board .cell-add-actions .add-note-cell{display:block!important;width:100%!important;margin:0!important;padding:3px 4px!important;font-size:11px!important;line-height:1.2;border-radius:4px}
+.board .cell-add-actions .add-cell{background:#e9f1ff;color:#1d4ed8;border:1px dashed #93b4f3}
+.board .cell-add-actions .add-note-cell{background:#fff5db;color:#92400e;border:1px dashed #e9bf66}
+.cell-notes{display:flex;flex-direction:column;gap:2px;padding:2px 4px}
+.cell-note{width:100%;text-align:left;white-space:pre-wrap;overflow-wrap:anywhere;font-size:11px;line-height:1.3;padding:4px 5px;background:#fff7d6;border:1px solid #e7c86c;border-radius:4px;color:#694611}
+.overview-mode .cell-add-actions{gap:1px;margin:1px 2px}.overview-mode .board .cell-add-actions button{height:15px;line-height:12px;padding:0!important;font-size:9px!important}
+@media print{.cell-add-actions{display:none!important}.cell-note{font-size:7px!important;padding:1px!important;print-color-adjust:exact;-webkit-print-color-adjust:exact}}
+/* Right memo panel remains in view while the schedule page scrolls */
+@media(min-width:801px){
+ .schedule-layout{align-items:flex-start}
+ .memo-panel{position:sticky;top:12px;align-self:flex-start;height:calc(100dvh - 24px);max-height:calc(100dvh - 24px);min-height:300px;z-index:8}
+}
+@media(max-width:800px){.memo-panel{position:static;max-height:none;height:auto}}
+@media print{.memo-panel{position:static!important}}
+
+#mobileApp{display:none}
+@media(max-width:800px){
+ body:not(.report-print) header,body:not(.report-print) #scheduleMain{display:none!important}
+ body:not(.report-print) #mobileApp{display:block}
+ #mobileApp{background:#f7f9fc;min-height:100dvh;padding-top:var(--mobile-memo-h,108px);padding-bottom:56px}
+ #mobileMemo{position:fixed;z-index:50;top:0;left:0;right:0;background:#fff;border-bottom:1px solid #cbd5e1;box-shadow:0 3px 12px #0001;padding:10px 12px;max-height:36dvh;overflow:auto}
+ .mobile-memo-head{display:flex;align-items:center;gap:8px}.mobile-memo-head strong{flex:1;font-size:14px}.mobile-memo-head button{padding:4px 10px}
+ #mobileMemoText{font-size:12px;line-height:1.45;max-height:19dvh;overflow:auto;padding-top:5px}
+ .mobile-memo-entry{border:0;border-left:3px solid #d6ac4d;background:#fff8dc;display:block;width:100%;text-align:left;font-size:12px;margin:3px 0;padding:6px;white-space:pre-wrap}
+ .mobile-month{background:white;margin:0 0 8px;padding:10px 4px 14px}
+ .mobile-month h2{font-size:20px;margin:6px 10px 14px;position:sticky;top:var(--mobile-memo-h,108px);background:#fff;z-index:4;padding:5px}
+ .mobile-weekdays,.mobile-week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:1px}
+ .mobile-weekdays span{text-align:center;font-size:11px;color:#667085;padding:5px}
+ .mobile-week{position:relative;margin-bottom:1px;min-height:82px}
+ .mobile-day{min-width:0;min-height:82px;border:1px solid #e7edf5;background:#fff;padding:4px 2px;touch-action:pan-y;user-select:none}
+ .mobile-day:nth-child(1){background:#fff8f8}.mobile-day:nth-child(7){background:#f4f8ff}
+ .mobile-day.outside{opacity:.35}.mobile-day.selected{outline:2px solid #2563eb;outline-offset:-2px;background:#eaf2ff}
+ .mobile-day .day-n{font-size:12px;font-weight:600}.mobile-day .note-dot{font-size:9px;color:#a16207;display:block}
+ .mobile-lanes{position:absolute;left:0;right:0;top:25px;pointer-events:none;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));grid-auto-rows:17px;row-gap:2px}
+ .mobile-bar{pointer-events:auto;touch-action:pan-y;user-select:none;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:10px;line-height:16px;padding:0 5px;border:1px solid #fff9;border-radius:3px;color:#fff;font-weight:600;z-index:2}
+ .mobile-bar.selected{outline:2px solid #0f172a;outline-offset:1px}
+ .mobile-bar.drag-preview{opacity:.65}
+ .mobile-bar .bar-grip{position:absolute;top:0;bottom:0;width:10px;touch-action:none}
+ .mobile-bar .bar-grip.start{left:0}.mobile-bar .bar-grip.end{right:0}
+ #mobileFoot{position:fixed;z-index:45;bottom:0;left:0;right:0;display:flex;gap:6px;justify-content:space-around;background:#fff;border-top:1px solid #cbd5e1;padding:6px max(8px,env(safe-area-inset-right)) calc(6px + env(safe-area-inset-bottom))}
+ #mobileFoot button{font-size:12px;padding:8px 12px}
+ #mobileDetail .dialog-body{font-size:14px;line-height:1.65;white-space:pre-wrap}
+ #mobileChoice .dialog-body button{margin:5px 0}
+}
+@media print{#mobileApp{display:none!important}}
+
+/* v3.1 common hamburger, layout preferences and dark theme */
+.toolbar #copyLastYear,.toolbar #workDaysBtn,.toolbar #printBtn{display:none!important}
+.hamburger{font-size:22px;padding:6px 12px;flex:none}#desktopHamburger{margin-left:auto;order:3}header .actions{display:none!important}
+#menuBackdrop:not([hidden]){position:fixed;inset:0;background:#07132699;z-index:180}#appMenu:not([hidden]){display:flex;position:fixed;right:0;top:0;bottom:0;width:min(370px,92vw);z-index:181;background:#fff;color:#203044;box-shadow:-12px 0 30px #0003;flex-direction:column}
+.menu-top{display:flex;align-items:center;justify-content:space-between;padding:15px;border-bottom:1px solid #cbd5e1}.menu-scroll{overflow:auto;padding:12px 15px 45px}.menu-scroll details{border-bottom:1px solid #e2e8f0;padding:8px 0}.menu-scroll summary{font-weight:700;padding:9px;cursor:pointer}.menu-scroll details>button,.menu-scroll label{display:block;width:100%;text-align:left;margin:7px 0;padding:10px}.menu-scroll label select,.menu-scroll label input{display:block;width:100%;margin-top:5px;padding:9px;border:1px solid #cbd5e1;border-radius:7px;background:#fff;color:#203044}.menu-scroll details>button{background:#f5f7fb}
+.copy-checks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin:8px 0 17px}.copy-checks label{border:1px solid #cbd5e1;border-radius:7px;padding:9px;font-size:13px}.filter-heading{display:flex;gap:6px;align-items:center;font-weight:700}.filter-heading button:first-of-type{margin-left:auto}.filter-heading button{padding:5px 7px;font-size:11px}.copy-preview{max-height:220px;overflow:auto;font-size:12px;margin:10px 0}.copy-preview table{border-collapse:collapse;width:100%}.copy-preview td,.copy-preview th{padding:5px;border:1px solid #cbd5e1;text-align:left}
+@media(max-width:800px){#mobileHamburger{position:absolute;right:8px;top:8px;z-index:3}#mobileMemo .mobile-memo-head{padding-right:52px}body.force-desktop:not(.report-print) header{display:flex!important}body.force-desktop:not(.report-print) #scheduleMain{display:block!important}body.force-desktop:not(.report-print) #mobileApp{display:none!important}body.force-desktop #scheduleMain{overflow-x:auto}body.force-desktop .board-wrap,body.force-desktop .week-section{overflow-x:auto}body.force-desktop .schedule-layout{min-width:900px}}
+@media(min-width:801px){body.force-mobile:not(.report-print) header,body.force-mobile:not(.report-print) #scheduleMain{display:none!important}body.force-mobile:not(.report-print) #mobileApp{display:block!important}body.force-mobile #mobileApp{display:block;background:#f7f9fc;min-height:100dvh;padding-top:var(--mobile-memo-h,108px);padding-bottom:56px}body.force-mobile #mobileMemo{display:block;position:fixed;top:0;left:0;right:0;z-index:40;background:#fff}body.force-mobile #mobileFoot{display:flex}body.force-mobile #mobileHamburger{position:absolute;right:8px;top:8px;z-index:3}}
+html[data-theme="dark"]{color-scheme:dark;background:#101827;color:#e5e7eb}html[data-theme="dark"] body,html[data-theme="dark"] main,html[data-theme="dark"] #mobileApp,html[data-theme="dark"] #reportPage{background:#101827;color:#e5e7eb}html[data-theme="dark"] header,html[data-theme="dark"] .toolbar{background:#182439;color:#e5e7eb}html[data-theme="dark"] button,html[data-theme="dark"] input,html[data-theme="dark"] select,html[data-theme="dark"] textarea{background:#243249;color:#e5e7eb;border-color:#475569}html[data-theme="dark"] button.primary{background:#2563eb;color:white}html[data-theme="dark"] .week-section,html[data-theme="dark"] .board-wrap,html[data-theme="dark"] .board td,html[data-theme="dark"] .board th.person,html[data-theme="dark"] .board thead th,html[data-theme="dark"] .week-title,html[data-theme="dark"] .memo-panel,html[data-theme="dark"] .memo-items,html[data-theme="dark"] #mobileMemo,html[data-theme="dark"] .mobile-day,html[data-theme="dark"] #mobileFoot,html[data-theme="dark"] dialog,html[data-theme="dark"] .dialog-head,html[data-theme="dark"] .dialog-body,html[data-theme="dark"] .dialog-foot,html[data-theme="dark"] .report-filters,html[data-theme="dark"] .report-table-wrap,html[data-theme="dark"] .report-kpi,html[data-theme="dark"] .report-table th,html[data-theme="dark"] .report-table td,html[data-theme="dark"] #appMenu{background:#1b293e!important;color:#e5e7eb!important;border-color:#40516a!important}html[data-theme="dark"] .board td.today,html[data-theme="dark"] .mobile-day.selected{background:#243b61!important}html[data-theme="dark"] .board .outside,html[data-theme="dark"] .mobile-day.outside{background:#111d2e!important}html[data-theme="dark"] .muted,html[data-theme="dark"] .hint{color:#aabbd0}html[data-theme="dark"] .menu-scroll details>button{background:#25344a}html[data-theme="dark"] .task{color:#14243c!important}html[data-theme="dark"] .mobile-bar{color:#fff!important}
+/* v3.4: preserve semantic category contrast over global dark button rules */
+html[data-theme="dark"] .board .task,
+html[data-theme="dark"] .board button.task{
+  background:#bcd9ff!important;color:#102d56!important;border-left-color:#2563eb!important;
+  font-weight:650;
+}
+html[data-theme="dark"] .board .task.green{background:#a9edc2!important;color:#12442b!important;border-left-color:#16a34a!important}
+html[data-theme="dark"] .board .task.orange{background:#ffdaaa!important;color:#663300!important;border-left-color:#ea580c!important}
+html[data-theme="dark"] .board .task.purple{background:#e5c9ff!important;color:#4c1d76!important;border-left-color:#9333ea!important}
+html[data-theme="dark"] .board .task.red{background:#ffc4c4!important;color:#701b1b!important;border-left-color:#dc2626!important}
+html[data-theme="dark"] .board .task .resize-handle{color:inherit!important}
+
+@media print{#appMenu,#menuBackdrop,#desktopHamburger,#mobileHamburger{display:none!important}}
+
+/* v3.2 iPhone viewport and touch stability fixes */
+html{width:100%;max-width:100%;overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{width:100%;max-width:100%;overflow-x:clip}
+#mobileApp{width:100%;max-width:100vw;min-width:0;overflow-x:clip}
+#mobileMonths{width:100%;max-width:100%;min-width:0;overflow-x:clip}
+.mobile-month{width:100%;max-width:100%;min-width:0;overflow:hidden;padding:8px 2px 12px}
+.mobile-month h2{max-width:100%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:18px;margin:4px 6px 10px}
+.mobile-weekdays,.mobile-week{width:100%;max-width:100%;min-width:0;grid-template-columns:repeat(7,minmax(0,1fr))!important}
+.mobile-weekdays>span,.mobile-day{min-width:0!important;width:auto!important;max-width:100%;overflow:hidden}
+.mobile-week{isolation:isolate}
+.mobile-lanes{width:100%;max-width:100%;min-width:0;overflow:hidden;grid-template-columns:repeat(7,minmax(0,1fr))!important}
+.mobile-bar{min-width:0;max-width:100%;position:relative}
+#mobileMemo{width:100%;max-width:100vw;overflow-x:hidden}
+#mobileFoot{display:none!important}
+#mobileApp{padding-bottom:calc(18px + env(safe-area-inset-bottom))!important}
+#mobileHamburger{position:static!important;flex:none;margin-left:auto}
+#mobileMemo .mobile-memo-head{padding-right:0!important}
+#mobileMemo .mobile-memo-head strong{min-width:0}
+#appMenu{max-width:100vw;overscroll-behavior:contain}
+dialog{max-width:calc(100vw - 16px);max-height:calc(100dvh - 30px)}
+dialog .dialog-body{max-height:calc(100dvh - 190px);overflow-y:auto}
+@media(max-width:800px){.dialog-head,.dialog-body,.dialog-foot{padding-left:12px;padding-right:12px}.date-row{grid-template-columns:repeat(2,minmax(0,1fr))}.date-row input{min-width:0;font-size:16px}.field input,.field select,.field textarea{font-size:16px}}
+html[data-theme="dark"] .mobile-month,html[data-theme="dark"] .mobile-month h2{background:#101827;color:#e5e7eb}
+html[data-theme="dark"] .mobile-day:nth-child(1),html[data-theme="dark"] .mobile-day:nth-child(7){background:#1b293e}
+
+/* v3.3: desktop memo pinned to viewport independently of schedule scroll */
+@media screen and (min-width:801px){
+  body:not(.report-print):not(.memo-collapsed) #scheduleMain:not([hidden]) .schedule-layout{padding-right:calc(clamp(245px,24vw,360px) + 12px)}
+  body:not(.report-print):not(.memo-collapsed) #scheduleMain:not([hidden]) .memo-panel{
+    position:fixed!important;
+    right:18px;
+    top:calc(var(--header-height,76px) + 12px);
+    width:clamp(245px,24vw,360px);
+    height:calc(100dvh - var(--header-height,76px) - 24px);
+    max-height:calc(100dvh - var(--header-height,76px) - 24px);
+    min-height:0;
+    margin:0;
+    z-index:45;
+  }
+  body.memo-collapsed #scheduleMain .schedule-layout{padding-right:0!important}
+}
+/* v3.6 desktop: reserve the sidebar column for the entire main content,
+   not just the schedule row. Avoid double-reserving space. */
+@media screen and (min-width:801px){
+ body:not(.report-print):not(.memo-collapsed) #scheduleMain:not([hidden]){
+   padding-right:calc(clamp(245px,24vw,360px) + 30px)!important;
+ }
+ body:not(.report-print):not(.memo-collapsed) #scheduleMain:not([hidden]) .schedule-layout{
+   padding-right:0!important;display:block!important;min-width:0!important;
+ }
+ body:not(.report-print):not(.memo-collapsed) #scheduleMain:not([hidden]) .schedule-left{
+   width:100%!important;min-width:0!important;
+ }
+ body:not(.report-print):not(.memo-collapsed) #scheduleMain:not([hidden]) .memo-panel{
+   right:12px!important;
+   top:calc(var(--header-height,76px) + 12px)!important;
+   width:clamp(245px,24vw,360px)!important;
+   z-index:40!important;
+ }
+ body.memo-collapsed #scheduleMain{padding-right:8px!important}
+}
+/* v3.6 category legend: high contrast and category labels in dark theme */
+html[data-theme="dark"] #categoryLegend{
+ background:#243249!important;color:#f1f5f9!important;
+ border-color:#52647f!important;
+}
+html[data-theme="dark"] #categoryLegend .legend-item{color:#f1f5f9!important}
+html[data-theme="dark"] #categoryLegend .legend-item i{border:1px solid #cbd5e1!important}
+@media print{#scheduleMain{padding-right:8px!important}}
+@media print{#memoPanel{position:static!important}}
+
+/* v3.7 mobile interaction and viewport fixes */
+@media(max-width:800px){
+ #mobileApp{padding-bottom:0!important;min-height:100svh!important;overflow-x:clip}
+ #mobileMonths{width:100%;max-width:100%;overflow-x:clip}
+ .mobile-month{padding-top:3px!important;padding-bottom:5px!important;margin-bottom:4px!important}
+ .mobile-month h2{position:static!important;top:auto!important;margin:4px 6px 6px!important;padding:4px 2px!important;font-size:19px!important;line-height:1.3!important;z-index:auto!important}
+ .mobile-weekdays{position:static!important}
+ .mobile-bar{touch-action:pan-y!important;cursor:pointer}
+ .mobile-bar .bar-grip{display:none!important}
+ #mobileFoot{display:none!important}
+ #mobileMemo .mobile-memo-head{gap:5px!important;padding-right:0!important}
+ #mobileHamburger{position:static!important;order:5!important;flex:none!important}
+ #mobileTodayTop{order:4!important;flex:none!important;font-size:12px!important;padding:7px!important}
+ #mobileMemo .mobile-memo-head strong{min-width:0!important;font-size:13px!important}
+ #mobileQuickNew{order:1!important;flex:none!important}
+ #mobileMemoAdd{order:2!important}#mobileMemoToggle{order:3!important}
+ #mobileDetail .dialog-foot{flex-wrap:wrap;gap:6px}
+ #mobileDetail .dialog-foot button{flex:1 1 40%;min-height:42px}
+}
+@media(min-width:801px){body.force-mobile #mobileApp{padding-bottom:0!important}body.force-mobile #mobileFoot{display:none!important}body.force-mobile .mobile-month h2{position:static!important}}
+
+/* v3.8 mobile single-month swipe navigation */
+#mobileMonths{touch-action:pan-y;user-select:none;-webkit-user-select:none}
+#mobileMonths .mobile-month{margin-bottom:0!important}
+#mobileMonths .mobile-month h2{display:flex;align-items:center;justify-content:center;min-height:36px}
+#mobileMonths .mobile-month h2::after{content:"";display:none}
+
+/* v3.9: always-accessible, high-contrast report action in PC header */
+header #reportBtn{order:2;display:inline-flex!important;align-items:center;justify-content:center;flex:none;margin-left:auto;padding:10px 20px;border-radius:9px;background:#e0a526!important;border:1px solid #f1c45a!important;color:#172d46!important;font-weight:800;letter-spacing:.04em;box-shadow:0 2px 8px #0002}
+header #reportBtn:hover{background:#f5bc3d!important;filter:none}
+header #desktopHamburger{margin-left:0;order:3}
+@media(max-width:800px){body:not(.force-desktop) header #reportBtn{display:none!important}body.force-desktop header #reportBtn{display:inline-flex!important}}
+@media(min-width:801px){body.force-mobile header #reportBtn{display:none!important}}
+@media print{header #reportBtn{display:none!important}}
+
+/* v3.10: persistent previous-year action alongside report on desktop */
+header #headerCopyBtn{order:1;display:inline-flex!important;align-items:center;justify-content:center;flex:none;margin-left:auto;padding:10px 16px;border-radius:9px;background:#15827d!important;border:1px solid #45b5aa!important;color:#fff!important;font-weight:750;letter-spacing:.01em;box-shadow:0 2px 8px #0002}
+header #headerCopyBtn:hover{background:#0e6965!important}
+header #reportBtn{order:2;margin-left:0!important}
+header #desktopHamburger{order:3}
+/* The copy control now lives in the header, not twice in the toolbar. */
+#scheduleMain .toolbar #copyLastYear{display:none!important}
+@media(max-width:800px){body:not(.force-desktop) header #headerCopyBtn{display:none!important}body.force-desktop header #headerCopyBtn{display:inline-flex!important}}
+@media(min-width:801px){body.force-mobile header #headerCopyBtn{display:none!important}}
+@media print{header #headerCopyBtn{display:none!important}}
+
+/* v3.11: keep memo reopen control at the former sidebar edge, never at page bottom */
+@media screen{
+ body.memo-collapsed #scheduleMain:not([hidden]) #memoReopen{
+   position:fixed!important;right:0!important;top:50%!important;
+   transform:translateY(-50%)!important;z-index:60!important;
+   display:flex!important;flex-direction:column;align-items:center;justify-content:center;
+   gap:9px;width:42px;min-height:146px;margin:0!important;padding:13px 8px!important;
+   border:1px solid #64748b!important;border-right:0!important;
+   border-radius:12px 0 0 12px!important;background:#176d87!important;
+   color:#fff!important;font-size:13px!important;font-weight:700!important;
+   box-shadow:-3px 3px 14px #0003!important;cursor:pointer;
+ }
+ body.memo-collapsed #memoReopen span:last-child{writing-mode:vertical-rl;text-orientation:upright;letter-spacing:2px}
+ body.memo-collapsed #memoReopen:focus-visible{outline:3px solid #f59e0b;outline-offset:2px}
+ body:not(.memo-collapsed) #memoReopen{display:none!important}
+ html[data-theme="dark"] body.memo-collapsed #memoReopen{background:#0e7490!important;color:#fff!important;border-color:#67e8f9!important}
+ body.force-mobile #memoReopen{display:none!important}
+}
+@media screen and (max-width:800px){body:not(.force-desktop) #memoReopen{display:none!important}}
+@media print{#memoReopen{display:none!important}}
+
+/* v3.13: larger mobile date touch targets, with unused vertical space reclaimed. */
+@media(max-width:800px){
+ #mobileMonths .mobile-week,
+ #mobileMonths .mobile-week>.mobile-day{
+   min-height:max(112px, min(160px, calc((100svh - 300px)/5)))!important;
+ }
+ #mobileMonths .mobile-day{cursor:pointer;padding:7px 5px!important}
+ #mobileMonths .mobile-day .day-n{font-size:14px!important}
+ #mobileDetailAddAnother{flex:1 1 100%!important;min-height:48px!important;font-weight:700}
+}
+/* v3.14: persistent manual sync and mobile feedback */
+header #desktopSyncNow{order:3;display:inline-flex;align-items:center;justify-content:center;padding:10px 14px;border-radius:9px;background:#2563eb!important;color:white!important;border:1px solid #60a5fa!important;font-weight:750;white-space:nowrap}
+header #desktopHamburger{order:4}
+header #desktopSyncNow:disabled,#mobileSyncNow:disabled{opacity:.55;cursor:wait}
+#mobileSyncNow{background:#2563eb!important;color:#fff!important;border-color:#60a5fa!important;flex:none!important;min-width:42px;min-height:42px}
+@media(max-width:800px){body:not(.force-desktop) header #desktopSyncNow{display:none!important}#mobileMemo .mobile-memo-head{flex-wrap:wrap}#mobileSyncNow{order:4!important}#mobileTodayTop{order:5!important}#mobileHamburger{order:6!important}}
+@media(min-width:801px){body.force-mobile header #desktopSyncNow{display:none!important}}
+@media print{header #desktopSyncNow{display:none!important}}
+
+/* v3.16: separate work and note blocks in each desktop cell */
+.board .cell-add-task,.board .cell-add-note{padding:2px 4px}
+.board .cell-add-task .add-cell,.board .cell-add-note .add-note-cell{
+ display:block!important;width:100%!important;margin:0!important;
+ padding:3px 4px!important;font-size:11px!important;line-height:1.2;
+ border-radius:4px
+}
+.board .cell-add-task .add-cell{background:#e9f1ff;color:#1d4ed8;border:1px dashed #93b4f3}
+.board .cell-add-note .add-note-cell{background:#fff5db;color:#92400e;border:1px dashed #e9bf66}
+html[data-theme="dark"] .board .cell-add-task .add-cell{background:#dbeafe!important;color:#1e40af!important}
+html[data-theme="dark"] .board .cell-add-note .add-note-cell{background:#fef3c7!important;color:#92400e!important}
+html[data-theme="dark"] .board .cell-note{background:#fde68a!important;color:#713f12!important}
+.mobile-cell-notes{position:relative;z-index:3;display:flex;flex-direction:column;gap:2px;margin-top:5px;max-height:55px;overflow:auto}
+.mobile-cell-note{font-size:10px!important;line-height:1.2!important;padding:2px 3px!important;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;width:100%;border-radius:3px;background:#fef3c7!important;color:#78350f!important;border:1px solid #eab308!important}
+html[data-theme="dark"] .mobile-cell-note{background:#fde68a!important;color:#713f12!important}
+@media print{.cell-add-task,.cell-add-note{display:none!important}}
+
+/* v3.17: reserve the task-lane region before displaying date notes. */
+@media(max-width:800px){
+ #mobileMonths .mobile-week .mobile-cell-notes{
+   margin-top:calc(var(--bars-bottom,44px) - 23px + 8px)!important;
+   position:relative!important;z-index:3;
+   max-height:none!important;overflow:visible!important;
+   gap:3px!important;
+ }
+ #mobileMonths .mobile-week .mobile-lanes{z-index:2}
+ #mobileMonths .mobile-week .mobile-cell-note{display:block;min-height:20px;max-width:100%;box-sizing:border-box}
+}
+
+/* v3.18: fixed year navigation in mobile month heading */
+#mobileMonths .mobile-year-nav{display:grid;grid-template-columns:minmax(65px,1fr) auto minmax(65px,1fr);align-items:center;gap:6px;padding:6px 5px 12px;max-width:100%;box-sizing:border-box}
+#mobileMonths .mobile-year-nav h2{position:static!important;margin:0!important;padding:0!important;white-space:nowrap;overflow:visible;text-overflow:clip;font-size:clamp(17px,5vw,25px)!important;text-align:center}
+#mobileMonths .mobile-year-step{font-size:clamp(11px,3.2vw,14px)!important;min-height:42px;min-width:0;padding:8px 5px!important;border-radius:9px;font-weight:650;white-space:nowrap;touch-action:manipulation}
+#mobileMonths .mobile-year-step:first-child{justify-self:start}
+#mobileMonths .mobile-year-step:last-child{justify-self:end}
+html[data-theme="dark"] #mobileMonths .mobile-year-step{background:#273750!important;color:#e2e8f0!important;border-color:#536581!important}
+
+/* v3.19: quiet default add controls, preserve strong saved item colors. */
+.board .cell-add-task .add-cell,
+.board .cell-add-note .add-note-cell{
+  background:transparent!important;
+  border:1px dashed rgba(100,116,139,.24)!important;
+  color:#64748b!important;
+  opacity:.58;
+  transition:background-color .13s ease,color .13s ease,border-color .13s ease,opacity .13s ease;
+}
+html[data-theme="dark"] .board .cell-add-task .add-cell,
+html[data-theme="dark"] .board .cell-add-note .add-note-cell{
+  background:transparent!important;
+  border-color:rgba(148,163,184,.20)!important;
+  color:#94a3b8!important;
+  opacity:.58;
+}
+.board .cell-add-task .add-cell:hover,
+.board .cell-add-task .add-cell:focus-visible{
+  background:rgba(59,130,246,.16)!important;
+  color:#1d4ed8!important;
+  border-color:#3b82f6!important;
+  opacity:1;
+}
+.board .cell-add-note .add-note-cell:hover,
+.board .cell-add-note .add-note-cell:focus-visible{
+  background:rgba(245,158,11,.16)!important;
+  color:#92400e!important;
+  border-color:#d97706!important;
+  opacity:1;
+}
+html[data-theme="dark"] .board .cell-add-task .add-cell:hover,
+html[data-theme="dark"] .board .cell-add-task .add-cell:focus-visible{
+  background:rgba(59,130,246,.22)!important;
+  color:#bfdbfe!important;
+  border-color:#60a5fa!important;
+  opacity:1;
+}
+html[data-theme="dark"] .board .cell-add-note .add-note-cell:hover,
+html[data-theme="dark"] .board .cell-add-note .add-note-cell:focus-visible{
+  background:rgba(245,158,11,.18)!important;
+  color:#fde68a!important;
+  border-color:#fbbf24!important;
+  opacity:1;
+}
+@media (hover:none){
+ .board .cell-add-task .add-cell,.board .cell-add-note .add-note-cell{opacity:.75}
+}
+
+/* v3.20: restore distinct Saturday/Sunday shading without overpowering scheduled work. */
+/* Desktop, light theme */
+.board th.sunday:not(.holiday),.board td.sunday:not(.holiday){background:#fff0f2!important}
+.board th.saturday:not(.holiday),.board td.saturday:not(.holiday){background:#edf5ff!important}
+.board th.sunday .day-number{color:#be123c!important}
+.board th.saturday .day-number{color:#1d4ed8!important}
+/* Desktop, dark theme: override the general dark cell rule with restrained tints. */
+html[data-theme="dark"] .board th.sunday:not(.holiday),html[data-theme="dark"] .board td.sunday:not(.holiday){background:#392836!important}
+html[data-theme="dark"] .board th.saturday:not(.holiday),html[data-theme="dark"] .board td.saturday:not(.holiday){background:#203551!important}
+html[data-theme="dark"] .board th.sunday .day-number{color:#fda4af!important}
+html[data-theme="dark"] .board th.saturday .day-number{color:#93c5fd!important}
+/* Mobile: each week's first and last day, including outside-month days. */
+.mobile-week>.mobile-day:first-child:not(.selected){background:#fff0f2!important}
+.mobile-week>.mobile-day:nth-child(7):not(.selected){background:#edf5ff!important}
+html[data-theme="dark"] .mobile-week>.mobile-day:first-child:not(.selected){background:#392836!important}
+html[data-theme="dark"] .mobile-week>.mobile-day:nth-child(7):not(.selected){background:#203551!important}
+.mobile-week>.mobile-day:first-child .day-n{color:#be123c!important}
+.mobile-week>.mobile-day:nth-child(7) .day-n{color:#1d4ed8!important}
+html[data-theme="dark"] .mobile-week>.mobile-day:first-child .day-n{color:#fda4af!important}
+html[data-theme="dark"] .mobile-week>.mobile-day:nth-child(7) .day-n{color:#93c5fd!important}
+/* Keep selected/today states legible and existing holiday priority intact. */
+html[data-theme="dark"] .board th.holiday,html[data-theme="dark"] .board td.holiday{background:#4a2735!important}
+
+/* v3.21: one continuous strip across the current week, while preserving row-specific ID */
+.board td[data-drop-date]{position:relative;overflow:visible}
+.board .task-lanes{position:relative;z-index:2}
+.board .task-continuous{
+ position:relative!important;
+ width:calc(var(--span) * 100% + (var(--span) - 1) * 1px)!important;
+ max-width:none!important;
+ z-index:6!important;
+ border-radius:5px!important;
+ box-shadow:0 1px 2px #0003;
+}
+.board .task-continuous:hover{z-index:8!important}
+.board .task-continuous.imported-task{background:#1f2937!important;color:#fff!important;border-color:#050a13!important}
+html[data-theme="dark"] .board .task-continuous.imported-task{background:#1f2937!important;color:#fff!important;border-color:#050a13!important}
+.board .task-continuous .resize-handle{flex:0 0 14px}
+
+/* v3.22: compact voice entry and mobile-friendly review */
+#mobileVoiceNew{white-space:nowrap;font-size:12px!important;padding:6px 8px!important}
+#voiceDialog{width:min(480px,calc(100vw - 20px))}
+#voicePreview{margin-top:12px;border:1px solid #94a3b8;border-radius:8px;padding:12px}
+#voicePreview p{margin:7px 0;font-size:13px}
+@media(max-width:800px){#mobileMemo .mobile-memo-head{gap:4px!important}#mobileVoiceNew{order:1!important}#mobileQuickNew{order:2!important}#mobileMemoAdd{order:3!important}#mobileMemoToggle{order:4!important}#mobileSyncNow{order:5!important}#mobileTodayTop{order:6!important}#mobileHamburger{order:7!important}}
+
+/* v3.24: compact desktop workspace */
+@media screen and (min-width:801px){
+ header{display:flex!important;align-items:center!important;gap:7px!important;flex-wrap:nowrap!important;padding:7px 12px!important;min-height:54px!important}
+ header>div:has(h1){flex:0 0 auto!important;min-width:132px}
+ header h1{font-size:15px!important;white-space:nowrap}
+ header small{display:none!important}
+ header #desktopToolbar{display:flex!important;position:static!important;flex:1 1 auto!important;min-width:0!important;justify-content:center!important;gap:4px!important;flex-wrap:nowrap!important;margin:0!important;padding:0!important;background:transparent!important;box-shadow:none!important}
+ header #desktopToolbar button{white-space:nowrap;font-size:11px;padding:6px 8px;flex:0 0 auto}
+ header #desktopToolbar #monthLabel{font-size:16px!important;min-width:110px!important;white-space:nowrap;flex:0 0 120px;text-align:center}
+ header #desktopToolbar #weekView,header #desktopToolbar #copyLastYear,header #desktopToolbar #workDaysBtn,header #desktopToolbar #printBtn,header #desktopToolbar #mobileToolbarBtn,header #desktopToolbar .hint{display:none!important}
+ header #headerActions{display:none!important}
+ header #headerCopyBtn,header #reportBtn,header #desktopSyncNow{font-size:11px!important;padding:6px 8px!important;white-space:nowrap}
+ #scheduleMain{padding:5px 8px!important}
+ #categoryLegend{position:static!important;margin:0 0 4px!important;padding:4px 8px!important;font-size:10px!important}
+ body:not(.report-print):not(.memo-collapsed) #scheduleMain:not([hidden]){padding-right:calc(clamp(130px,12vw,190px) + 14px)!important}
+ body:not(.report-print):not(.memo-collapsed) #scheduleMain:not([hidden]) .schedule-layout{padding-right:0!important}
+ body:not(.report-print):not(.memo-collapsed) #scheduleMain:not([hidden]) .memo-panel{right:8px!important;top:62px!important;width:clamp(130px,12vw,190px)!important;height:calc(100dvh - 70px)!important;max-height:calc(100dvh - 70px)!important}
+ .memo-items{padding:3px!important;gap:3px!important}
+ .memo-card{padding:4px 5px!important;min-height:26px!important;line-height:1.25!important;font-size:11px!important;gap:3px!important}
+ .memo-panel-head{padding:6px!important}
+ .memo-help{display:none!important}
+ .memo-add{margin:3px!important;padding:5px!important}
+ .week-section{margin-bottom:3px!important}
+ .week-title{padding:3px 8px!important;font-size:10px!important}
+ .board-wrap{max-height:none!important;overflow:visible!important}
+ .board.monthly{min-width:0!important;width:100%!important;table-layout:fixed!important}
+ .board.monthly .person{min-width:74px!important;width:74px!important;font-size:11px!important;padding:5px!important}
+ .board.monthly td,.board.monthly thead th{min-width:0!important;width:auto!important;padding:1px!important}
+ .board.monthly thead th{height:25px!important;font-size:10px!important}
+ .board.monthly td{height:auto!important;min-height:0!important}
+ .board .task-span,.board .task-slot{height:19px!important;min-height:19px!important;font-size:10px!important}
+ .task-lanes{gap:1px!important}
+ .cell-add-task,.cell-add-note{height:15px!important;margin:1px!important}
+ .cell-add-task button,.cell-add-note button{height:15px!important;padding:0!important;line-height:12px!important;font-size:9px!important}
+ .cell-notes{margin:1px!important}
+ .cell-note{padding:1px 3px!important;font-size:9px!important;line-height:1.2!important}
+ body.overview-mode #scheduleMain{padding-right:8px!important}
+ body.overview-mode #memoPanel,body.overview-mode #memoReopen,body.overview-mode #memoQuickAdd{display:none!important}
+ body.overview-mode .cell-add-task,body.overview-mode .cell-add-note,body.overview-mode .cell-notes,body.overview-mode .cell-note{display:none!important}
+ body.overview-mode .board .task-span,body.overview-mode .board .task-slot{height:14px!important;min-height:14px!important;font-size:9px!important}
+ body.overview-mode .board.monthly thead th{height:19px!important}
+ body.overview-mode .board.monthly .person{font-size:10px!important;padding:2px!important}
+ body.overview-mode .week-title{padding:1px 6px!important}
+}
+@media print{
+ body:not(.report-print) header,body:not(.report-print) #mobileApp,body:not(.report-print) #appMenu{display:none!important}
+ body:not(.report-print) #scheduleMain,body:not(.report-print) #scheduleMain .schedule-layout,body:not(.report-print) #scheduleMain .schedule-left{display:block!important;width:100%!important;padding:0!important;margin:0!important}
+ body:not(.report-print) #scheduleMain #boardArea{display:block!important;overflow:visible!important}
+ body:not(.report-print) #scheduleMain #memoPanel{display:none!important}
+}
+
+/* v3.25: overview-first desktop workflow */
+@media(min-width:801px){
+ body.overview-mode .board.monthly td[data-drop-date]{cursor:pointer}
+ body.overview-mode .board.monthly td[data-drop-date]:hover{outline:1px solid rgba(99,162,239,.55);outline-offset:-1px}
+ .task-new-from-edit{display:block;width:100%;padding:12px 14px!important;margin:0 0 15px!important;border:2px solid #0c8fca!important;background:#0874ad!important;color:#fff!important;font-size:15px!important;font-weight:700!important;border-radius:8px!important;cursor:pointer}
+ .task-new-from-edit[hidden]{display:none!important}
+}
+
+/* v3.26: compact two-level memo sidebar in overview and detail mode */
+@media screen and (min-width:801px){
+ body.overview-mode:not(.memo-collapsed):not(.report-print) #scheduleMain:not([hidden]){padding-right:calc(clamp(145px,12vw,210px) + 14px)!important}
+ body.overview-mode:not(.memo-collapsed) #memoPanel{display:flex!important}
+ body.overview-mode.memo-collapsed #memoPanel{display:none!important}
+ body.overview-mode.memo-collapsed #memoReopen{display:flex!important}
+ body.overview-mode:not(.memo-collapsed) #memoReopen{display:none!important}
+ body:not(.report-print):not(.memo-collapsed) #scheduleMain:not([hidden]) #memoPanel{
+  position:fixed!important;right:8px!important;top:62px!important;
+  width:clamp(145px,12vw,210px)!important;height:calc(100dvh - 70px)!important;
+  max-height:calc(100dvh - 70px)!important;min-height:0!important;
+  display:flex!important;flex-direction:column!important;overflow:hidden!important;z-index:40!important;
+ }
+ #memoPanel .memo-panel-head{flex:0 0 auto!important}
+ #memoPanel .memo-split{display:flex;flex-direction:column;min-height:0;flex:1;overflow:hidden}
+ #memoPanel .memo-section{display:flex;flex-direction:column;min-height:0;flex:1 1 50%;overflow:hidden}
+ #memoPanel .memo-section-personal{border-bottom:1px solid #9ca3af66}
+ #memoPanel .memo-section-title{display:flex;align-items:center;justify-content:space-between;flex:0 0 auto;padding:7px 8px 5px;font-size:11px;background:#f0f4fa;color:#334155}
+ #memoPanel .memo-section-title span{font-size:10px;color:#64748b}
+ #memoPanel .memo-items{min-height:0!important;flex:1 1 auto!important;overflow-y:auto!important;padding:4px!important;gap:4px!important}
+ #memoPanel .memo-card{display:flex!important;flex-direction:column;align-items:stretch;min-height:0!important;padding:5px 6px!important;font-size:11px!important;gap:3px!important}
+ #memoPanel .individual-memo-meta{display:block;color:#1d4ed8;font-size:10px;font-weight:700}
+ #memoPanel .memo-card-content{display:block;white-space:pre-wrap;overflow-wrap:anywhere}
+ #memoPanel .memo-empty{padding:8px 5px;font-size:11px}
+ #memoPanel .memo-add{flex:0 0 auto;margin:4px!important;padding:5px!important}
+ html[data-theme="dark"] #memoPanel .memo-section-title{background:#243249!important;color:#e2e8f0!important}
+ html[data-theme="dark"] #memoPanel .individual-memo-meta{color:#93c5fd!important}
+}
+@media screen and (max-width:800px){#memoPanel .memo-split{display:flex;flex-direction:column}#memoPanel .memo-section{min-height:130px}}
+@media print{#memoPanel,#memoReopen{display:none!important}}
+
+/* v3.27: persistent, larger resize handles on every visible weekly segment */
+.board .task-continuous{overflow:visible!important;isolation:isolate}
+.board .task-continuous .resize-handle{
+ flex:0 0 24px!important;min-width:24px!important;
+ height:100%;min-height:18px;display:flex;align-items:center;justify-content:center;
+ font-size:16px!important;line-height:1;cursor:ew-resize!important;
+ position:relative;z-index:3;touch-action:none;
+ background:rgba(0,0,0,.13);border-radius:3px;
+}
+.board .task-continuous .resize-handle:hover{background:rgba(0,0,0,.35);outline:1px solid currentColor}
+.board .task-continuous .resize-start{margin-left:-3px}
+.board .task-continuous .resize-end{margin-right:-3px}
+@media print{.board .task-continuous{overflow:hidden!important}.board .resize-handle{display:none!important}}
+
+/* v3.28 precise pointer drag: wider hit targets and explicit drop-row feedback */
+.board .task-continuous{touch-action:none;cursor:grab!important}
+.board .task-continuous:active{cursor:grabbing!important}
+.board td.drop-preview{outline:2px solid #60a5fa!important;outline-offset:-2px;background-color:rgba(96,165,250,.19)!important}
+.board .task-continuous .resize-handle{min-width:28px!important;flex-basis:28px!important;cursor:ew-resize!important}
+
+/* v3.29: Larger visual resize targets; center remains available for moving between staff */
+.board .task-continuous .resize-handle{
+ min-width:36px!important;flex-basis:36px!important;
+ min-height:24px!important;
+ background:rgba(0,0,0,.19)!important;
+}
+.board .task-continuous .resize-handle:hover{background:rgba(0,0,0,.38)!important}
+.board .task-continuous{min-height:25px!important}
+
+/* v3.30: desktop detail view uses the page's single vertical scrollbar.
+   overflow-x:auto on every week implicitly created a vertical scroll container. */
+@media screen and (min-width:801px){
+ body:not(.report-print) #scheduleMain .week-section,
+ body:not(.report-print) #scheduleMain .board-wrap{
+  overflow:visible!important;
+  overflow-x:visible!important;
+  overflow-y:visible!important;
+  max-height:none!important;
+ }
+ body:not(.report-print) #scheduleMain .week-section{contain:none!important}
+}
+
+/* v3.32: cross-cell continuous bars should remain above neighboring empty cells. */
+@media screen and (min-width:801px){
+ .board td[data-drop-date]{overflow:visible!important}
+ .board .task-lanes{position:relative!important;z-index:4!important;overflow:visible!important}
+ .board .task-continuous{z-index:12!important;pointer-events:auto!important}
+ .board .task-continuous .resize-handle{z-index:14!important;pointer-events:auto!important}
+}
+/* v3.33: Keep bar handles interactive across date columns; empty-cell registration
+   is limited to the central third by the delegated click handler. */
+@media screen and (min-width:801px){
+ .board td[data-drop-date]{cursor:default!important}
+ .board td[data-drop-date] .add-cell{cursor:pointer}
+ .board .task-continuous .resize-handle{cursor:ew-resize!important}
+}
+
+/* v3.34: the multi-day bar, including its right handle, must sit ABOVE later empty date cells. */
+@media screen and (min-width:801px){
+ .board td[data-drop-date]:has(> .task-lanes > .task-continuous){
+   position:relative!important;
+   z-index:10!important;
+   overflow:visible!important;
+ }
+ .board td[data-drop-date]:has(> .task-lanes > .task-continuous):hover{z-index:11!important}
+ .board .task-lanes{overflow:visible!important}
+ .board .task-continuous{
+   display:flex!important;
+   align-items:center!important;
+   position:relative!important;
+   overflow:visible!important;
+   isolation:auto!important;
+ }
+ .board .task-continuous .resize-handle{
+   align-self:center!important;
+   display:flex!important;
+   align-items:center!important;
+   justify-content:center!important;
+   height:100%!important;
+   min-height:100%!important;
+   flex:0 0 28px!important;
+   min-width:28px!important;
+   margin:0!important;
+   position:relative!important;
+   top:auto!important;
+   bottom:auto!important;
+   z-index:15!important;
+ }
+ .board .task-continuous .resize-end{
+   margin-left:auto!important;
+   border-radius:0 4px 4px 0!important;
+ }
+ .board .task-continuous .resize-start{border-radius:4px 0 0 4px!important}
+}
+
+@media screen and (min-width:801px){
+ .board th.create-date-header{cursor:pointer!important;transition:background-color .12s ease}
+ .board th.create-date-header:hover{background-color:rgba(68,140,233,.28)!important;outline:2px solid rgba(105,172,255,.65);outline-offset:-2px}
+ .board td[data-drop-date],body.overview-mode .board.monthly td[data-drop-date]{cursor:default!important}
+ body.overview-mode .board.monthly td[data-drop-date]:hover{outline:none!important}
+}
+/* v3.37: keep resize gestures horizontal even if pointer strays vertically */
+.board .task-continuous,.board .task-continuous .resize-handle{touch-action:none!important;user-select:none!important;-webkit-user-select:none!important}
+.last-update-label{display:block;font-size:10px;font-weight:400;opacity:.8;white-space:nowrap}
+.mobile-last-update{padding:3px 12px;text-align:right;font-size:11px}
+@media(min-width:801px){.mobile-last-update{display:none}}
+
+header #lastUpdateDesktop.sync-timestamp{display:inline-flex!important;flex:0 0 auto!important;align-items:center;font-size:11px!important;font-weight:600!important;line-height:1.3!important;white-space:nowrap!important;opacity:1!important;color:inherit!important;padding:5px 7px!important;border-radius:5px!important;background:rgba(120,140,160,.14)!important}
+#lastUpdateMobile.mobile-last-update{display:block!important;visibility:visible!important;opacity:1!important;font-size:11px!important;font-weight:600!important;padding:5px 12px!important;text-align:right!important}
+@media(min-width:801px){body:not(.force-mobile) #lastUpdateMobile.mobile-last-update{display:none!important}}
+@media(max-width:800px){body:not(.force-desktop) header #lastUpdateDesktop.sync-timestamp{display:none!important}}
+@media print{header #lastUpdateDesktop.sync-timestamp,#lastUpdateMobile.mobile-last-update{display:none!important}}
+
+/* v3.40: retain resize across vertical pointer movement */
+.board .task-continuous .resize-handle{touch-action:none!important;user-select:none!important;-webkit-user-select:none!important;cursor:ew-resize!important}
+body.task-resize-active,body.task-resize-active *{user-select:none!important;-webkit-user-select:none!important}
+
+.task-confirmed{outline:2px solid #151515!important;outline-offset:-2px!important;box-shadow:inset 0 0 0 1px #151515!important}
+html[data-theme="dark"] .task-confirmed{outline-color:#fff!important;box-shadow:inset 0 0 0 1px #fff!important}
+.task-confirmed .confirmed-mark{display:inline-flex;flex:0 0 16px;width:16px;height:16px;align-items:center;justify-content:center;border-radius:50%;background:#fff;color:#151515;font-family:Arial,sans-serif;font-size:13px;font-weight:900;line-height:1;vertical-align:middle;margin:0 4px 0 2px;box-shadow:0 0 0 1px rgba(0,0,0,.45)}.flag-choice{display:inline-flex;align-items:center;gap:7px;padding:7px 2px;font-weight:600}.flag-choice input{width:17px;height:17px;accent-color:#c38b19}.pdf-attachment{border:1px dashed #8795a8;border-radius:8px;padding:10px;margin-top:8px}.pdf-attachment a{display:inline-block;margin:5px 8px 5px 0;overflow-wrap:anywhere}.pdf-attachment button{margin-right:8px}
+
+/* v3.46: confirmation beside category, status hidden without changing stored data */
+.task-category-confirmed-row{display:flex;align-items:end;gap:12px;width:100%}
+.task-category-confirmed-row>.field{flex:1;min-width:0}
+.task-category-confirmed-row>.task-confirmed-choice{flex:0 0 auto;white-space:nowrap;padding:8px 5px;margin-bottom:1px}
+@media(max-width:440px){.task-category-confirmed-row{gap:8px}.task-category-confirmed-row>.task-confirmed-choice{padding:6px 2px}}
+
+/* v3.47: compact category with left-side color preview, confirmed right; wide SR + order */
+.task-category-confirmed-row{display:grid;grid-template-columns:minmax(58px,auto) minmax(100px,1fr) auto;align-items:end;gap:10px}
+.task-category-confirmed-row>.category-compact-field{min-width:0;width:100%}
+.task-category-confirmed-row .category-preview-inline{margin:0 0 8px;min-width:0;display:flex;align-items:center;gap:5px;white-space:nowrap}
+.task-category-confirmed-row #categorySwatch{width:18px;height:18px;flex:0 0 18px}
+.task-category-confirmed-row #categoryPreviewText{font-size:12px;white-space:nowrap}
+.task-category-confirmed-row .task-confirmed-choice{margin-bottom:1px}
+.task-sr-order-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:end;width:100%}
+.task-sr-order-row>.task-sr-field{min-width:0;width:100%}
+.task-sr-order-row>.task-order-choice{white-space:nowrap;margin-bottom:1px;padding:8px 4px}
+@media(max-width:440px){.task-category-confirmed-row{grid-template-columns:minmax(48px,auto) minmax(90px,1fr) auto;gap:7px}.task-category-confirmed-row #categoryPreviewText{font-size:11px}.task-sr-order-row{gap:8px}}
+
+/* v3.50 confirmed + order status */
+.board .task-confirmed{outline:3px solid #151515!important;outline-offset:-3px!important;box-shadow:inset 0 0 0 1px #151515!important}
+html[data-theme="dark"] .board .task-confirmed{outline-color:#fff!important;box-shadow:inset 0 0 0 1px #fff!important}
+.task-confirmed .confirmed-text{display:inline-flex;align-items:center;margin-right:5px;font-size:11px;font-weight:800;white-space:nowrap}
+.task-label .order-mark{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;margin-right:5px;padding:0 3px;border-radius:3px;font-weight:900;line-height:1.2;background:#fff;color:#151515;font-size:14px}
+.task-label .order-pending{background:#fff3c4;color:#a00000}
+.task-label .order-done{background:#e8f9ec;color:#145b2b}
+.task-sr-order-row{grid-template-columns:minmax(0,1fr) auto auto;gap:9px}
+.task-sr-order-row>.task-order-choice,.task-sr-order-row>.task-order-completed-choice{white-space:nowrap;padding:8px 2px;margin-bottom:1px}
+@media(max-width:440px){.task-sr-order-row{gap:5px}.task-sr-order-row>.flag-choice{font-size:12px;gap:3px}}
+
+/* v3.51 compact status indicators: keep original calendar row/bar heights */
+.board .task-continuous .task-label{display:flex!important;align-items:center!important;flex:1 1 0!important;min-width:0!important;overflow:hidden!important;white-space:nowrap!important;gap:3px!important;line-height:1!important}
+.board .task-continuous .task-label .task-name-text{display:block!important;flex:1 1 auto!important;min-width:0!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important;line-height:1.2!important}
+.board .task-continuous .task-status-confirmed,.board .task-continuous .task-status-order,.board .task-continuous .task-status-previous{display:inline-flex!important;align-items:center!important;justify-content:center!important;flex:0 0 auto!important;white-space:nowrap!important;line-height:1!important;font-size:9px!important;font-weight:800!important}
+.board .task-continuous .task-status-confirmed{background:#fff!important;color:#171717!important;border-radius:2px!important;padding:1px 3px!important}
+.board .task-continuous .task-status-order{min-width:12px!important;height:12px!important;padding:0 2px!important;border-radius:2px!important;background:#fff1c8!important;color:#8e220a!important;font-size:11px!important}
+.board .task-continuous .task-status-order.done{background:#e2f6e5!important;color:#15592d!important}
+body.overview-mode .board .task-continuous .task-label{gap:2px!important}
+body.overview-mode .board .task-continuous .task-status-confirmed{font-size:8px!important;padding:0 2px!important}
+body.overview-mode .board .task-continuous .task-status-order{height:10px!important;min-width:10px!important;font-size:10px!important;padding:0 1px!important}
+/* Restore a visible but unobtrusive themed outline. No change to row dimensions. */
+.board .task-continuous.task-confirmed{outline:3px solid #151515!important;outline-offset:-3px!important}
+html[data-theme="dark"] .board .task-continuous.task-confirmed{outline-color:#fff!important}
+
+.sr-input-line{display:flex;gap:5px;align-items:center;min-width:0}.sr-input-line input{flex:1;min-width:0}.sr-input-line button{flex-shrink:0;font-size:11px;padding:7px 8px;white-space:nowrap}.sr-lookup-status{font-size:10px;opacity:.8;display:block;line-height:1.2;margin-top:3px}
+
+.sr-excel-drop{border:2px dashed #8496ac;border-radius:9px;padding:16px 9px;text-align:center;cursor:pointer;font-weight:700;line-height:1.8;margin:10px 0}.sr-excel-drop span{font-size:12px;font-weight:400}.sr-excel-drop.drag-over{background:rgba(70,130,180,.16);border-color:#4285f4}.sr-excel-drop.uploading{opacity:.65;pointer-events:none}
+
+.order-reminder-card{border-left:3px solid #d97706!important;text-align:left}.order-reminder-card .individual-memo-meta{font-weight:750}.order-reminder-card .memo-card-content{overflow-wrap:anywhere}
+/* v3.58: all 11 category colors, consistent across themes and display modes */
+.board button.task.task-span.blue{background:#dbeafe!important;color:#1e40af!important;border-left-color:#3b82f6!important}
+html[data-theme="dark"] .board button.task.task-span.blue{background:#bcd9ff!important;color:#102d56!important;border-left-color:#2563eb!important}
+.board button.task.task-span.green{background:#dcfce7!important;color:#166534!important;border-left-color:#22c55e!important}
+html[data-theme="dark"] .board button.task.task-span.green{background:#a9edc2!important;color:#12442b!important;border-left-color:#16a34a!important}
+.board button.task.task-span.orange{background:#ffedd5!important;color:#9a3412!important;border-left-color:#fb923c!important}
+html[data-theme="dark"] .board button.task.task-span.orange{background:#ffdaaa!important;color:#663300!important;border-left-color:#ea580c!important}
+.board button.task.task-span.purple{background:#f3e8ff!important;color:#6b21a8!important;border-left-color:#a855f7!important}
+html[data-theme="dark"] .board button.task.task-span.purple{background:#e5c9ff!important;color:#4c1d76!important;border-left-color:#9333ea!important}
+.board button.task.task-span.red{background:#fee2e2!important;color:#991b1b!important;border-left-color:#ef4444!important}
+html[data-theme="dark"] .board button.task.task-span.red{background:#ffc4c4!important;color:#701b1b!important;border-left-color:#dc2626!important}
+.board button.task.task-span.gray{background:#e2e8f0!important;color:#334155!important;border-left-color:#64748b!important}
+html[data-theme="dark"] .board button.task.task-span.gray{background:#cbd5e1!important;color:#1e293b!important;border-left-color:#64748b!important}
+.board button.task.task-span.yellow{background:#fef9c3!important;color:#713f12!important;border-left-color:#eab308!important}
+html[data-theme="dark"] .board button.task.task-span.yellow{background:#fef08a!important;color:#713f12!important;border-left-color:#ca8a04!important}
+.board button.task.task-span.teal{background:#ccfbf1!important;color:#115e59!important;border-left-color:#0d9488!important}
+html[data-theme="dark"] .board button.task.task-span.teal{background:#99f6e4!important;color:#134e4a!important;border-left-color:#0f766e!important}
+.board button.task.task-span.pink{background:#fce7f3!important;color:#9d174d!important;border-left-color:#db2777!important}
+html[data-theme="dark"] .board button.task.task-span.pink{background:#fbcfe8!important;color:#831843!important;border-left-color:#be185d!important}
+.board button.task.task-span.cyan{background:#cffafe!important;color:#155e75!important;border-left-color:#0891b2!important}
+html[data-theme="dark"] .board button.task.task-span.cyan{background:#a5f3fc!important;color:#164e63!important;border-left-color:#0e7490!important}
+.board button.task.task-span.brown{background:#f5e6d3!important;color:#78350f!important;border-left-color:#92400e!important}
+html[data-theme="dark"] .board button.task.task-span.brown{background:#e9c9a4!important;color:#653c17!important;border-left-color:#92400e!important}
+#bridgePanel{position:fixed;bottom:12px;left:12px;z-index:99999;background:#202938;color:#fff;border:1px solid #8895a7;border-radius:9px;padding:12px;max-width:min(520px,calc(100vw - 24px));box-shadow:0 4px 18px #0005;font:13px system-ui}#bridgePanel>div:first-child{display:flex;justify-content:space-between;gap:16px;margin-bottom:7px}#bridgeStatus{font-size:11px}#bridgePanel .bridge-controls{display:flex;gap:6px}#bridgeInput{flex:1;min-width:0;padding:7px;background:#fff;color:#111;border-radius:4px}#bridgePanel button,#bridgeToggle{padding:6px 9px;border:1px solid #9ca3af;border-radius:5px;background:#f1f5f9;color:#111}#bridgePanel.collapsed{display:none}#bridgeToggle{position:fixed;bottom:8px;left:8px;z-index:99998;font:12px system-ui}
+
+/* v3.63: Highlight the selected staff member throughout the visible month. */
+.board th.person .person-highlight-toggle{display:block;width:100%;text-align:left;padding:3px 5px;border:0;background:transparent;color:inherit;font-weight:inherit;font-size:inherit;white-space:normal}
+.board th.person .person-highlight-toggle:hover{text-decoration:underline}
+.board tr.person-highlighted th.person{background:#fef08a!important;color:#1f2937!important;box-shadow:inset 0 0 0 2px #eab308}
+.board tr.person-highlighted td[data-drop-date]{box-shadow:inset 0 0 0 2px #eab308!important}
+html[data-theme="dark"] .board tr.person-highlighted th.person{background:#6b5416!important;color:#fff5bd!important}
+html[data-theme="dark"] .board tr.person-highlighted td[data-drop-date]{box-shadow:inset 0 0 0 2px #facc15!important}
+/* v3.64: keep GAS connection inside the settings hamburger, never floating over calendar. */
+#appMenu #bridgePanel{position:static;inset:auto;display:block;z-index:auto;max-width:none;width:100%;box-shadow:none;border:0;border-radius:0;padding:0;margin:0;background:transparent;color:inherit;font:inherit;opacity:1}
+#appMenu #bridgePanel .bridge-controls{display:flex;flex-wrap:wrap;gap:6px;padding:8px 0 12px}
+#appMenu #bridgePanel #bridgeInput{min-width:120px;flex:1 1 150px;max-width:100%;color:#111;background:#fff}
+#appMenu #bridgePanel #bridgeStatus{float:right;font-size:11px;margin-left:8px;max-width:55%;overflow-wrap:anywhere;font-weight:normal}
+#appMenu #bridgePanel summary{cursor:pointer}
+#bridgeToggle{display:none!important}
+
+/* v3.66: A single real bar spans its entire weekly range. All cells share
+   one paint order: no td/lane stacking context may cover later-day tasks. */
+@media screen and (min-width:801px){
+ .board td[data-drop-date]{position:static!important;z-index:auto!important;overflow:visible!important}
+ .board td[data-drop-date]:has(> .task-lanes > .task-continuous),
+ .board td[data-drop-date]:has(> .task-lanes > .task-continuous):hover{position:static!important;z-index:auto!important}
+ .board td[data-drop-date] .task-lanes{position:relative!important;z-index:auto!important;overflow:visible!important;isolation:auto!important}
+ .board .task-continuous{position:relative!important;z-index:12!important;overflow:visible!important;max-width:none!important}
+ .board .task-continuous:hover{z-index:13!important}
+ .board .task-continuous .resize-handle{z-index:14!important}
+}
+
+/* v3.67: Imported plans must remain dark until explicitly saved.
+   This rule must override all 11 category selectors from v3.58. */
+.board button.task.task-span.task-continuous.imported-task,
+html[data-theme="dark"] .board button.task.task-span.task-continuous.imported-task {
+  background:#1f2937!important;
+  color:#ffffff!important;
+  border-color:#0f172a!important;
+  border-left-color:#0f172a!important;
+}
+.board button.task.task-span.task-continuous.imported-task .task-name-text,
+.board button.task.task-span.task-continuous.imported-task .task-status-previous {
+  color:#ffffff!important;
+}
+
+/* v3.68: Compact month overview without sacrificing readable task labels. */
+@media screen and (min-width:801px){
+ body:not(.report-print) #scheduleMain .week-title{display:none!important}
+ body:not(.report-print) #scheduleMain .week-section{margin-bottom:2px!important}
+ body:not(.report-print) #scheduleMain .board thead th:not(.person){height:26px!important;min-height:26px!important;padding:2px 3px!important;line-height:1.15!important;vertical-align:middle!important}
+ body:not(.report-print) #scheduleMain .board thead th .day-number{display:inline!important;font-size:14px!important;line-height:1.2!important}
+ body:not(.report-print) #scheduleMain .board thead th .weekday{display:inline!important;margin-left:5px!important;font-size:12px!important;line-height:1.2!important}
+ body:not(.report-print) #scheduleMain .board thead th .holiday-name{display:block!important;font-size:10px!important;line-height:1.1!important;margin-top:1px!important}
+ body:not(.report-print) #scheduleMain .board thead th.holiday{height:38px!important}
+ body:not(.report-print) #scheduleMain .board th.person{font-size:12px!important}
+ body:not(.report-print) #scheduleMain .board .task-label{font-size:11px!important;line-height:1.2!important}
+}
+@media print{
+ .week-title{display:none!important}
+ .board thead th .day-number,.board thead th .weekday{display:inline!important}
+ .board thead th .weekday{margin-left:2mm!important}
+}
+
+/* v3.69: Keep row/bar heights unchanged; align labels within available height. */
+@media screen and (min-width:801px){
+  body:not(.report-print) #scheduleMain .board .task-continuous{
+    padding-top:0!important;padding-bottom:0!important;
+    align-items:center!important;
+  }
+  body:not(.report-print) #scheduleMain .board .task-continuous .task-label{
+    align-self:center!important;min-height:0!important;
+    margin-top:0!important;margin-bottom:0!important;
+    padding-top:0!important;padding-bottom:0!important;
+    line-height:1!important;align-items:center!important;
+  }
+  body:not(.report-print) #scheduleMain .board .task-continuous .task-name-text{
+    line-height:1!important;min-height:0!important;
+    padding-top:0!important;padding-bottom:0!important;
+    margin-top:0!important;margin-bottom:0!important;
+  }
+  body:not(.report-print) #scheduleMain .board .task-continuous .task-status-confirmed,
+  body:not(.report-print) #scheduleMain .board .task-continuous .task-status-previous,
+  body:not(.report-print) #scheduleMain .board .task-continuous .task-status-order{
+    line-height:1!important;vertical-align:middle!important;
+    padding-top:0!important;padding-bottom:0!important;
+  }
+}
+/* Confirmed status remains visible as text/check, but no outline or inset border. */
+.board .task-confirmed,
+.board .task-continuous.task-confirmed,
+html[data-theme="dark"] .board .task-confirmed,
+html[data-theme="dark"] .board .task-continuous.task-confirmed{
+  outline:none!important;outline-width:0!important;
+  box-shadow:0 1px 2px #0003!important;
+}
+
+/* v3.70: The left-hand person header must not impose a minimum row
+   height on otherwise compact task lanes. The task lanes themselves
+   continue to determine height when multiple appointments overlap. */
+@media screen and (min-width:801px){
+ body:not(.report-print) #scheduleMain .board tbody th.person{
+   height:auto!important;min-height:0!important;
+   padding:0 3px!important;line-height:1.15!important;
+   vertical-align:middle!important;
+ }
+ body:not(.report-print) #scheduleMain .board tbody th.person .person-highlight-toggle{
+   box-sizing:border-box!important;min-height:0!important;
+   padding:0 3px!important;margin:0!important;
+   line-height:17px!important;
+ }
+ body:not(.report-print) #scheduleMain .board tbody td[data-drop-date]{
+   height:auto!important;min-height:0!important;
+   padding-top:0!important;padding-bottom:0!important;
+ }
+ body:not(.report-print) #scheduleMain .board tbody td.outside{
+   height:auto!important;min-height:0!important;padding:0!important;
+ }
+}
+
+/* v3.75: standalone mobile-first presentation; existing application logic retained */
+@media screen and (max-width: 850px){
+ html{font-size:15px;-webkit-text-size-adjust:100%}
+ body{overflow-x:hidden}
+ header{padding:8px 10px!important;gap:5px!important}
+ header h1{font-size:15px!important;line-height:1.25}
+ header small{font-size:10px!important}
+ main{padding:5px!important}
+ .actions{gap:4px!important}
+ .actions button{min-height:36px!important;font-size:12px!important}
+ .toolbar{padding:5px 0!important;gap:4px!important;margin-bottom:4px!important}
+ .toolbar button{min-height:35px!important;font-size:12px!important}
+ .toolbar strong{font-size:17px!important;white-space:nowrap}
+ .category-legend{max-height:40px;overflow-y:auto;font-size:10px!important;gap:3px 7px!important}
+ .schedule-layout{display:block!important;min-width:0!important}
+ .schedule-left{width:100%!important;min-width:0!important}
+ .board-wrap{width:100%!important;max-width:100%!important;overflow-x:auto!important;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;max-height:calc(100dvh - 195px)!important;min-height:300px}
+ .board.monthly{min-width:800px!important}
+ .board th.person,.board td.person,.board .person{position:sticky!important;left:0!important;z-index:3;min-width:75px!important;width:75px!important;max-width:75px!important;font-size:11px!important}
+ .board thead th.person{z-index:6!important}
+ .board td,.board thead th{min-width:100px!important}
+ .board .task,.board .task-span{font-size:11px!important;line-height:1.2!important}
+ .resize-handle{min-width:19px;touch-action:none}
+ .memo-panel{width:100%!important;max-width:100%!important;max-height:45dvh!important;overflow:auto}
+ dialog{max-width:calc(100vw - 12px)!important;max-height:calc(100dvh - 20px)!important;margin:auto!important}
+ dialog form{max-width:100%!important}
+ input,select,textarea{font-size:16px!important}
+ #bridgePanel{max-width:calc(100vw - 20px)!important}
+}
+@media screen and (max-width:480px){
+ .board.monthly{min-width:760px!important}
+ .board td,.board thead th{min-width:98px!important}
+ .board th.person,.board td.person,.board .person{min-width:74px!important;width:74px!important}
+ .board-wrap{max-height:calc(100dvh - 185px)!important}
+}
+</style></head><body>
+<header><button id="headerCopyBtn" type="button">↶ 昨年度から反映</button><button id="reportBtn" type="button" class="primary">▤ 集計</button><button id="desktopSyncNow" type="button" title="最新データを取得">↻ 同期</button><button id="desktopHamburger" class="hamburger" type="button" aria-label="メニュー" aria-expanded="false">☰</button><div><h1>共有作業予定表</h1><small>担当者 × 日付 ｜ 月間スケジュール</small></div><span id="lastUpdateDesktop" class="sync-timestamp">最終同期：未取得</span><div class="actions" id="headerActions"><button id="mobileMenuBtn" type="button" aria-expanded="false">☰ メニュー</button><button id="shareBtn" type="button">↗ 共有</button><button id="refresh">↻ 更新</button><button id="peopleBtn">担当者設定</button><button id="categoryBtn">区分・色の設定</button><button class="primary" id="newBtn">＋ スケジュール</button><button type="button" id="memoQuickAdd">＋ メモ</button></div></header>
+<div id="mobileApp" aria-label="スマートフォン用月間予定表">
+<div id="mobileMemo"><div class="mobile-memo-head"><button type="button" id="mobileVoiceNew" title="音声で予定登録">🎙 音声</button><button type="button" id="mobileQuickNew" aria-label="予定を追加" title="予定を追加">＋予定</button><button type="button" id="mobileSyncNow" aria-label="最新データに同期" title="最新データに同期">↻</button><button type="button" id="mobileTodayTop" aria-label="今月へ移動" title="今月へ移動">今月</button><button type="button" id="mobileHamburger" class="hamburger" aria-label="メニュー" aria-expanded="false">☰</button><strong>共有メモ <span id="mobileMemoMonth"></span></strong><button type="button" id="mobileMemoAdd">＋</button><button type="button" id="mobileMemoToggle">⌄</button></div><div id="mobileMemoText"></div></div>
+<div id="lastUpdateMobile" class="last-update-label mobile-last-update">最終同期：未取得</div><div id="mobileMonths"></div><div id="mobileFoot"><button id="mobileTools">☰ メニュー</button><button id="mobileToday">今月へ</button><button id="mobileReload">更新</button></div></div>
+<div id="menuBackdrop" hidden></div><aside id="appMenu" hidden aria-label="操作メニュー"><div class="menu-top"><strong>メニュー</strong><button id="closeAppMenu" type="button">✕</button></div><div class="menu-scroll"><details open><summary>表示設定</summary><label>カラーテーマ<select id="themeSelect"><option value="system">端末に合わせる</option><option value="light">ライト</option><option value="dark">ダーク</option></select></label><label>画面表示<select id="layoutSelect"><option value="auto">自動</option><option value="mobile">スマホ版</option><option value="desktop">PC版</option></select></label></details><details open><summary>予定・管理</summary><button data-menu-action="people">作業者の設定</button><button data-menu-action="category">作業区分・色の設定</button></details><details><summary>開発者設定（SR番号参照元）</summary><p class="muted">年度別のExcel（.xlsx）をここへドロップ、または選択して取り込めます。元のExcelは変更しません。取込後は全利用者のSR参照元が切り替わります。</p><div id="srExcelDrop" class="sr-excel-drop" tabindex="0" role="button" aria-label="Excelファイルを選択">Excel（.xlsx）をここにドラッグ＆ドロップ<br><span>またはクリックしてファイルを選択</span><input id="srExcelFile" type="file" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" hidden></div><p id="srExcelUploadStatus" class="muted" role="status"></p><p class="muted">GoogleスプレッドシートのURLによる設定も引き続き利用できます。</p><label>参照する管理表のURLまたはID<input id="srSourceUrl" type="text" placeholder="https://docs.google.com/spreadsheets/d/..."></label><button id="srSourceTest" type="button">参照先を検証</button><button id="srSourceSave" type="button" class="primary">参照先を保存</button><button id="srSourceClear" type="button">参照先の設定を解除</button><p id="srSourceStatus" class="muted" role="status">設定を確認しています…</p><p class="muted">未設定時はv3.52で取り込んだ2026年度のデータを使用します。URLを知っている全利用者がこの設定を変更できる運用は避けてください。</p></details><details><summary>集計・出力</summary><button data-menu-action="report">作業実績の集計・CSV</button><button data-menu-action="days">作業日数</button><button data-menu-action="print">PDF・印刷</button></details><details><summary>共有・同期</summary><button data-menu-action="share">共有URL</button><button data-menu-action="reload">データ更新</button><label>GoogleカレンダーID<input id="calendarId" placeholder="専用カレンダーのID"></label><button id="saveCalendarConfig">同期先を保存</button><button id="runCalendarSync">Googleカレンダーへ同期</button><p id="calendarSyncStatus" class="muted">GoogleからiPhone標準・Mocaへ表示できます。現在は予定表→Googleの片方向同期です。</p></details></div></aside>
+<dialog id="mobileDetail"><div class="dialog-head"><h2 id="mobileDetailTitle">予定の詳細</h2><button id="mobileDetailClose">✕</button></div><div class="dialog-body" id="mobileDetailBody"></div><div class="dialog-foot"><button id="mobileDetailMemo">メモを編集</button><button id="mobileDetailMove">日付・期間を変更</button><button class="primary" id="mobileDetailEdit">予定を編集</button><button class="primary" id="mobileDetailAddAnother">＋ 別の予定を追加する</button></div></dialog>
+<dialog id="mobileChoice"><div class="dialog-head"><h2 id="mobileChoiceTitle">日付の操作</h2><button id="mobileChoiceClose">✕</button></div><div class="dialog-body"><p id="mobileChoiceDate"></p><button class="primary" id="mobileChoiceTask">＋ 予定を登録</button> <button id="mobileChoiceNote">＋ メモを登録</button></div></dialog>
+<main id="scheduleMain"><div class="toolbar" id="desktopToolbar"><button id="mobileToolbarBtn" type="button" aria-expanded="false">その他の操作 ▾</button><button id="prevYear">≪ 前年</button><button id="prev">‹ 前月</button><strong id="monthLabel"></strong><button id="next">翌月 ›</button><button id="nextYear">翌年 ≫</button><button id="thisMonth">今月</button><button id="monthView" aria-pressed="true">月間表示</button><button id="weekView" aria-pressed="false" hidden>週間表示</button><button id="copyLastYear">前年同月を一括反映</button><button id="workDaysBtn">作業日数</button><button id="overviewBtn" aria-pressed="true">詳細表示</button><button id="printBtn">月間PDF（1枚）</button><span class="hint">予定をドラッグして移動 ／ 両端の ◂ ▸ をドラッグして期間変更</span></div><div id="categoryLegend" class="category-legend" aria-label="作業区分と色の一覧"></div><div class="schedule-layout" id="scheduleLayout"><div class="schedule-left"><div class="board-wrap" id="boardArea"></div></div><aside class="memo-panel" id="memoPanel" aria-label="個別メモと全体メモ"><div class="memo-panel-head"><div><strong>メモ一覧</strong><span id="memoMonthLabel"></span></div><button type="button" id="memoClose" title="メモ欄を閉じる" aria-label="メモ欄を閉じる">×</button></div><div class="memo-split"><section class="memo-section memo-section-personal" aria-label="個別メモ"><div class="memo-section-title"><strong>個別メモ</strong><span id="individualMemoCount"></span></div><div class="memo-items" id="individualMemoItems"></div></section><section class="memo-section memo-section-shared" aria-label="全体メモ"><div class="memo-section-title"><strong>全体メモ</strong></div><div class="memo-items" id="memoItems"></div><button type="button" class="memo-add" id="memoAdd">＋ メモを追加</button></section></div></aside></div><button id="memoReopen" type="button" hidden aria-label="共有メモを再表示" title="共有メモを開く"><span aria-hidden="true">▤</span><span>メモを表示</span></button><div class="status" id="status">読み込み中...</div></main>
+<section id="reportPage" hidden aria-label="集計専用画面"><div class="report-head"><div><h2>担当者別 作業実績集計</h2><p>作業区分ごとの延べ日数・件数と、重複を除いた稼働日数</p></div><button id="reportBack">← 予定表に戻る</button></div><div class="report-filters"><label>集計期間<select id="reportPeriod"><option value="fiscal">年度（4月〜翌3月）</option><option value="calendar">暦年（1月〜12月）</option><option value="month">月間</option><option value="custom">日付指定</option></select></label><label>対象年<input type="number" id="reportYear" min="2000" max="2099"></label><label id="reportMonthWrap" hidden>対象月<select id="reportMonth"></select></label><label id="reportFromWrap" hidden>開始日<input type="date" id="reportFrom"></label><label id="reportToWrap" hidden>終了日<input type="date" id="reportTo"></label><label>担当者<select id="reportPerson"></select></label><label>集計単位<select id="reportMetric"><option value="days">延べ作業日数</option><option value="tasks">作業件数</option></select></label><label>対象<select id="reportStatus"><option value="all">すべての予定</option><option value="done">完了のみ</option><option value="planned">未完了のみ</option><option value="cancelled">中止のみ</option></select></label></div><div class="report-actions"><button id="reportRefresh" class="primary">再集計</button><button id="reportCSV">CSV書き出し（Excel対応）</button><button id="reportDetailCSV">内訳CSV</button><button id="reportPDF">PDFに保存・印刷</button></div><div class="report-summary" id="reportSummary"></div><div id="reportTableWrap" class="report-table-wrap"></div><p id="reportNotes" class="muted"></p><div id="reportDetails" class="report-details" hidden></div></section><dialog id="shareDialog"><div class="dialog-head"><h2>予定表を共有</h2><button type="button" id="closeShare">✕</button></div><div class="dialog-body"><p class="muted">この予定表のWebアプリURLを共有します。アクセスできる範囲はApps Scriptのデプロイ設定に従います。</p><label class="field">共有URL<input id="shareUrl" type="text" readonly placeholder="URLを取得しています…"></label><p id="shareNotice" class="muted" role="status"></p></div><div class="dialog-foot"><button type="button" id="cancelShare">閉じる</button><button type="button" id="nativeShareBtn">共有メニュー</button><button type="button" class="primary" id="copyShareBtn">URLをコピー</button></div></dialog>
+<dialog id="workDaysDialog" class="wide-dialog"><div class="dialog-head"><h2 id="workDaysTitle">担当者別 作業日数</h2><button type="button" id="closeWorkDays">✕</button></div><div class="dialog-body"><p class="muted">同じ日に複数の作業があっても1日と数えます。土日・祝日も予定があれば算入します。</p><div id="workDaysTable"></div></div><div class="dialog-foot"><button type="button" id="closeWorkDaysFoot">閉じる</button></div></dialog>
+<dialog id="copyDialog"><div class="dialog-head"><h2>前年同月から反映</h2><button type="button" id="closeCopy">✕</button></div><div class="dialog-body"><p id="copyDescription" class="muted"></p><div class="filter-heading">対象作業者 <button type="button" id="copyPeopleAll">全選択</button><button type="button" id="copyPeopleNone">解除</button></div><div id="copyPeople" class="copy-checks"></div><div class="filter-heading">対象区分 <button type="button" id="copyCatsAll">全選択</button><button type="button" id="copyCatsNone">解除</button></div><div id="copyCats" class="copy-checks"></div><p class="muted">作業者と区分の両方に一致する予定だけ反映します。複数人の予定は選択した担当者だけを複製します。</p><button type="button" id="copyPreviewBtn">対象をプレビュー</button><div id="copyPreview" class="copy-preview" aria-live="polite"></div></div><div class="dialog-foot"><button type="button" id="cancelCopy">キャンセル</button><button class="primary" type="button" id="executeCopy" disabled>確認して反映</button></div></dialog>
+<dialog id="cellNoteDialog"><form id="cellNoteForm"><div class="dialog-head"><h2 id="cellNoteTitle">セルのメモ</h2><button type="button" id="cellNoteClose">✕</button></div><div class="dialog-body"><p class="muted" id="cellNoteInfo"></p><label class="field">メモ<textarea id="cellNoteBody" maxlength="2000" required placeholder="作業区分のない自由メモ" style="min-height:145px"></textarea></label></div><div class="dialog-foot"><button type="button" class="danger" id="cellNoteDelete" hidden>削除</button><button type="button" id="cellNoteCancel">キャンセル</button><button type="submit" class="primary" id="cellNoteSave">保存</button></div></form></dialog><dialog id="memoDialog"><form id="memoForm"><div class="dialog-head"><h2 id="memoDialogTitle">メモの追加</h2><button type="button" id="memoDialogClose">✕</button></div><div class="dialog-body"><label class="field">内容<textarea id="memoBody" maxlength="3000" required placeholder="連絡事項や注意事項を入力" style="min-height:170px"></textarea></label></div><div class="dialog-foot"><button type="button" id="memoDelete" class="danger" hidden>削除</button><button type="button" id="memoCancel">キャンセル</button><button type="submit" class="primary" id="memoSave">保存</button></div></form></dialog><dialog id="voiceDialog"><div class="dialog-head"><h2>音声で予定を登録</h2><button type="button" id="voiceClose">✕</button></div><div class="dialog-body"><p class="muted">入力欄をタップし、iPhoneキーボードのマイクから話してください。AIや外部APIは使用しません。</p><label class="field">話した内容<textarea id="voiceText" rows="5" placeholder="現場名、中央公民館。日時、10月22日から23日。作業者、坂本と小笠原。区分、点検。"></textarea></label><button type="button" id="voiceExample">例文を入力</button><p id="voiceError" role="status" style="color:#b45309;white-space:pre-wrap"></p><div id="voicePreview" hidden></div></div><div class="dialog-foot"><button type="button" id="voiceCancel">キャンセル</button><button type="button" class="primary" id="voiceParse">内容を解析</button><button type="button" class="primary" id="voiceConfirm" hidden>予定を確認して保存へ</button></div></dialog><dialog id="taskDialog"><form id="taskForm"><div class="dialog-head"><h2 id="dialogTitle">予定の追加</h2><button type="button" id="closeTask">✕</button></div><div class="dialog-body"><button type="button" id="taskNewFromEdit" class="task-new-from-edit" hidden>＋ この日付に新規予定を登録</button><div class="task-category-confirmed-row"><div class="category-preview category-preview-inline"><span id="categorySwatch"></span><span id="categoryPreviewText">青色</span></div><label class="field category-compact-field">作業区分<select id="taskCategory" required></select></label><label class="flag-choice task-confirmed-choice"><input id="taskConfirmed" type="checkbox"> 確定</label></div><div class="task-sr-order-row"><label class="field task-sr-field">SR番号<div class="sr-input-line"><input id="taskSr" maxlength="80" placeholder="SR番号を入力"><button type="button" id="getNextSr" title="Excelの上から順に未使用SR番号を取得">次のSR取得</button></div><small id="srLookupStatus" class="sr-lookup-status"></small></label><label class="flag-choice task-order-choice"><input id="taskOrdered" type="checkbox"> 注文</label><label class="flag-choice task-order-completed-choice"><input id="taskOrderCompleted" type="checkbox"> 注文済み</label></div><div class="date-row"><label class="flag-choice"><input id="taskEstimate" type="checkbox"> 見積</label><label class="flag-choice"><input id="taskPaid" type="checkbox"> 支払</label></div><label class="field">現場名<input id="taskSite" maxlength="150" placeholder="現場名"></label><label class="field">作業名<input id="taskTitle" maxlength="100" required placeholder="例：現場A・点検"></label><div class="date-row"><label class="field">開始日<input id="taskStart" type="date" required></label><label class="field">終了日<input id="taskEnd" type="date" required></label></div><div class="field">担当者（複数選択可）<div class="people-choices" id="peopleChoices"></div></div><input id="taskStatus" type="hidden" value="planned"><label class="field">メモ<textarea id="taskNote" maxlength="1000" placeholder="必要な場合のみ"></textarea></label><div class="pdf-attachment"><label class="field">PDF添付（ファイル選択、またはここへPDFを貼り付け）<input id="taskPdfFile" type="file" accept="application/pdf,.pdf"></label><div id="taskPdfLinks"></div><small id="taskPdfStatus">PDFはGoogleドライブへ保存されます（最大8MB）。</small></div></div><div class="dialog-foot"><button type="button" class="danger" id="deleteBtn" hidden>削除</button><button type="button" id="cancelTask">キャンセル</button><button class="primary" type="submit" id="saveBtn">保存</button></div></form></dialog>
+<dialog id="peopleDialog"><div class="dialog-head"><h2>担当者設定（最大10人）</h2><button type="button" id="closePeople">✕</button></div><div class="dialog-body"><p class="muted">担当者名を入力してください。予定に使用中の名前を変更・削除する場合は、先に該当予定を変更してください。</p><div id="peopleInputs"></div><button type="button" id="addPerson">＋ 担当者を追加</button></div><div class="dialog-foot"><button id="cancelPeople">キャンセル</button><button class="primary" id="savePeople">保存</button></div></dialog>
+<dialog id="categoryDialog"><div class="dialog-head"><h2>作業区分・色の設定</h2><button type="button" id="closeCategories">✕</button></div><div class="dialog-body"><p class="muted">区分を追加・編集できます。色の変更は登録済みの予定にも反映されます。使用中の区分は削除できません。</p><div id="categoryRows"></div><button type="button" id="addCategory">＋ 区分を追加</button></div><div class="dialog-foot"><button type="button" id="cancelCategories">キャンセル</button><button class="primary" type="button" id="saveCategoriesBtn">設定を保存</button></div></dialog>
+<script>
+'use strict';
+document.getElementById('mobileMenuBtn').addEventListener('click',function(){const el=document.getElementById('headerActions'),open=el.classList.toggle('mobile-expanded');this.setAttribute('aria-expanded',String(open));this.textContent=open?'✕ 閉じる':'☰ メニュー';});
+document.getElementById('mobileToolbarBtn').addEventListener('click',function(){const el=this.closest('.toolbar'),open=el.classList.toggle('mobile-expanded');this.setAttribute('aria-expanded',String(open));this.textContent=open?'その他の操作 ▴ 閉じる':'その他の操作 ▾';});
+const $=id=>document.getElementById(id);
+const colors={blue:'#3b82f6',green:'#22c55e',orange:'#fb923c',purple:'#a855f7',red:'#ef4444',gray:'#64748b',yellow:'#eab308',teal:'#0d9488',pink:'#db2777',cyan:'#0891b2',brown:'#92400e'};
+const colorLabels={blue:'青',green:'緑',orange:'オレンジ',purple:'紫',red:'赤',gray:'灰',yellow:'黄',teal:'青緑',pink:'ピンク',cyan:'水色',brown:'茶'};
+const legacyCategory={blue:'点検',green:'調査',orange:'工事'};
+function categoryColor(name){return state.categories.find(c=>c.name===name)?.color||'blue';}
+function updateCategoryPreview(){const category=$('taskCategory').value,color=categoryColor(category);$('categorySwatch').style.background=colors[color];$('categoryPreviewText').textContent=colorLabels[color];}
+function populateCategories(selected){$('taskCategory').innerHTML=state.categories.map(c=>`<option value="${esc(c.name)}">${esc(c.name)}（${colorLabels[c.color]}）</option>`).join('');if(selected&&state.categories.some(c=>c.name===selected))$('taskCategory').value=selected;updateCategoryPreview();}
+$('taskCategory').addEventListener('change',updateCategoryPreview);
+let state={people:['担当者A','担当者B','担当者C'],tasks:[],categories:[{name:'点検',color:'blue'},{name:'調査',color:'green'},{name:'工事',color:'orange'}]};let view='month';let cursor=new Date();cursor.setHours(12,0,0,0);cursor.setDate(1);let editId=null;let busy=false;
+let memoState={month:'',items:[]},memoEditId=null,memoBusy=false;const demoMemos=new Map();const demoCellNotes=new Map();let cellNotes=[],cellNoteEdit=null,cellNoteBusy=false;
+const DEMO=false;
+const dateStr=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const bridgePending=new Map();let bridgeSequence=0;let bridgeReady=false;
+let bridgeWindow=null;let bridgeTimer=null;let bridgeSession='';
+const bridgeFrame=document.createElement('iframe');
+bridgeFrame.style.cssText='position:absolute;width:0;height:0;border:0;opacity:0;pointer-events:none';
+bridgeFrame.title='予定表データ通信';
+const DEFAULT_GAS_URL='https://script.google.com/macros/s/AKfycbxd2k97QvSzZLjjcUFn5NVduxkcOSXUgGjjt1Dctvcm-uPy7HadONshfN6ul7pS2aSk/exec';
+function bridgeUrl(){return localStorage.getItem('workScheduleGasUrl')||DEFAULT_GAS_URL;}
+function bridgeStatus(message){const el=document.getElementById('bridgeStatus');if(el)el.textContent=message;}
+function connectBridge(url){
+ const normalized=url.trim();
+ if(!/^https:\/\/script\.google\.com\/macros\/s\/[^/]+\/exec(?:\?.*)?$/.test(normalized))throw Error('GASのウェブアプリURL（/exec）を入力してください');
+ localStorage.setItem('workScheduleGasUrl',normalized);
+ bridgeReady=false;bridgeWindow=null;
+ bridgeSession=Array.from(crypto.getRandomValues(new Uint8Array(16)),v=>v.toString(16).padStart(2,'0')).join('');
+ for(const p of bridgePending.values())p.reject(Error('GAS接続が更新されました'));
+ bridgePending.clear();clearTimeout(bridgeTimer);
+ bridgeStatus('接続中…');
+ const sep=normalized.includes('?')?'&':'?';
+ bridgeFrame.src=normalized+sep+'bridge=1&session='+encodeURIComponent(bridgeSession);
+ bridgeTimer=setTimeout(()=>{if(!bridgeReady)bridgeStatus('接続失敗：通信ページから応答がありません');},12000);
+}
+window.addEventListener('message',event=>{
+ const msg=event.data;
+ if(!msg||msg.channel!=='work-schedule-bridge-v2'||msg.session!==bridgeSession)return;
+ // Apps Script HTML Service uses a sandboxed inner iframe on googleusercontent.com.
+ if(!/^https:\/\/([a-z0-9-]+\.)*googleusercontent\.com$/i.test(event.origin))return;
+ if(msg.type==='ready'){
+  bridgeWindow=event.source;bridgeReady=true;clearTimeout(bridgeTimer);
+  bridgeStatus('接続しました');load();return;
+ }
+ if(msg.type==='response'&&event.source===bridgeWindow){
+  const p=bridgePending.get(msg.id);if(!p)return;
+  bridgePending.delete(msg.id);msg.ok?p.resolve(msg.result):p.reject(Error(msg.error||'GAS通信エラー'));
+ }
+});
+function server(method,...args){
+ if(!bridgeReady||!bridgeWindow)return Promise.reject(Error('GASへの接続が完了していません。接続URLを確認してください'));
+ return new Promise((resolve,reject)=>{
+  const id=++bridgeSequence;bridgePending.set(id,{resolve,reject});
+  bridgeWindow.postMessage({channel:'work-schedule-bridge-v2',session:bridgeSession,type:'request',id,method,args},'*');
+ });
+}
+
+function demoCall(method,args){
+ if(method==='getNextSrNumber')return {sr:'',message:'SR取得はGAS公開版で利用できます'};
+ if(method==='getCellNotes')return structuredClone([...demoCellNotes.values()].filter(n=>n.date.slice(0,7)===args[0]));
+ if(method==='saveCellNote'){const n=args[0],id=n.id||'demo-note-'+Date.now();demoCellNotes.set(id,{...n,id});return {id};}
+ if(method==='deleteCellNote'){demoCellNotes.delete(args[0]);return true;}
+if(method==='getMonthMemos')return {month:args[0],items:structuredClone(demoMemos.get(args[0])||[])};if(method==='saveMonthMemo'){const m=args[0],v=args[1];if(memoState.month!==m){memoState={month:m,items:structuredClone(demoMemos.get(m)||[])}}const item={id:v.id||'demo-'+Date.now(),body:v.body,updated:new Date().toISOString()};const idx=memoState.items.findIndex(x=>x.id===item.id);if(idx<0)memoState.items.push(item);else memoState.items[idx]=item;demoMemos.set(m,structuredClone(memoState.items));return structuredClone(memoState);}if(method==='deleteMonthMemo'){memoState.items=(demoMemos.get(args[0])||[]).filter(x=>x.id!==args[1]);memoState.month=args[0];demoMemos.set(args[0],structuredClone(memoState.items));return structuredClone(memoState);}if(method==='getCalendarSyncConfig')return {configured:false,calendarId:''};if(method==='setCalendarSyncConfig')return {configured:true,calendarId:args[0]};if(method==='syncCalendarNow')throw Error('Google Apps Scriptで公開したアプリから実行してください');if(method==='getData')return structuredClone(state);if(method==='saveTask'){const input=args[0];const people=[...new Set(input.people||[])];for(let j=0;j<people.length;j++){const t={...input,people:[people[j]],id:j===0?(input.id||'demo-'+Date.now()):'demo-'+Date.now()+'-'+j};const i=state.tasks.findIndex(x=>x.id===t.id);if(i<0)state.tasks.push(t);else state.tasks[i]=t;}return structuredClone(state);}if(method==='deleteTask'){state.tasks=state.tasks.filter(x=>x.id!==args[0]);return structuredClone(state);}if(method==='saveCategories'){state.categories=args[0];state.tasks.forEach(t=>{t.color=categoryColor(t.category)});return structuredClone(state);}if(method==='previewPreviousYear'||method==='copyPreviousYear'){const [year,month,selectedPeople,selectedCategories]=args;const preview=method==='previewPreviousYear';const items=[];const prefix=String(year-1)+'-'+String(month).padStart(2,'0')+'-';let added=0;for(const t of [...state.tasks].filter(t=>selectedCategories.includes(t.category)&&t.people.some(p=>selectedPeople.includes(p))&&t.start.slice(0,7)<=prefix.slice(0,7)&&t.end.slice(0,7)>=prefix.slice(0,7))){const shift=d=>{const v=new Date(d+'T12:00:00');v.setFullYear(v.getFullYear()+1);return dateStr(v)};const clone={...t,id:'demo-copy-'+Date.now()+'-'+added,start:shift(t.start),end:shift(t.end),people:t.people.filter(p=>selectedPeople.includes(p)).slice(0,1),imported:true};const duplicate=state.tasks.some(x=>x.title===clone.title&&x.start===clone.start&&x.end===clone.end&&x.category===clone.category&&x.people.join('|')===clone.people.join('|'));items.push({...clone,duplicate});if(!duplicate){if(!preview)state.tasks.push(clone);added++}}return preview?{items,added,skipped:items.length-added}:{data:structuredClone(state),added,skipped:items.length-added};}if(method==='savePeople'){const removed=state.people.filter(p=>!args[0].includes(p));if(state.tasks.some(t=>t.people.some(p=>removed.includes(p))))throw Error('予定に使用中の担当者は削除できません');state.people=args[0];return structuredClone(state);}}
+function recordLastUpdate(){
+ const label='最終同期：'+new Date().toLocaleString('ja-JP',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});
+ for(const id of ['lastUpdateDesktop','lastUpdateMobile']){const el=$(id);if(el){el.textContent=label;el.title='この端末で最後に正常に取得・保存した日時（サーバーの最終編集日時ではありません）';}}
+}
+function status(s){$('status').textContent=s+(DEMO?' ｜ プレビュー版：変更は保存されません':'');}
+async function load(){
+ const key=monthKey();
+ try{
+  // Fetch the three independent datasets in parallel, not serially.
+  const [data,notes,memos]=await Promise.all([
+   server('getData'),server('getCellNotes',key),server('getMonthMemos',key)
+  ]);
+  state=data;
+  if(key===monthKey()){
+   cellNotes=notes;cellNotesMonth=key;
+   memoState=memos;renderMemos();
+  }
+  render();
+  recordLastUpdate();
+  status('同期完了：'+new Date().toLocaleTimeString('ja-JP'));
+ }catch(e){status('読み込みエラー：'+e.message);}
+}
+
+/* v2.2: Japanese national holidays, including substitute and citizens' holidays. */
+function nationalHolidays(year){
+ const map=new Map();
+ if(year<2000||year>2099)return map;
+ const put=(m,d,name)=>map.set(dateStr(new Date(year,m-1,d)),name);
+ const nth=(m,weekday,n)=>{const first=new Date(year,m-1,1).getDay();return 1+(weekday-first+7)%7+7*(n-1);};
+ const vernal=Math.floor(20.8431+0.242194*(year-1980)-Math.floor((year-1980)/4));
+ const autumn=Math.floor(23.2488+0.242194*(year-1980)-Math.floor((year-1980)/4));
+ put(1,1,'元日');put(1,nth(1,1,2),'成人の日');put(2,11,'建国記念の日');
+ if(year>=2020)put(2,23,'天皇誕生日');
+ put(3,vernal,'春分の日');put(4,29,'昭和の日');put(5,3,'憲法記念日');put(5,4,'みどりの日');put(5,5,'こどもの日');
+ if(year===2020)put(7,23,'海の日');else if(year===2021)put(7,22,'海の日');else put(7,nth(7,1,3),'海の日');
+ if(year>=2016){if(year===2020)put(8,10,'山の日');else if(year===2021)put(8,8,'山の日');else put(8,11,'山の日');}
+ put(9,nth(9,1,3),'敬老の日');put(9,autumn,'秋分の日');
+ if(year===2020)put(7,24,'スポーツの日');else if(year===2021)put(7,23,'スポーツの日');else put(10,nth(10,1,2),'スポーツの日');
+ put(11,3,'文化の日');put(11,23,'勤労感謝の日');
+ if(year<=2018){map.delete(dateStr(new Date(year,2-1,23)));put(12,23,'天皇誕生日');}
+ if(year===2019){put(5,1,'天皇の即位の日');put(10,22,'即位礼正殿の儀');}
+ // Citizen's holiday: an ordinary weekday sandwiched between two national holidays.
+ for(let d=new Date(year,0,2);d.getFullYear()===year;d.setDate(d.getDate()+1)){
+  const k=dateStr(d);if(map.has(k)||d.getDay()===0)continue;
+  const a=new Date(d);a.setDate(a.getDate()-1);const b=new Date(d);b.setDate(b.getDate()+1);
+  if(map.has(dateStr(a))&&map.has(dateStr(b)))map.set(k,'国民の休日');
+ }
+ // Substitute holiday: next non-holiday day following a national holiday on Sunday.
+ const originals=[...map.keys()].sort();
+ for(const key of originals){const d=new Date(key+'T12:00:00');if(d.getDay()!==0)continue;
+  d.setDate(d.getDate()+1);while(map.has(dateStr(d)))d.setDate(d.getDate()+1);
+  if(d.getFullYear()===year)map.set(dateStr(d),'振替休日');
+ }
+ return map;
+}
+
+let highlightedPerson=null;
+function makeTable(dates,monthMode){
+ const notesByCell=new Map();
+ for(const n of cellNotes){const key=n.date+"\\u001f"+n.person;if(!notesByCell.has(key))notesByCell.set(key,[]);notesByCell.get(key).push(n);}
+
+ const today=dateStr(new Date());
+ const holidays=new Map([...new Set(dates.map(d=>d.getFullYear()))].flatMap(y=>[...nationalHolidays(y)]));
+ const visible=dates.map(d=>!monthMode||d.getMonth()===cursor.getMonth());
+ let h='<table class="board '+(monthMode?'monthly':'')+'"><thead><tr><th class="person">担当者</th>';
+ for(let i=0;i<dates.length;i++){
+  const d=dates[i],ok=visible[i],holiday=holidays.get(dateStr(d));
+  h+=`<th title="${ok?'クリックしてこの日に予定を追加':''}" ${ok?`data-create-date="${dateStr(d)}"`:''} class="${holiday?'holiday ':''}${d.getDay()===0?'sunday':d.getDay()===6?'saturday':''} ${ok?'create-date-header':'outside'}"><span class="day-number">${ok?(monthMode?d.getDate():`${d.getMonth()+1}/${d.getDate()}`):''}</span><span class="weekday">${ok?'日月火水木金土'[d.getDay()]:''}</span>${ok&&holiday?`<span class="holiday-name">${esc(holiday)}</span>`:''}</th>`;
+ }
+ h+='</tr></thead><tbody>';
+ for(const person of state.people){
+  // Assign each multi-day task to a stable lane for the entire week.
+  // Longer tasks take priority, with earlier starts as the tie breaker.
+  const active=state.tasks.filter(t=>t.people.includes(person)&&t.start<=dateStr(dates[6])&&t.end>=dateStr(dates[0])&&dates.some((d,i)=>visible[i]&&t.start<=dateStr(d)&&t.end>=dateStr(d)));
+  active.sort((a,b)=>{
+   const ad=Math.round((Date.parse(a.end+'T12:00:00')-Date.parse(a.start+'T12:00:00'))/86400000);
+   const bd=Math.round((Date.parse(b.end+'T12:00:00')-Date.parse(b.start+'T12:00:00'))/86400000);
+   return (bd-ad)||a.start.localeCompare(b.start)||String(a.id).localeCompare(String(b.id));
+  });
+  const lanes=[];
+  const placements=new Map();
+  for(const t of active){
+   const occupancy=dates.map((d,i)=>visible[i]&&t.start<=dateStr(d)&&t.end>=dateStr(d));
+   let lane=0;
+   while(lanes[lane]&&occupancy.some((v,i)=>v&&lanes[lane][i]))lane++;
+   if(!lanes[lane])lanes[lane]=Array(7).fill(false);
+   occupancy.forEach((v,i)=>{if(v)lanes[lane][i]=true;});
+   placements.set(t.id,lane);
+  }
+  h+=`<tr class="${highlightedPerson===person?'person-highlighted':''}"><th class="person"><button type="button" class="person-highlight-toggle" data-highlight-person="${esc(person)}" aria-pressed="${highlightedPerson===person}" title="この担当者の週を強調表示">${esc(person)}</button></th>`;
+  for(let i=0;i<7;i++){
+   const d=dates[i],ds=dateStr(d),holiday=holidays.get(ds);
+   if(!visible[i]){h+='<td class="outside"></td>';continue;}
+   h+=`<td data-drop-date="${ds}" data-drop-person="${esc(person)}" class="${(holiday?'holiday ':'')+(d.getDay()===0?'sunday':d.getDay()===6?'saturday':'')+(ds===today?' today':'')}"><div class="task-lanes">`;
+   for(let lane=0;lane<lanes.length;lane++){
+    const t=active.find(t=>placements.get(t.id)===lane&&t.start<=ds&&t.end>=ds);
+    if(!t){h+='<div class="task-slot"></div>';continue;}
+    const prev=i>0&&visible[i-1]&&t.start<=dateStr(dates[i-1])&&t.end>=dateStr(dates[i-1]);
+    const next=i<6&&visible[i+1]&&t.start<=dateStr(dates[i+1])&&t.end>=dateStr(dates[i+1]);
+    if(prev){h+='<div class="task-slot"></div>';continue;}
+    let span=1;
+    while(i+span<7&&visible[i+span]&&t.start<=dateStr(dates[i+span])&&t.end>=dateStr(dates[i+span]))span++;
+    const endsHere=true; // Every weekly segment needs an end handle, even if the task continues next week.
+    h+=`<button draggable="false" style="--span:${span}" class="task task-span task-continuous ${esc(t.color||'blue')} ${t.imported?'imported-task':''} ${t.confirmed?'task-confirmed':''}" data-edit="${esc(t.id)}" data-task-date="${ds}" title="${esc(t.title)}${t.note?' / '+esc(t.note):''}"><span class="resize-handle resize-start" draggable="false" data-resize="start" title="開始日を変更">◂</span><span class="task-label">${t.imported?'<span class="task-status-previous">前年｜</span>':''}${t.confirmed?'<span class="task-status-confirmed" title="確定">✓ 確定</span>':''}${t.orderCompleted?'<span class="task-status-order done" title="注文済み">☑</span>':t.ordered?'<span class="task-status-order pending" title="注文依頼">!</span>':''}<span class="task-name-text">${esc(t.title)}</span></span>${endsHere?`<span class="resize-handle resize-end" draggable="false" data-resize="end" title="終了日を変更">▸</span>`:''}</button>`;
+   }
+   const notes=notesByCell.get(ds+"\\u001f"+person)||[];
+   h+=`</div><div class="cell-add-task"><button class="add-cell" data-date="${ds}" data-person="${esc(person)}" title="スケジュールを追加">＋ 予定</button></div><div class="cell-notes">${notes.map(n=>`<button class="cell-note" data-cell-note-id="${esc(n.id)}" title="メモを編集">${esc(n.body)}</button>`).join('')}</div><div class="cell-add-note"><button class="add-note-cell" data-note-date="${ds}" data-note-person="${esc(person)}" title="自由メモを追加">＋ メモ</button></div></td>`;
+  }
+  h+='</tr>';
+ }
+ return h+'</tbody></table>';
+}
+function renderLegend(){
+ $('categoryLegend').innerHTML=state.categories.map(c=>`<span class="legend-item"><i style="background:${colors[c.color]||colors.blue}"></i>${esc(c.name)}</span>`).join('')+'<span class="legend-item imported-key"><i></i>前年から複製</span>';
+}
+function render(){
+ renderLegend();
+ const month=view==='month';
+ const start=new Date(cursor);
+ if(month)start.setDate(1);
+ start.setDate(start.getDate()-start.getDay());
+ const end=new Date(cursor);
+ if(month)end.setMonth(end.getMonth()+1,0);
+ else end.setDate(start.getDate()+6);
+ $('monthLabel').textContent=month?`${cursor.getFullYear()}年${cursor.getMonth()+1}月`:`${start.getFullYear()}年${start.getMonth()+1}月${start.getDate()}日 ～ ${end.getMonth()+1}月${end.getDate()}日`;
+ $('prev').textContent=month?'‹ 前月':'‹ 前週';$('next').textContent=month?'翌月 ›':'翌週 ›';$('thisMonth').textContent=month?'今月':'今週';
+ $('monthView').setAttribute('aria-pressed',String(month));$('weekView').setAttribute('aria-pressed',String(!month));
+ $('printBtn').textContent='月間PDF（1枚）';
+ const weeks=month?Math.ceil((end-start)/(7*86400000))+1:1;
+ let html='';
+ for(let w=0;w<weeks;w++){
+  const dates=Array.from({length:7},(_,i)=>{const d=new Date(start);d.setDate(start.getDate()+w*7+i);return d;});
+  if(month&&dates[0]>end)break;
+  html+=`<section class="week-section">${makeTable(dates,month)}</section>`;
+ }
+ $('boardArea').innerHTML=html;
+ renderIndividualMemos();
+ if(memoState.month!==monthKey())loadMemos();if(cellNotesMonth!==monthKey())loadCellNotes().then(()=>render());
+}
+
+function switchView(next){
+ next='month';
+ if(next===view)return;
+ if(next==='week'){const now=new Date();if(cursor.getFullYear()===now.getFullYear()&&cursor.getMonth()===now.getMonth())cursor=now;}
+ else cursor.setDate(1);
+ view=next;render();
+}
+
+
+let taskPdfAttachments=[];
+let taskPdfUploading=false;
+const SR_PREFIX='20411212-';
+function normalizeSr(v){const s=String(v||'').trim();return s?SR_PREFIX+s.replace(/^(?:20411212-)+/,''):'';}
+$('taskSr').addEventListener('blur',()=>{$('taskSr').value=normalizeSr($('taskSr').value);});
+function taskExtraFields(){return {site:$('taskSite').value.trim(),sr:normalizeSr($('taskSr').value),ordered:$('taskOrdered').checked,orderCompleted:$('taskOrderCompleted').checked,estimate:$('taskEstimate').checked,paid:$('taskPaid').checked,confirmed:$('taskConfirmed').checked,pdfs:structuredClone(taskPdfAttachments)};}
+function renderTaskPdfLinks(){
+ $('taskPdfLinks').innerHTML=taskPdfAttachments.map((a,i)=>`<div><a target="_blank" rel="noopener noreferrer" href="${esc(a.url)}">📄 ${esc(a.name||'PDF')}</a><button type="button" data-remove-pdf="${i}">添付を外す</button></div>`).join('');
+}
+$('taskPdfLinks').addEventListener('click',e=>{const b=e.target.closest('[data-remove-pdf]');if(!b)return;taskPdfAttachments.splice(Number(b.dataset.removePdf),1);renderTaskPdfLinks();});
+async function attachTaskPdf(file){
+ if(!file)return;
+ if(!/\.pdf$/i.test(file.name)&&file.type!=='application/pdf'){alert('PDFファイルを選択してください');return;}
+ if(file.size>8*1024*1024){alert('PDFは8MB以下にしてください');return;}
+ if(DEMO){alert('PDF添付はGASで公開した画面から利用してください');return;}
+ if(taskPdfUploading)return;
+ taskPdfUploading=true;$('saveBtn').disabled=true;$('taskPdfStatus').textContent='PDFをアップロード中…';
+ try{
+  const b64=await new Promise((resolve,reject)=>{const r=new FileReader();r.onerror=()=>reject(Error('読み込みに失敗しました'));r.onload=()=>resolve(String(r.result).split(',')[1]);r.readAsDataURL(file);});
+  const uploaded=await server('uploadTaskPdf',{name:file.name,data:b64,mimeType:'application/pdf'});
+  taskPdfAttachments.push(uploaded);renderTaskPdfLinks();$('taskPdfStatus').textContent='アップロード完了。予定を保存してください。';
+ }catch(err){$('taskPdfStatus').textContent='PDF添付に失敗しました：'+err.message;alert('PDF添付に失敗しました：'+err.message);}
+ finally{taskPdfUploading=false;$('saveBtn').disabled=busy;$('taskPdfFile').value='';}
+}
+$('taskPdfFile').addEventListener('change',e=>attachTaskPdf(e.target.files?.[0]));
+$('taskNote').addEventListener('paste',e=>{const f=[...(e.clipboardData?.files||[])].find(f=>f.type==='application/pdf'||/\.pdf$/i.test(f.name));if(f){e.preventDefault();attachTaskPdf(f);}});
+
+let taskBaseline='';
+function taskFormSnapshot(){
+ return JSON.stringify({title:$('taskTitle').value.trim(),start:$('taskStart').value,end:$('taskEnd').value,
+ people:[...$('peopleChoices').querySelectorAll('input:checked')].map(x=>x.value).sort(),
+ category:$('taskCategory').value,note:$('taskNote').value,status:$('taskStatus').value,site:$('taskSite').value,sr:normalizeSr($('taskSr').value),ordered:$('taskOrdered').checked,orderCompleted:$('taskOrderCompleted').checked,estimate:$('taskEstimate').checked,paid:$('taskPaid').checked,confirmed:$('taskConfirmed').checked,pdfs:taskPdfAttachments});
+}
+let outsideAutoSavePending=false;
+async function closeTaskByBackdrop(){
+ const dialog=$('taskDialog');
+ if(!dialog.open||outsideAutoSavePending||busy||taskPdfUploading)return;
+ if(taskFormSnapshot()===taskBaseline){dialog.close();return;}
+ const form=$('taskForm');
+ if(taskPdfUploading){alert('PDFのアップロード完了後に保存してください');return;}if(!form.reportValidity())return; // Never silently save an incomplete schedule.
+ const people=[...$('peopleChoices').querySelectorAll('input:checked')].map(x=>x.value);
+ if(!people.length){alert('担当者を1人以上選んでください');return;}
+ if($('taskEnd').value<$('taskStart').value){alert('終了日は開始日以降にしてください');return;}
+ const task={id:editId,title:$('taskTitle').value.trim(),start:$('taskStart').value,end:$('taskEnd').value,people,
+ note:$('taskNote').value,workStatus:$('taskStatus').value,category:$('taskCategory').value,color:categoryColor($('taskCategory').value),...taskExtraFields()};
+ outsideAutoSavePending=true;busy=true;$('saveBtn').disabled=true;
+ try{const saving=saveTaskCompact(task);dialog.close();await saving;}
+ catch(err){alert('自動保存に失敗しました：'+err.message);}
+ finally{outsideAutoSavePending=false;busy=false;$('saveBtn').disabled=false;}
+}
+$('taskDialog').addEventListener('click',e=>{
+ if(e.target!==$('taskDialog'))return;
+ const r=$('taskDialog').getBoundingClientRect();
+ if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)closeTaskByBackdrop();
+});
+function openTask(id=null,date=null,person=null){editId=id;const t=id?state.tasks.find(t=>t.id===id):null;if(id&&!t)return;const ds=date||dateStr(new Date());$('taskNewFromEdit').hidden=!t;$('taskNewFromEdit').dataset.date=date||t?.start||ds;$('taskNewFromEdit').dataset.person=person||t?.people?.[0]||'';$('dialogTitle').textContent=t?'担当者別の予定を編集':'予定の追加';$('taskTitle').value=t?.title||'';$('taskStart').value=t?.start||ds;$('taskEnd').value=t?.end||ds;$('taskNote').value=t?.note||'';$('taskSite').value=t?.site||'';$('taskSr').value=normalizeSr(t?.sr||'');$('srLookupStatus').textContent='';$('taskOrdered').checked=!!t?.ordered;$('taskOrderCompleted').checked=!!t?.orderCompleted;$('taskEstimate').checked=!!t?.estimate;$('taskPaid').checked=!!t?.paid;$('taskConfirmed').checked=!!t?.confirmed;taskPdfAttachments=Array.isArray(t?.pdfs)?structuredClone(t.pdfs):[];renderTaskPdfLinks();$('taskPdfStatus').textContent='PDFはGoogleドライブへ保存されます（最大8MB）。';$('taskStatus').value=t?.workStatus||'planned';$('peopleChoices').innerHTML=state.people.map(p=>`<label><input type="checkbox" value="${esc(p)}" ${((t?.people||[person]).includes(p))?'checked':''}> ${esc(p)}</label>`).join('');populateCategories(t?.category||legacyCategory[t?.color]);$('deleteBtn').hidden=!t;srRequestSeq++;$('srLookupStatus').textContent='SR番号は「次のSR取得」を押すと取得します';$('taskDialog').showModal();taskBaseline=taskFormSnapshot();$('taskTitle').focus();}
+let srRequestSeq=0;
+async function requestNextSr(){
+ const seq=++srRequestSeq,when=$('taskStart').value,id=editId;
+ if(!when)return;
+ $('srLookupStatus').textContent='SR番号を確認中…';
+ try{
+  const result=await server('getNextSrNumber',when,id);
+  if(seq!==srRequestSeq||!$('taskDialog').open||$('taskStart').value!==when||editId!==id)return;
+  if(result?.sr){$('taskSr').value=normalizeSr(result.sr);}
+  $('srLookupStatus').textContent=result?.message||'取得できませんでした';
+ }catch(err){if(seq===srRequestSeq)$('srLookupStatus').textContent='取得失敗：'+err.message;}
+}
+$('getNextSr').addEventListener('click',requestNextSr);
+$('taskStart').addEventListener('change',()=>{srRequestSeq++;$('srLookupStatus').textContent='SR番号は「次のSR取得」を押すと取得します';});
+$('taskSr').addEventListener('input',()=>{srRequestSeq++;$('srLookupStatus').textContent='手入力したSR番号を使用します';});
+// v3.43: show saved changes immediately, then persist to Sheets.
+// Keep busy=true until the server acknowledges; on failure restore the prior state.
+async function saveTaskCompact(task){
+ const before=state.tasks.slice();
+ const tempId=task.id||'pending-'+Date.now()+'-'+Math.random().toString(36).slice(2);
+ const preview={...task,id:tempId,people:[task.people[0]],imported:false};
+ if(task.id){
+  const idx=state.tasks.findIndex(t=>t.id===task.id);
+  if(idx>=0)state.tasks[idx]=preview;
+ }else state.tasks.push(preview);
+ render();
+ status('保存中…（画面には仮反映済み）');
+ try{
+  const result=await server('saveTask',task,true);
+  if(result&&Array.isArray(result.saved)){
+   const ids=new Set(result.saved.map(t=>t.id));
+   state.tasks=state.tasks.filter(t=>t.id!==tempId&&!ids.has(t.id)).concat(result.saved);
+  }else if(result?.tasks)state=result;
+  else throw Error('保存結果を確認できませんでした');
+  render();recordLastUpdate();
+  status('保存しました：'+new Date().toLocaleTimeString('ja-JP'));
+ }catch(err){
+  state.tasks=before;render();
+  status('保存に失敗しました。変更を元に戻しました');
+  throw err;
+ }
+}
+async function perform(method,...args){if(busy)return false;busy=true;$('saveBtn').disabled=true;try{const result=await server(method,...args);state=result;render();recordLastUpdate();status('更新しました：'+new Date().toLocaleTimeString('ja-JP'));return true;}catch(e){alert('操作できませんでした：'+e.message);return false;}finally{busy=false;$('saveBtn').disabled=false;}}
+$('taskForm').addEventListener('submit',async e=>{e.preventDefault();const people=[...$('peopleChoices').querySelectorAll('input:checked')].map(x=>x.value);if(!people.length){alert('担当者を1人以上選んでください');return;}const task={id:editId,title:$('taskTitle').value.trim(),start:$('taskStart').value,end:$('taskEnd').value,people,note:$('taskNote').value,workStatus:$('taskStatus').value,category:$('taskCategory').value,color:categoryColor($('taskCategory').value),...taskExtraFields()};if(task.end<task.start){alert('終了日は開始日以降にしてください');return;}if(taskPdfUploading){alert('PDFのアップロード完了後に保存してください');return;}if(busy)return;
+ busy=true;$('saveBtn').disabled=true;
+ // Close immediately after server confirms saving, without fetching the entire workbook.
+ try{const saving=saveTaskCompact(task);$('taskDialog').close();await saving;}
+ catch(err){alert('予定を保存できませんでした。画面の変更は元に戻しました：'+err.message);}
+ finally{busy=false;$('saveBtn').disabled=false;}});
+$('taskNewFromEdit').onclick=()=>{const btn=$('taskNewFromEdit');const date=btn.dataset.date,person=btn.dataset.person;$('taskDialog').close();openTask(null,date,person);};
+// v3.44: delete is optimistic, matching the immediate feedback of saving.
+// The server is authoritative; restore the original task if the request fails.
+$('deleteBtn').onclick=async()=>{
+ const id=editId;
+ if(!id||busy||!confirm('この担当者の予定を削除しますか？'))return;
+ const previous=state.tasks.slice();
+ if(!previous.some(t=>t.id===id))return;
+ busy=true;
+ $('saveBtn').disabled=true;
+ $('deleteBtn').disabled=true;
+ state.tasks=state.tasks.filter(t=>t.id!==id);
+ $('taskDialog').close();
+ render();
+ status('削除中…（画面には仮反映済み）');
+ try{
+  const result=await server('deleteTask',id);
+  if(!result||!Array.isArray(result.tasks))throw Error('削除結果を確認できませんでした');
+  state=result;
+  render();recordLastUpdate();
+  status('削除しました：'+new Date().toLocaleTimeString('ja-JP'));
+ }catch(err){
+  state.tasks=previous;
+  render();
+  status('削除に失敗しました。予定を元に戻しました');
+  alert('予定を削除できませんでした。画面の変更は元に戻しました：'+err.message);
+ }finally{
+  busy=false;
+  $('saveBtn').disabled=false;
+  $('deleteBtn').disabled=false;
+ }
+};
+let dragInfo=null;let dragDoneAt=0;
+function plusDays(ds,n){const d=new Date(ds+'T12:00:00');d.setDate(d.getDate()+n);return dateStr(d);}
+function daysBetween(a,b){return Math.round((new Date(b+'T12:00:00')-new Date(a+'T12:00:00'))/86400000);}
+// v3.5: reflect drag changes immediately, save asynchronously, rollback on failure.
+let dragSavePending=false;
+async function commitDraggedTask(task){
+ if(dragSavePending)return false;
+ const index=state.tasks.findIndex(t=>t.id===task.id);
+ if(index<0)return false;
+ dragSavePending=true;
+ const previous=state.tasks[index];
+ state.tasks[index]={...previous,...task};
+ render();
+ try{
+  const result=await server('saveTask',task,true);
+  if(result?.saved?.length){
+   const saved=result.saved[0];
+   const idx=state.tasks.findIndex(t=>t.id===task.id);
+   if(idx>=0)state.tasks[idx]=saved;
+  }else if(result?.tasks)state=result;
+  else throw Error('保存結果が不正です');
+  render();
+  recordLastUpdate();
+  status('保存しました：'+new Date().toLocaleTimeString('ja-JP'));
+  return true;
+ }catch(err){
+  const i=state.tasks.findIndex(t=>t.id===task.id);
+  if(i>=0)state.tasks[i]=previous;
+  render();
+  alert('変更を保存できなかったため元に戻しました：'+err.message);
+  return false;
+ }finally{dragSavePending=false;}
+}
+// v3.28: coordinate-based pointer dragging avoids the browser's unreliable native drag hit-testing.
+// v3.41: desktop direct drag and double-click editing; mobile tap remains unchanged.
+// End grips retain immediate horizontal resizing.
+let pointerDrag=null;
+const TASK_DOUBLE_CLICK_MS=350;
+let lastTaskTap=null;
+function boardCellAt(x,y){
+ for(const td of $('boardArea').querySelectorAll('td[data-drop-date]')){
+  const r=td.getBoundingClientRect();
+  if(x>=r.left&&x<r.right&&y>=r.top&&y<r.bottom)return td;
+ }
+ return null;
+}
+function resizeCellAtX(row,x){
+ if(!row)return null;
+ const cells=[...row.querySelectorAll('td[data-drop-date]')];
+ if(!cells.length)return null;
+ for(const cell of cells){const r=cell.getBoundingClientRect();if(x>=r.left&&x<r.right)return cell;}
+ return x<cells[0].getBoundingClientRect().left?cells[0]:cells[cells.length-1];
+}
+function clearPointerDrag(){
+ document.body.classList.remove("task-resize-active");
+
+ $('boardArea').querySelectorAll('.drop-preview').forEach(td=>td.classList.remove('drop-preview'));
+ $('boardArea').querySelectorAll('.dragging').forEach(el=>el.classList.remove('dragging'));
+ pointerDrag=null;
+}
+$('boardArea').addEventListener('pointerdown',e=>{
+ if(e.button!==0||busy||dragSavePending)return;
+ let btn=e.target.closest('.task-continuous[data-edit]');
+ let virtualEdge=null;
+ if(!btn){
+  let nearest=Infinity;
+  for(const candidate of $('boardArea').querySelectorAll('.task-continuous[data-edit]')){
+   const r=candidate.getBoundingClientRect();
+   if(e.clientY<r.top-5||e.clientY>r.bottom+5)continue;
+   const reach=Math.min(28,Math.max(12,r.height*.8));
+   for(const side of ['start','end']){
+    if(candidate.classList.contains('task-day-segment')&&!candidate.classList.contains(side==='start'?'segment-start':'segment-end'))continue;
+    const distance=Math.abs(e.clientX-(side==='start'?r.left:r.right));
+    if(distance<=reach&&distance<nearest){nearest=distance;btn=candidate;virtualEdge=side;}
+   }
+  }
+ }
+ if(!btn)return;
+ const task=state.tasks.find(t=>t.id===btn.dataset.edit);if(!task)return;
+ const handle=e.target.closest('[data-resize]');
+ const r=btn.getBoundingClientRect();
+ const edge=Math.min(36,Math.max(18,r.height*1.5),r.width*.22);
+ const mode=virtualEdge||handle?.dataset.resize||((btn.classList.contains('task-day-segment')&&!btn.classList.contains('segment-start')&&!btn.classList.contains('segment-end'))?'move':(btn.classList.contains('segment-start')&&e.clientX-r.left<=edge?'start':btn.classList.contains('segment-end')&&r.right-e.clientX<=edge?'end':'move'));
+ // Open immediately on the second press. Do not wait for its pointerup.
+ if(mode==='move'&&e.pointerType!=='touch'&&lastTaskTap&&
+    lastTaskTap.id===task.id&&Date.now()-lastTaskTap.time<=TASK_DOUBLE_CLICK_MS){
+  lastTaskTap=null;
+  dragDoneAt=Date.now();
+  e.preventDefault();
+  openTask(task.id);
+  return;
+ }
+ const d={id:task.id,mode,origin:boardCellAt(e.clientX,e.clientY)?.dataset.dropDate||btn.dataset.taskDate,
+  sourcePerson:task.people[0],x:e.clientX,y:e.clientY,moved:false,target:null,pointerId:e.pointerId,
+  resizeRow:mode==='move'?null:btn.closest('tr'),pointerType:e.pointerType||'mouse'};
+ pointerDrag=d;
+ if(mode!=="move")document.body.classList.add("task-resize-active");
+ try{$('boardArea').setPointerCapture(e.pointerId);}catch(_){}
+ e.preventDefault();
+},true);
+window.addEventListener('pointermove',e=>{
+ const d=pointerDrag;if(!d||e.pointerId!==d.pointerId)return;
+ const dx=e.clientX-d.x,dy=e.clientY-d.y;
+ // Desktop: start moving as soon as the pointer travels 5px.
+ // Touch: preserve tap-to-edit; do not enable accidental schedule dragging.
+ if(d.mode==='move'&&d.pointerType==='touch')return;
+ if(!d.moved&&Math.hypot(dx,dy)<3)return;
+ d.moved=true;
+ const td=d.mode==='move'?boardCellAt(e.clientX,e.clientY):resizeCellAtX(d.resizeRow,e.clientX);
+ if(d.target!==td){d.target?.classList.remove('drop-preview');d.target=td;td?.classList.add('drop-preview');}
+ e.preventDefault();
+});
+window.addEventListener('pointerup',async e=>{
+ const d=pointerDrag;if(!d||e.pointerId!==d.pointerId)return;
+ const td=d.mode==='move'?(boardCellAt(e.clientX,e.clientY)||d.target):resizeCellAtX(d.resizeRow,e.clientX);
+ const moved=d.moved;
+ clearPointerDrag();
+ dragDoneAt=Date.now();
+ if(!moved){
+  if(d.mode!=='move')return;
+  if(d.pointerType==='touch'){
+   // Existing smartphone behavior: a single tap opens the editor.
+   lastTaskTap=null;openTask(d.id);return;
+  }
+  const now=Date.now();
+  if(lastTaskTap&&lastTaskTap.id===d.id&&now-lastTaskTap.time<=TASK_DOUBLE_CLICK_MS){
+   lastTaskTap=null;
+   openTask(d.id);
+  }else{
+   lastTaskTap={id:d.id,time:now};
+  }
+  return;
+ }
+ lastTaskTap=null;
+ if(!td)return;
+ const old=state.tasks.find(t=>t.id===d.id);if(!old)return;
+ const target=td.dataset.dropDate,task={...old};
+ if(d.mode==='move'){
+  const delta=daysBetween(d.origin,target);
+  task.start=plusDays(old.start,delta);task.end=plusDays(old.end,delta);
+  task.people=[td.dataset.dropPerson];
+ }else if(d.mode==='start')task.start=target;
+ else if(d.mode==='end')task.end=target;
+ if(task.end<task.start){alert('終了日より後に開始日を移動できません');return;}
+ if(task.start===old.start&&task.end===old.end&&task.people[0]===old.people[0])return;
+ await commitDraggedTask(task);
+});
+window.addEventListener('pointercancel',e=>{if(pointerDrag?.pointerId===e.pointerId)clearPointerDrag();});
+$('boardArea').addEventListener('lostpointercapture',()=>{});
+// Suppress native HTML drag-and-drop; pointer handling supports precise cross-row drops.
+$('boardArea').addEventListener('dragstart',e=>{if(e.target.closest('.task-continuous'))e.preventDefault();});
+// v3.35: Date headers create tasks; empty staff cells do not.
+$('boardArea').onclick=e=>{
+ const personButton=e.target.closest('[data-highlight-person]');
+ if(personButton){highlightedPerson=highlightedPerson===personButton.dataset.highlightPerson?null:personButton.dataset.highlightPerson;render();return;}
+ if(Date.now()-dragDoneAt<650||e.target.closest('[data-resize]'))return;
+ const edit=e.target.closest('[data-edit]');
+ if(edit)return; // Task editing is handled by pointerup (double-click on desktop).
+ const dateHead=e.target.closest('th[data-create-date]');
+ if(dateHead){openTask(null,dateHead.dataset.createDate);return;}
+ const add=e.target.closest('.add-cell[data-date]');
+ if(add){openTask(null,add.dataset.date,add.dataset.person);return;}
+};
+
+function printSchedule(){
+ // Print the existing month board rather than rebuilding a different schedule.
+ const source=$('boardArea');
+ const board=source.cloneNode(true);
+ const originalTasks=source.querySelectorAll('.task');
+ const printedTasks=board.querySelectorAll('.task');
+ printedTasks.forEach((task,i)=>{
+  const sourceTask=originalTasks[i];
+  const imported=task.classList.contains('imported-task');
+  const colorName=[...task.classList].find(c=>Object.prototype.hasOwnProperty.call(colors,c));
+  // Print uses a light, low-saturation palette so small labels remain readable.
+  // Category names/colors are unchanged; only the paper presentation differs.
+  const printPalette={
+   blue:['#dbeafe','#93b4e6'],green:['#dcfce7','#86cfa3'],
+   orange:['#ffedd5','#e5b77f'],purple:['#f3e8ff','#c6a4e8'],
+   red:['#fee2e2','#e6a1a1'],gray:['#e2e8f0','#a8b4c2'],
+   yellow:['#fef9c3','#dfcd78'],teal:['#ccfbf1','#80c8bb'],
+   pink:['#fce7f3','#e8aac9'],cyan:['#cffafe','#86ceda'],
+   brown:['#f3e8db','#cbb09b']
+  };
+  const [bg,edge]=imported?['#111827','#111827']:(printPalette[colorName]||printPalette.blue);
+  task.style.setProperty('background-color',bg,'important');
+  task.style.setProperty('border-color',edge,'important');
+  task.style.setProperty('color',imported?'#fff':'#0b1627','important');
+  task.style.setProperty('box-shadow','none','important');
+  task.removeAttribute('draggable');
+  task.removeAttribute('data-edit');
+  task.querySelectorAll('.resize-handle').forEach(el=>el.remove());
+  // Keep status and title visible; do not render interactive controls on paper.
+  if(sourceTask)task.title=sourceTask.title;
+ });
+ board.querySelectorAll('.cell-add-task,.cell-add-note,.add-cell,.add-note-cell,.resize-handle').forEach(el=>el.remove());
+ board.querySelectorAll('.person-highlight-toggle').forEach(el=>{
+  const span=document.createElement('span');span.className='print-person';span.textContent=el.textContent;el.replaceWith(span);
+ });
+ board.querySelectorAll('.cell-note').forEach(el=>{
+  const span=document.createElement('span');span.className='print-note';span.textContent=el.textContent;el.replaceWith(span);
+ });
+ // Explicitly preserve the displayed category colors in the new print document.
+ const printable=`<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8"><title>${esc($('monthLabel').textContent)} 共有作業予定表</title><style>
+ @page{size:A3 landscape;margin:5mm}
+ *{box-sizing:border-box;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+ html,body{padding:0;margin:0;background:#fff;color:#142238;font-family:'Yu Gothic',Meiryo,Arial,sans-serif}
+ #paper{position:relative;width:410mm;display:flow-root;overflow:visible;transform:none!important}
+ h1{font-size:17px;line-height:1.35;text-align:center;margin:0 0 5px;font-weight:700}
+ .week-section{display:block;width:100%;margin:0 0 3px;padding:0;overflow:visible;break-inside:avoid;page-break-inside:avoid}
+ .week-title{display:none!important}
+ table.board{width:100%!important;min-width:0!important;border-collapse:collapse;table-layout:fixed;margin:0!important}
+ .board th,.board td{border:1px solid #91a0b2!important;padding:1px 2px!important;vertical-align:top;position:relative;overflow:visible;font-size:10px}
+ .board th.person{width:8.5%!important;min-width:0!important;white-space:nowrap;text-align:left;background:#e5edf5;color:#142238;font-weight:600}
+ .board thead th{height:18px!important;line-height:15px;text-align:center;background:#e5edf5;font-weight:700}
+ .board thead th.person{text-align:left}
+ .board td{width:13.07%!important;height:auto!important;background:#fff}
+ .board td.sunday,.board th.sunday{background:#fff0f2!important}
+ .board td.saturday,.board th.saturday{background:#edf5ff!important}
+ .board td.holiday,.board th.holiday{background:#ffe7e9!important}
+ .board td.outside,.board th.outside{background:#f0f1f3!important}
+ .day-number,.weekday{display:inline!important;font-size:10px!important;line-height:14px!important;margin:0 2px!important}
+ .holiday-name{display:inline!important;font-size:8px!important;color:#b91c1c;margin-left:3px}
+ .board tbody tr{height:auto!important;min-height:0!important}
+ .board .task-lanes{position:relative!important;display:flex!important;flex-direction:column!important;gap:1px!important;min-height:15px!important;padding:0!important;margin:0!important;overflow:visible!important}
+ .board .task-slot{height:15px!important;min-height:15px!important;flex:none!important;margin:0!important;padding:0!important}
+ .board .task,.board .task-continuous{display:flex!important;align-items:center!important;position:relative!important;width:calc(var(--span,1) * 100% + (var(--span,1) - 1) * 1px)!important;max-width:none!important;height:15px!important;min-height:15px!important;line-height:13px!important;margin:0!important;padding:0 3px!important;border:1px solid transparent!important;border-radius:2px!important;box-shadow:none!important;white-space:nowrap!important;text-align:left!important;overflow:hidden!important;font-size:9px!important;font-family:inherit!important;z-index:3!important}
+ .board .task-label{display:block!important;min-width:0;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important;line-height:13px!important;font-size:9px!important;color:inherit!important}
+ /* v3.74: improve print legibility without changing row height or one-page scaling. */
+ .board .task,.board .task-continuous,.board .task-label,.board .task-name-text,.board .task-status-confirmed,.board .task-status-previous,.board .task-status-order{font-weight:700!important;text-shadow:none!important;-webkit-font-smoothing:auto!important}
+ .board .task-name-text,.board .task-status-confirmed,.board .task-status-previous,.board .task-status-order{font-size:9px!important;line-height:13px!important;color:inherit!important;vertical-align:baseline!important}
+ .cell-notes{font-size:8px;line-height:10px}.print-note{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ .cell-add-task,.cell-add-note,.resize-handle,.add-cell,.add-note-cell{display:none!important}
+ @media print{html,body{margin:0!important;padding:0!important;overflow:visible!important;height:auto!important}#paper{position:relative!important;left:auto!important;top:auto!important;transform:none!important;break-inside:avoid!important;page-break-inside:avoid!important}}
+ </style></head><body><div id="paper"><h1>${esc($('monthLabel').textContent)} 共有作業予定表</h1>${board.innerHTML}</div><script>
+ (function(){
+  function fit(){
+   const paper=document.getElementById('paper');
+   // CSS transform scales only the drawing, not the printable layout box.
+   // Chrome's zoom scales both the content AND its pagination footprint.
+   paper.style.zoom='1';
+   paper.style.transform='none';
+   const availableHeight=275*96/25.4;
+   const availableWidth=402*96/25.4;
+   const height=paper.getBoundingClientRect().height;
+   const width=paper.getBoundingClientRect().width;
+   const scale=Math.min(1,availableHeight/Math.max(height,1),availableWidth/Math.max(width,1));
+   paper.style.zoom=String(Math.max(0.1,scale*0.97));
+  }
+  window.addEventListener('load',function(){
+   const ready=document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve();
+   ready.then(function(){requestAnimationFrame(function(){fit();setTimeout(function(){window.focus();window.print();},350);});});
+  });
+  window.addEventListener('beforeprint',fit);
+ })();
+ <\/script></body></html>`;
+ const win=window.open('','_blank');
+ if(!win){alert('印刷用画面を開けませんでした。ポップアップを許可してください。');return;}
+ win.document.open();win.document.write(printable);win.document.close();
+}
+document.querySelector('header').appendChild($('desktopToolbar'));
+$('prevYear').onclick=()=>{cursor.setFullYear(cursor.getFullYear()-1);render();};$('nextYear').onclick=()=>{cursor.setFullYear(cursor.getFullYear()+1);render();};$('prev').onclick=()=>{if(view==='month'){cursor.setDate(1);cursor.setMonth(cursor.getMonth()-1);}else cursor.setDate(cursor.getDate()-7);render();};$('next').onclick=()=>{if(view==='month'){cursor.setDate(1);cursor.setMonth(cursor.getMonth()+1);}else cursor.setDate(cursor.getDate()+7);render();};$('thisMonth').onclick=()=>{cursor=new Date();cursor.setHours(12,0,0,0);if(view==='month')cursor.setDate(1);render();};$('monthView').onclick=()=>switchView('month');$('weekView').onclick=()=>switchView('week');$('printBtn').onclick=()=>printSchedule();$('newBtn').onclick=()=>openTask();$('refresh').onclick=load;$('closeTask').onclick=$('cancelTask').onclick=()=>$('taskDialog').close();
+function personInput(value=''){const input=document.createElement('input');input.className='person-input';input.placeholder='担当者名';input.maxLength=40;input.value=value;$('peopleInputs').append(input);}
+$('peopleBtn').onclick=()=>{$('peopleInputs').innerHTML='';state.people.forEach(personInput);$('peopleDialog').showModal();};$('addPerson').onclick=()=>{if($('peopleInputs').children.length<10)personInput();else alert('担当者は最大10人です');};$('closePeople').onclick=$('cancelPeople').onclick=()=>$('peopleDialog').close();$('savePeople').onclick=async()=>{const people=[...$('peopleInputs').querySelectorAll('input')].map(x=>x.value.trim()).filter(Boolean);if(!people.length||people.length>10||new Set(people).size!==people.length){alert('担当者は重複なしで1〜10人登録してください');return;}if(await perform('savePeople',people))$('peopleDialog').close();};
+function addCategoryRow(c={name:'',color:'blue'}){
+ const row=document.createElement('div');row.className='category-row';
+ row.innerHTML=`<input class="category-name" maxlength="30" placeholder="区分名（例：出張）" value="${esc(c.name)}"><select class="category-color">${Object.keys(colors).map(key=>`<option value="${key}" ${key===c.color?'selected':''}>${colorLabels[key]}</option>`).join('')}</select><button type="button" class="category-remove" aria-label="区分を削除">削除</button>`;
+ row.querySelector('.category-remove').onclick=()=>row.remove();
+ $('categoryRows').appendChild(row);
+}
+$('categoryBtn').onclick=()=>{$('categoryRows').innerHTML='';state.categories.forEach(addCategoryRow);$('categoryDialog').showModal();};
+$('addCategory').onclick=()=>{if($('categoryRows').children.length>=30)return alert('区分は最大30件です');addCategoryRow();};
+$('closeCategories').onclick=$('cancelCategories').onclick=()=>$('categoryDialog').close();
+$('saveCategoriesBtn').onclick=async()=>{
+ const rows=[...$('categoryRows').children].map(r=>({name:r.querySelector('.category-name').value.trim(),color:r.querySelector('.category-color').value}));
+ if(!rows.length||rows.some(x=>!x.name)||new Set(rows.map(x=>x.name)).size!==rows.length)return alert('区分名を入力し、重複をなくしてください');
+ if(await perform('saveCategories',rows))$('categoryDialog').close();
+};
+let overview=window.matchMedia('(min-width:801px)').matches;
+document.body.classList.toggle('overview-mode',overview);
+function setOverview(next){overview=next;document.body.classList.toggle('overview-mode',overview);$('overviewBtn').textContent=overview?'詳細表示':'全体表示';$('overviewBtn').setAttribute('aria-pressed',String(overview));if(overview&&view!=='month'){view='month';cursor.setDate(1);render();}window.scrollTo(0,0);}
+$('overviewBtn').onclick=()=>setOverview(!overview);
+// Count distinct calendar days on which each person has at least one assignment.
+function workDaysForPerson(person,year,month=null){
+ const first=new Date(year,month===null?0:month-1,1,12);
+ const last=new Date(year,month===null?11:month,0,12);
+ const days=new Set();
+ for(const t of state.tasks){
+  if(!t.people.includes(person)||t.end<dateStr(first)||t.start>dateStr(last))continue;
+  const from=t.start>dateStr(first)?t.start:dateStr(first);
+  const to=t.end<dateStr(last)?t.end:dateStr(last);
+  const d=new Date(from+'T12:00:00');
+  while(dateStr(d)<=to){days.add(dateStr(d));d.setDate(d.getDate()+1);}
+ }
+ return days.size;
+}
+function showWorkDays(){
+ const year=cursor.getFullYear(),month=cursor.getMonth()+1;
+ $('workDaysTitle').textContent=`担当者別 作業日数（${year}年${month}月）`;
+ $('workDaysTable').innerHTML=`<table class="workdays-table"><thead><tr><th>担当者</th><th>${month}月の作業日数</th><th>${year}年の年間作業日数</th></tr></thead><tbody>${state.people.map(p=>`<tr><td>${esc(p)}</td><td>${workDaysForPerson(p,year,month)}日</td><td>${workDaysForPerson(p,year)}日</td></tr>`).join('')}</tbody></table><p class="workdays-note">集計対象：登録済みの作業期間。日付が重なる作業は重複して数えません。年間は1月1日〜12月31日の登録済み予定から算出します。</p>`;
+ $('workDaysDialog').showModal();
+}
+$('workDaysBtn').onclick=showWorkDays;
+$('closeWorkDays').onclick=$('closeWorkDaysFoot').onclick=()=>$('workDaysDialog').close();
+function copySelections(id){return [...document.querySelectorAll('#'+id+' input:checked')].map(x=>x.value)}
+function renderCopyChecks(id,items){$(id).innerHTML=items.map(v=>`<label><input type="checkbox" checked value="${esc(v)}"> ${esc(v)}</label>`).join('');}
+function openCopyDialog(){const y=cursor.getFullYear(),m=cursor.getMonth()+1;$('copyDescription').textContent=`${y-1}年${m}月 → ${y}年${m}月`;renderCopyChecks('copyPeople',state.people);renderCopyChecks('copyCats',state.categories.map(c=>c.name));$('copyPreview').innerHTML='';$('executeCopy').disabled=true;$('copyDialog').showModal();}
+$('copyLastYear').onclick=openCopyDialog;
+$('headerCopyBtn').onclick=openCopyDialog;
+for(const [btn,id,checked] of [['copyPeopleAll','copyPeople',true],['copyPeopleNone','copyPeople',false],['copyCatsAll','copyCats',true],['copyCatsNone','copyCats',false]])$(btn).onclick=()=>{document.querySelectorAll('#'+id+' input').forEach(x=>x.checked=checked);$('executeCopy').disabled=true;};
+for(const id of ['copyPeople','copyCats'])$(id).addEventListener('change',()=>{$('executeCopy').disabled=true;$('copyPreview').textContent='条件が変更されました。再プレビューしてください。';});
+$('closeCopy').onclick=$('cancelCopy').onclick=()=>$('copyDialog').close();
+$('copyPreviewBtn').onclick=async()=>{const people=copySelections('copyPeople'),cats=copySelections('copyCats');if(!people.length||!cats.length){alert('作業者と区分を選択してください');return;}try{const r=await server('previewPreviousYear',cursor.getFullYear(),cursor.getMonth()+1,people,cats);$('copyPreview').innerHTML=`<strong>追加予定 ${r.added}件／重複 ${r.skipped}件</strong><table><thead><tr><th>予定</th><th>期間</th><th>担当者</th><th>区分</th></tr></thead><tbody>${r.items.map(t=>`<tr><td>${esc(t.title)}${t.duplicate?'（重複）':''}</td><td>${esc(t.start)}～${esc(t.end)}</td><td>${esc(t.people.join('、'))}</td><td>${esc(t.category)}</td></tr>`).join('')}</tbody></table>`;$('executeCopy').disabled=r.added===0;}catch(e){alert(e.message)}};
+$('executeCopy').onclick=async()=>{if(busy||$('executeCopy').disabled)return;const people=copySelections('copyPeople'),cats=copySelections('copyCats');if(!confirm('プレビューした条件で前年の予定を反映しますか？'))return;busy=true;$('executeCopy').disabled=true;try{const r=await server('copyPreviousYear',cursor.getFullYear(),cursor.getMonth()+1,people,cats);state=r.data;render();$('copyDialog').close();status(`前年同月：${r.added}件追加、${r.skipped}件重複`);alert(`${r.added}件追加しました`);}catch(e){alert('反映できません：'+e.message)}finally{busy=false;}};
+
+// The canonical deployment URL is resolved on the server, not from the Apps Script iframe URL.
+let shareLink='';
+async function openShareDialog(){
+ $('shareUrl').value='';$('shareNotice').textContent='';shareLink='';
+ $('copyShareBtn').disabled=true;$('nativeShareBtn').disabled=true;
+ $('shareDialog').showModal();
+ if(DEMO){$('shareNotice').textContent='プレビュー中は共有URLを取得できません。Webアプリとしてデプロイ後にご利用ください。';return;}
+ try{
+  const url=await server('getWebAppUrl');
+  if(!/^https:\/\/script\.google\.com\/macros\/s\/.+\/exec(?:[?#].*)?$/.test(url||''))throw Error('公開済みのWebアプリURLを取得できません');
+  shareLink=url;$('shareUrl').value=url;$('copyShareBtn').disabled=false;
+  $('nativeShareBtn').disabled=!navigator.share;
+ }catch(e){$('shareNotice').textContent='共有URLを取得できません。Code.gsも更新し、Webアプリを再デプロイしてください。';}
+}
+$('shareBtn').onclick=openShareDialog;
+$('closeShare').onclick=$('cancelShare').onclick=()=>$('shareDialog').close();
+$('copyShareBtn').onclick=async()=>{
+ if(!shareLink)return;
+ try{await navigator.clipboard.writeText(shareLink);$('shareNotice').textContent='URLをコピーしました。';}
+ catch(e){$('shareUrl').focus();$('shareUrl').select();$('shareNotice').textContent='自動コピーできませんでした。選択されたURLを Ctrl+C でコピーしてください。';}
+};
+$('nativeShareBtn').onclick=async()=>{
+ if(!shareLink||!navigator.share)return;
+ try{await navigator.share({title:'共有作業予定表',url:shareLink});}catch(e){if(e.name!=='AbortError')$('shareNotice').textContent='共有メニューを開けませんでした。URLをコピーしてください。';}
+};
+
+
+// Report view: always aggregate from the same shared schedule data.
+let reportRows=[],reportDetailRows=[],reportRange=null,reportCols=[];
+const reportStatusLabel={planned:'未完了',done:'完了',cancelled:'中止'};
+function reportToggle(open){$('scheduleMain').hidden=open;$('reportPage').hidden=!open;document.body.classList.toggle('report-active',open);if(open){$('reportYear').value=cursor.getFullYear();$('reportMonth').value=String(cursor.getMonth()+1);reportPopulatePeople();reportUpdateFilters();reportBuild();}window.scrollTo(0,0);}
+$('reportBtn').onclick=async()=>{if(!DEMO)try{state=await server('getData');}catch(e){alert('集計データを取得できません：'+e.message);return;}reportToggle(true);};
+$('reportBack').onclick=()=>reportToggle(false);
+$('reportMonth').innerHTML=Array.from({length:12},(_,i)=>`<option value="${i+1}">${i+1}月</option>`).join('');
+function reportPopulatePeople(){const value=$('reportPerson').value;$('reportPerson').innerHTML='<option value="">全員</option>'+state.people.map(p=>`<option value="${esc(p)}">${esc(p)}</option>`).join('');if(state.people.includes(value))$('reportPerson').value=value;}
+function reportUpdateFilters(){const p=$('reportPeriod').value;$('reportMonthWrap').hidden=p!=='month';$('reportFromWrap').hidden=$('reportToWrap').hidden=p!=='custom';$('reportYear').parentElement.hidden=p==='custom';}
+$('reportPeriod').onchange=()=>{reportUpdateFilters();reportBuild();};
+for(const id of ['reportYear','reportMonth','reportPerson','reportMetric','reportStatus','reportFrom','reportTo'])$(id).onchange=reportBuild;
+$('reportRefresh').onclick=async()=>{if(!DEMO){try{state=await server('getData');reportPopulatePeople();}catch(e){alert('更新できません：'+e.message);return;}}reportBuild();};
+function reportDateRange(){const p=$('reportPeriod').value,y=Number($('reportYear').value)||new Date().getFullYear(),m=Number($('reportMonth').value)||1;
+ if(p==='custom')return {start:$('reportFrom').value,end:$('reportTo').value,label:`${$('reportFrom').value} ～ ${$('reportTo').value}`};
+ if(p==='month')return {start:`${y}-${String(m).padStart(2,'0')}-01`,end:dateStr(new Date(y,m,0,12)),label:`${y}年${m}月`};
+ if(p==='fiscal')return {start:`${y}-04-01`,end:`${y+1}-03-31`,label:`${y}年度（4月〜翌3月）`};
+ return {start:`${y}-01-01`,end:`${y}-12-31`,label:`${y}年（1月〜12月）`};}
+function reportBuild(){const r=reportDateRange();if(!r.start||!r.end||r.start>r.end){$('reportTableWrap').innerHTML='<p style="padding:16px">有効な集計期間を指定してください。</p>';return;}
+ reportRange=r;const person=$('reportPerson').value,metric=$('reportMetric').value,filter=$('reportStatus').value;
+ reportCols=state.categories.map(c=>c.name);for(const t of state.tasks)if(!reportCols.includes(t.category||'未分類'))reportCols.push(t.category||'未分類');
+ const people=person?[person]:state.people,acc=new Map(people.map(p=>[p,{name:p,groups:new Map(),days:new Set(),tasks:new Set()}]));reportDetailRows=[];
+ for(const t of state.tasks){const status=t.workStatus||'planned';if(filter!=='all'&&status!==filter)continue;if(t.end<r.start||t.start>r.end)continue;
+  const from=t.start>r.start?t.start:r.start,to=t.end<r.end?t.end:r.end,category=t.category||'未分類';
+  const count=daysBetween(from,to)+1;if(count<1)continue;
+  for(const p of t.people){const a=acc.get(p);if(!a)continue;let g=a.groups.get(category);if(!g){g={days:0,tasks:new Set()};a.groups.set(category,g);}g.days+=count;g.tasks.add(t.id);
+   a.tasks.add(t.id);for(let d=from;d<=to;d=plusDays(d,1))a.days.add(d);
+   reportDetailRows.push({person:p,category,title:t.title,start:from,end:to,days:count,status:reportStatusLabel[status]||status,note:t.note||'',id:t.id});
+  }
+ }
+ reportRows=[...acc.values()].map(a=>({name:a.name,values:reportCols.map(c=>{const g=a.groups.get(c);return g?(metric==='days'?g.days:g.tasks.size):0;}),uniqueDays:a.days.size,taskCount:a.tasks.size}));
+ const totals=reportCols.map((_,i)=>reportRows.reduce((sum,row)=>sum+row.values[i],0));
+ const unique=reportRows.reduce((sum,row)=>sum+row.uniqueDays,0),tasks=reportRows.reduce((sum,row)=>sum+row.taskCount,0);
+ $('reportSummary').innerHTML=`<div class="report-kpi">集計期間<strong>${esc(r.label)}</strong></div><div class="report-kpi">対象担当者<strong>${people.length}人</strong></div><div class="report-kpi">担当者別の実稼働日数合計<strong>${unique}日</strong></div><div class="report-kpi">担当者別の作業件数合計<strong>${tasks}件</strong></div>`;
+ const header=`<thead><tr><th>担当者</th>${reportCols.map(c=>`<th>${esc(c)}</th>`).join('')}<th>区分別合計</th><th>実稼働日数</th><th>作業件数</th></tr></thead>`;
+ const body=`<tbody>${reportRows.map((a,i)=>`<tr><td>${esc(a.name)}</td>${a.values.map((v,j)=>`<td>${v?`<button class="report-cell" data-person="${i}" data-category="${j}" title="内訳を表示">${v}</button>`:'0'}</td>`).join('')}<td class="report-total">${a.values.reduce((x,y)=>x+y,0)}</td><td>${a.uniqueDays}</td><td>${a.taskCount}</td></tr>`).join('')}</tbody>`;
+ const footer=`<tfoot><tr><td>全体</td>${totals.map(x=>`<td>${x}</td>`).join('')}<td>${totals.reduce((a,b)=>a+b,0)}</td><td>${unique}</td><td>${tasks}</td></tr></tfoot>`;
+ $('reportTableWrap').innerHTML=`<table class="report-table">${header}${body}${footer}</table>`;
+ $('reportNotes').textContent=metric==='days'?'区分別：同じ担当者・同じ日に複数件ある場合も、作業ごとに延べ日数を加算。実稼働日数：担当者ごとに日付の重複を除外。複数人の担当は各人に計上。':'作業件数：期間内に1日以上重なる作業を、担当者・区分ごとに1件として計上。実稼働日数は日付の重複を除外。';
+ $('reportDetails').hidden=true;
+}
+$('reportTableWrap').onclick=e=>{const b=e.target.closest('button[data-person]');if(!b)return;const person=reportRows[Number(b.dataset.person)]?.name,category=reportCols[Number(b.dataset.category)];const entries=reportDetailRows.filter(x=>x.person===person&&x.category===category).sort((a,b)=>a.start.localeCompare(b.start));$('reportDetails').hidden=false;$('reportDetails').innerHTML=`<h3>${esc(person)} × ${esc(category)}：内訳（${entries.length}件）</h3><div class="detail-scroll"><table><thead><tr><th>期間</th><th>作業名</th><th>日数</th><th>状態</th><th>メモ</th></tr></thead><tbody>${entries.map(x=>`<tr><td>${esc(x.start)} ～ ${esc(x.end)}</td><td>${esc(x.title)}</td><td>${x.days}</td><td>${esc(x.status)}</td><td>${esc(x.note)}</td></tr>`).join('')}</tbody></table></div>`;$('reportDetails').scrollIntoView({behavior:'smooth',block:'nearest'});};
+function reportCSV(rows,name){const quote=v=>'"'+String(v??'').replace(/"/g,'""')+'"';const content='\uFEFF'+rows.map(r=>r.map(quote).join(',')).join('\r\n');const blob=new Blob([content],{type:'text/csv;charset=utf-8;'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name+'.csv';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),5000);}
+$('reportCSV').onclick=()=>{if(!reportRange)return;const metric=$('reportMetric').value;reportCSV([['期間',reportRange.label],['単位',metric==='days'?'延べ作業日数':'作業件数'],['担当者',...reportCols,'区分別合計','実稼働日数','作業件数'],...reportRows.map(r=>[r.name,...r.values,r.values.reduce((a,b)=>a+b,0),r.uniqueDays,r.taskCount])],`作業集計_${reportRange.start}_${reportRange.end}`);};
+$('reportDetailCSV').onclick=()=>{if(!reportRange)return;reportCSV([['担当者','区分','作業名','開始日','終了日','対象期間内の日数','実施状況','メモ'],...reportDetailRows.map(r=>[r.person,r.category,r.title,r.start,r.end,r.days,r.status,r.note])],`作業内訳_${reportRange.start}_${reportRange.end}`);};
+$('reportPDF').onclick=()=>{document.body.classList.add('report-print');window.print();};
+
+window.addEventListener('afterprint',()=>document.body.classList.remove('pdf-print','report-print'));
+
+/* Shared memo panel, one collection per calendar month. */
+function monthKey(){return `${cursor.getFullYear()}-${String(cursor.getMonth()+1).padStart(2,'0')}`;}
+let memoRequest=0;
+async function loadMemos(){
+ const key=monthKey(),request=++memoRequest;
+ $('memoMonthLabel').textContent=key.replace('-','年')+'月';
+ try{const result=await server('getMonthMemos',key);if(request!==memoRequest||monthKey()!==key)return;memoState=result;renderMemos();}
+ catch(e){if(request===memoRequest)$('memoItems').textContent='メモの読み込みに失敗しました：'+e.message;}
+}
+function renderMemos(){
+ const el=$('memoItems');el.innerHTML='';
+ if(!memoState.items.length){el.innerHTML='<p class="memo-empty">この月のメモはまだありません。</p>';return;}
+ for(const item of memoState.items){const b=document.createElement('button');b.type='button';b.className='memo-card';const t=document.createElement('span');t.className='memo-card-content';t.textContent=item.body;b.appendChild(t);b.title='クリックして編集';b.onclick=()=>openMemo(item.id);el.appendChild(b);}
+}
+function openMemo(id=null){
+ const item=id?memoState.items.find(x=>x.id===id):null;memoEditId=item?.id||null;
+ $('memoDialogTitle').textContent=item?'メモの編集':'メモの追加';$('memoBody').value=item?.body||'';$('memoDelete').hidden=!item;$('memoDialog').showModal();$('memoBody').focus();
+}
+$('memoAdd').onclick=()=>openMemo();$('memoQuickAdd').onclick=()=>{document.body.classList.remove('memo-collapsed');openMemo();};
+$('memoClose').onclick=()=>document.body.classList.add('memo-collapsed');$('memoReopen').onclick=()=>document.body.classList.remove('memo-collapsed');
+$('memoDialogClose').onclick=$('memoCancel').onclick=()=>$('memoDialog').close();
+$('memoForm').onsubmit=async e=>{
+ e.preventDefault();if(memoBusy)return;const body=$('memoBody').value.trim();if(!body)return;
+ memoBusy=true;$('memoSave').disabled=true;const key=monthKey();
+ try{const result=await server('saveMonthMemo',key,{id:memoEditId,body});if(key===monthKey()){memoState=result;renderMemos();}$('memoDialog').close();status('メモを保存しました');}
+ catch(err){alert('メモを保存できませんでした：'+err.message)}finally{memoBusy=false;$('memoSave').disabled=false;}
+};
+$('memoDelete').onclick=async()=>{
+ if(!memoEditId||memoBusy||!confirm('このメモを削除しますか？'))return;memoBusy=true;const key=monthKey();
+ try{const result=await server('deleteMonthMemo',key,memoEditId);if(key===monthKey()){memoState=result;renderMemos();}$('memoDialog').close();status('メモを削除しました');}
+ catch(err){alert('削除できませんでした：'+err.message)}finally{memoBusy=false;}
+};
+
+
+function renderIndividualMemos(){
+ const el=$('individualMemoItems'),count=$('individualMemoCount');
+ if(!el)return;
+ const month=monthKey();
+ // 注文が必要で、まだ注文済みでない予定を個別メモに自動表示する。
+ // 既存の個別メモはそのまま残し、注文済みになると注文カードだけが消える。
+ const orders=(state.tasks||[]).filter(t=>t.ordered&&!t.orderCompleted&&
+   (String(t.start||'').slice(0,7)<=month&&String(t.end||t.start||'').slice(0,7)>=month))
+   .slice().sort((a,b)=>String(a.start).localeCompare(String(b.start))||String(a.title).localeCompare(String(b.title)));
+ const ready=cellNotesMonth===month;
+ const notes=ready?cellNotes.filter(n=>n.date&&n.date.startsWith(month)).slice().sort((a,b)=>a.date.localeCompare(b.date)||String(a.person).localeCompare(String(b.person))):[];
+ count.textContent=(orders.length+notes.length)?`${orders.length+notes.length}件`:'';
+ el.innerHTML='';
+ for(const task of orders){
+  const b=document.createElement('button');b.type='button';b.className='memo-card individual-memo-card order-reminder-card';
+  const head=document.createElement('span');head.className='individual-memo-meta';
+  head.textContent=`！ 注文依頼　${String(task.start||'').slice(5).replace('-','/')}　${(task.people||[]).join('・')}`;
+  const body=document.createElement('span');body.className='memo-card-content';
+  body.textContent=[task.site||'',task.title||'',task.sr?`SR：${task.sr}`:''].filter(Boolean).join(' ／ ');
+  b.append(head,body);b.title='クリックして予定を編集（注文済みにすると一覧から消えます）';
+  b.onclick=()=>openTask(task.id);el.appendChild(b);
+ }
+ if(!ready){const p=document.createElement('p');p.className='memo-empty';p.textContent='個別メモを読み込み中…';el.appendChild(p);return;}
+ for(const note of notes){
+  const b=document.createElement('button');b.type='button';b.className='memo-card individual-memo-card';
+  const head=document.createElement('span');head.className='individual-memo-meta';head.textContent=`${Number(note.date.slice(5,7))}/${Number(note.date.slice(8,10))}　${note.person}`;
+  const body=document.createElement('span');body.className='memo-card-content';body.textContent=note.body||'';
+  b.append(head,body);b.title='クリックして個別メモを編集';b.onclick=()=>openCellNote(note.date,note.person,note.id);el.appendChild(b);
+ }
+ if(!orders.length&&!notes.length)el.innerHTML='<p class="memo-empty">この月の個別メモ・注文依頼はありません。</p>';
+}
+
+let cellNotesMonth='',cellNotesReq=0;
+async function loadCellNotes(){
+ const month=monthKey(),req=++cellNotesReq;
+ try{const notes=await server('getCellNotes',month);if(req!==cellNotesReq||month!==monthKey())return;cellNotes=notes;cellNotesMonth=month;}
+ catch(e){status('セルメモの読み込みに失敗しました：'+e.message);}
+}
+function openCellNote(date,person,id=null){
+ const note=id?cellNotes.find(n=>n.id===id):null;
+ cellNoteEdit={date:note?.date||date,person:note?.person||person,id:note?.id||null};
+ $('cellNoteTitle').textContent=note?'メモを編集':'メモを追加';
+ $('cellNoteInfo').textContent=cellNoteEdit.date+' ／ '+cellNoteEdit.person;
+ $('cellNoteBody').value=note?.body||'';
+ $('cellNoteDelete').hidden=!note;
+ $('cellNoteDialog').showModal();$('cellNoteBody').focus();
+}
+document.addEventListener('click',e=>{
+ const add=e.target.closest('[data-note-date]');
+ if(add){openCellNote(add.dataset.noteDate,add.dataset.notePerson);return;}
+ const edit=e.target.closest('[data-cell-note-id]');
+ if(edit){const note=cellNotes.find(n=>n.id===edit.dataset.cellNoteId);if(note)openCellNote(note.date,note.person,note.id);}
+});
+$('cellNoteClose').onclick=$('cellNoteCancel').onclick=()=>$('cellNoteDialog').close();
+$('cellNoteForm').onsubmit=async e=>{
+ e.preventDefault();if(cellNoteBusy||!cellNoteEdit)return;
+ const body=$('cellNoteBody').value.trim();if(!body)return;
+ cellNoteBusy=true;$('cellNoteSave').disabled=true;
+ try{
+  const saved=await server('saveCellNote',{...cellNoteEdit,body});
+  const record={...cellNoteEdit,id:saved.id,body};
+  const index=cellNotes.findIndex(n=>n.id===record.id);
+  if(index>=0)cellNotes[index]=record;else cellNotes.push(record);
+  cellNotesMonth=record.date.slice(0,7);
+  $('cellNoteDialog').close();render();if(mIsMobile())mRebuild();
+  status('セルメモを保存しました');
+  // Reconcile against the server; the UI already reflects the successful save.
+  recordLastUpdate();
+  // The successful write response is authoritative; a manual sync remains available.
+ }catch(err){alert('メモを保存できませんでした：'+err.message)}
+ finally{cellNoteBusy=false;$('cellNoteSave').disabled=false;}
+};
+$('cellNoteDelete').onclick=async()=>{
+ if(cellNoteBusy||!cellNoteEdit?.id||!confirm('このメモを削除しますか？'))return;
+ cellNoteBusy=true;
+ try{await server('deleteCellNote',cellNoteEdit.id);cellNotes=cellNotes.filter(n=>n.id!==cellNoteEdit.id);$('cellNoteDialog').close();render();if(mIsMobile())mRebuild();await loadCellNotes();render();if(mIsMobile())mRebuild();status('セルメモを削除しました');}
+ catch(err){alert('削除できませんでした：'+err.message)}
+ finally{cellNoteBusy=false;}
+};
+
+function syncHeaderHeight(){document.documentElement.style.setProperty('--header-height',document.querySelector('header').offsetHeight+'px');}
+if(window.ResizeObserver)new ResizeObserver(syncHeaderHeight).observe(document.querySelector('header'));
+syncHeaderHeight();
+
+
+/* v3.0 mobile calendar: independent UI, shared data */
+const mapp=document.getElementById('mobileApp'),mmonths=document.getElementById('mobileMonths');
+let mDetailDate='',mSelected=null,mActiveMonth='',mMin=null,mMax=null,mRenderBusy=false,mGesture=null,mIgnoreClickUntil=0,mChoiceDate='',mDetailTask=null,mMemoOpen=true;
+const mIsMobile=()=>isMobileLayout();
+function mMonthDate(d){return new Date(d.getFullYear(),d.getMonth(),1)}
+function mMonthAdd(d,n){return new Date(d.getFullYear(),d.getMonth()+n,1)}
+function mKey(d){return dateStr(d).slice(0,7)}
+function mDateFromKey(k){return new Date(k+'-01T12:00:00')}
+function mTaskColor(t){return colors[t.color]||colors.blue||'#2563eb'}
+function mWeeks(month){
+ const start=new Date(month.getFullYear(),month.getMonth(),1);start.setDate(1-start.getDay());
+ const end=new Date(month.getFullYear(),month.getMonth()+1,0);
+ const dates=[];for(let d=new Date(start);d<=end||d.getDay()!==0;d.setDate(d.getDate()+1))dates.push(new Date(d));
+ return Array.from({length:Math.ceil(dates.length/7)},(_,i)=>dates.slice(i*7,i*7+7));
+}
+function mBuildMonth(month){
+ const key=mKey(month),section=document.createElement('section');section.className='mobile-month';section.dataset.month=key;
+ let h=`<div class="mobile-year-nav"><button type="button" class="mobile-year-step" data-year-shift="-1" aria-label="前年へ移動">前年 ‹</button><h2>${month.getFullYear()}年${month.getMonth()+1}月</h2><button type="button" class="mobile-year-step" data-year-shift="1" aria-label="翌年へ移動">› 翌年</button></div><div class="mobile-weekdays">${['日','月','火','水','木','金','土'].map(x=>`<span>${x}</span>`).join('')}</div>`;
+ const notesByDate=new Map();
+ for(const note of cellNotes){if(!notesByDate.has(note.date))notesByDate.set(note.date,[]);notesByDate.get(note.date).push(note);}
+ const monthTasks=state.tasks.filter(t=>t.start<=dateStr(new Date(month.getFullYear(),month.getMonth()+1,7))&&t.end>=dateStr(new Date(month.getFullYear(),month.getMonth(),1-6)));
+ for(const week of mWeeks(month)){
+  const ws=dateStr(week[0]),we=dateStr(week[6]);
+  h+='<div class="mobile-week">';
+  for(const d of week){const ds=dateStr(d),notes=notesByDate.get(ds)||[];
+   const chips=notes.map(n=>`<button type="button" class="mobile-cell-note" data-cell-note-id="${esc(n.id)}" title="${esc(n.person)}：${esc(n.body)}">${esc(n.body)}</button>`).join('');
+   h+=`<div class="mobile-day ${d.getMonth()!==month.getMonth()?'outside':''} ${mSelected?.date===ds?'selected':''}" data-m-date="${ds}"><span class="day-n">${d.getDate()}</span><div class="mobile-cell-notes">${chips}</div></div>`;
+  }
+  const tasks=monthTasks.filter(t=>t.start<=we&&t.end>=ws).sort((a,b)=>a.start.localeCompare(b.start)||a.title.localeCompare(b.title));
+  let laneEnd=[];let bars='';
+  for(const t of tasks){
+   const a=Math.max(0,daysBetween(ws,t.start)),b=Math.min(6,daysBetween(ws,t.end));
+   let lane=laneEnd.findIndex(x=>x<a);if(lane<0){lane=laneEnd.length;laneEnd.push(b)}else laneEnd[lane]=b;
+   const label=esc(t.title),id=esc(t.id);
+   bars+=`<div class="mobile-bar ${mSelected?.id===t.id?'selected':''}" data-m-task="${id}" data-m-anchor="${ws}" style="grid-column:${a+1}/${b+2};grid-row:${lane+1};background:${mTaskColor(t)}" title="${label}">${label}</div>`;
+  }
+  const laneCount=Math.max(1,laneEnd.length);
+  h+=`<div class="mobile-lanes" style="grid-template-rows:repeat(${laneCount},17px)">${bars}</div></div>`;
+  // A week grows to accommodate every bar; no silent truncation.
+  // Weekly markup is already complete; avoid repeated full-string regex scans.
+ }
+ section.innerHTML=h;
+ for(const w of section.querySelectorAll('.mobile-week')){
+  const n=Math.max(1,...[...w.querySelectorAll('.mobile-bar')].map(b=>Number(b.style.gridRowStart)||1));
+  const barsBottom=25+n*19;
+  const noteRows=Math.max(0,...[...w.querySelectorAll('.mobile-cell-notes')].map(el=>el.children.length));
+  const minHeight=Math.max(112,barsBottom+10+Math.min(noteRows,4)*24+10);
+  w.style.minHeight=minHeight+'px';
+  w.style.setProperty('--bars-bottom',barsBottom+'px');
+  for(const day of w.querySelectorAll('.mobile-day'))day.style.minHeight=minHeight+'px';
+ }
+ return section;
+}
+/* v3.8: one-month viewport, never append or prepend months on scroll. */
+function mRebuild(){
+ if(!mIsMobile()||!state?.tasks)return;
+ const month=mActiveMonth?mDateFromKey(mActiveMonth):mMonthDate(cursor);
+ mmonths.replaceChildren(mBuildMonth(month));
+ mSyncMemo();mMeasureMemo();
+}
+function mInit(){
+ if(!mIsMobile())return;
+ mActiveMonth=mKey(mMonthDate(cursor));
+ mRebuild();
+}
+function mSyncMemo(){
+ const el=document.getElementById('mobileMemoText');document.getElementById('mobileMemoMonth').textContent=mActiveMonth;
+ if(memoState.month!==mActiveMonth){el.textContent='メモを読み込み中…';return;}
+ el.innerHTML=memoState.items.length?memoState.items.map(x=>`<button class="mobile-memo-entry" data-m-memo="${esc(x.id)}">${esc(x.body)}</button>`).join(''):'この月の共有メモはありません';
+}
+function mMeasureMemo(){document.getElementById('mobileApp').style.setProperty('--mobile-memo-h',document.getElementById('mobileMemo').offsetHeight+'px')}
+const mObserve=new ResizeObserver(mMeasureMemo);mObserve.observe(document.getElementById('mobileMemo'));
+let mMonthReq=0;
+async function mSetMonth(key){
+ mActiveMonth=key;
+ cursor=mDateFromKey(key);const req=++mMonthReq;
+ try{
+  const [m,n]=await Promise.all([server('getMonthMemos',key),server('getCellNotes',key)]);
+  if(req!==mMonthReq)return;
+  memoState=m;cellNotes=n;cellNotesMonth=key;
+  mSyncMemo();mRebuild();
+ }catch(e){document.getElementById('mobileMemoText').textContent='メモを読み込めません：'+e.message}
+}
+/* Swipe left for next month, right for previous month.
+   Vertical scrolling remains native. A horizontal gesture never triggers a task tap. */
+let mSwipeStart=null,mSwipeIgnoreUntil=0;
+mmonths.addEventListener('touchstart',e=>{
+ if(e.touches.length!==1||!mIsMobile()||!$('appMenu').hidden)return;
+ const t=e.touches[0];mSwipeStart={x:t.clientX,y:t.clientY,time:Date.now()};
+},{passive:true});
+mmonths.addEventListener('touchend',e=>{
+ if(!mSwipeStart||!mIsMobile())return;
+ const t=e.changedTouches[0],dx=t.clientX-mSwipeStart.x,dy=t.clientY-mSwipeStart.y;
+ const elapsed=Date.now()-mSwipeStart.time;mSwipeStart=null;
+ if(Math.abs(dx)<55||Math.abs(dx)<Math.abs(dy)*1.4||elapsed>1300)return;
+ mSwipeIgnoreUntil=Date.now()+450;
+ mShiftMonth(dx<0?1:-1);
+},{passive:true});
+mmonths.addEventListener('touchcancel',()=>{mSwipeStart=null},{passive:true});
+function mShiftYear(delta){
+ if(!mIsMobile())return;
+ const current=mActiveMonth?mDateFromKey(mActiveMonth):mMonthDate(cursor);
+ const year=current.getFullYear()+delta;
+ if(year<2001||year>2100)return;
+ const next=new Date(year,current.getMonth(),1);
+ const key=mKey(next);
+ mActiveMonth=key;cursor=next;
+ mRebuild();window.scrollTo({top:0,behavior:'instant'});mSetMonth(key);
+}
+mmonths.addEventListener('click',e=>{
+ const button=e.target.closest('[data-year-shift]');
+ if(!button)return;
+ e.preventDefault();e.stopPropagation();
+ mShiftYear(Number(button.dataset.yearShift));
+});
+function mShiftMonth(delta){
+ if(!mIsMobile())return;
+ const current=mActiveMonth?mDateFromKey(mActiveMonth):mMonthDate(cursor);
+ const next=mMonthAdd(current,delta);
+ if(next.getFullYear()<2001||next.getFullYear()>2100)return;
+ const key=mKey(next);
+ mActiveMonth=key;cursor=next;
+ mRebuild();
+ // Keep the month heading in view without fighting vertical scrolling.
+ window.scrollTo({top:0,behavior:'instant'});
+ mSetMonth(key);
+}
+function mShowDetail(id,tappedDate){
+ const t=state.tasks.find(x=>x.id===id);if(!t)return;mDetailTask=t;mDetailDate=tappedDate||t.start;
+ document.getElementById('mobileDetailTitle').textContent=t.title;
+ document.getElementById('mobileDetailBody').textContent=`作業区分：${t.category||'未設定'}\n期間：${t.start} ～ ${t.end}\n担当者：${(t.people||[]).join('、')}\n実施状況：${({planned:'未完了',done:'完了',cancelled:'中止'})[t.workStatus]||'未完了'}\n\n作業メモ：\n${t.note||'（なし）'}`;
+ document.getElementById('mobileDetail').showModal();
+}
+function mShowChoice(date){mChoiceDate=date;document.getElementById('mobileChoiceDate').textContent=date;document.getElementById('mobileChoice').showModal();}
+document.getElementById('mobileDetailClose').onclick=()=>document.getElementById('mobileDetail').close();
+document.getElementById('mobileDetailAddAnother').onclick=()=>{document.getElementById('mobileDetail').close();openTask(null,mDetailDate)};
+document.getElementById('mobileDetailEdit').onclick=()=>{document.getElementById('mobileDetail').close();openTask(mDetailTask.id)};
+document.getElementById('mobileDetailMove').onclick=()=>{document.getElementById('mobileDetail').close();openTask(mDetailTask.id);document.getElementById('taskStart')?.focus();};
+document.getElementById('mobileDetailMemo').onclick=()=>{document.getElementById('mobileDetail').close();openTask(mDetailTask.id);document.getElementById('taskNote').focus()};
+document.getElementById('mobileChoiceClose').onclick=()=>document.getElementById('mobileChoice').close();
+document.getElementById('mobileChoiceTask').onclick=()=>{document.getElementById('mobileChoice').close();openTask(null,mChoiceDate)};
+document.getElementById('mobileChoiceNote').onclick=()=>{document.getElementById('mobileChoice').close();mShowPersonChoice(mChoiceDate)};
+function mShowPersonChoice(date){
+ const person=prompt('メモの担当者を入力してください：\n'+state.people.join(' / '),state.people[0]||'');
+ if(person===null)return;
+ if(!state.people.includes(person.trim())){alert('登録済みの担当者を指定してください');return;}
+ openCellNote(date,person.trim());
+}
+document.getElementById('mobileMemoAdd').onclick=()=>{openMemo()};
+document.getElementById('mobileMemoToggle').onclick=()=>{mMemoOpen=!mMemoOpen;document.getElementById('mobileMemoText').hidden=!mMemoOpen;mMeasureMemo()};
+document.getElementById('mobileMemoText').onclick=e=>{const b=e.target.closest('[data-m-memo]');if(b)openMemo(b.dataset.mMemo)};
+document.getElementById('mobileToday').onclick=()=>mGoToday();
+document.getElementById('mobileTodayTop').onclick=()=>mGoToday();
+function mGoToday(){
+ cursor=new Date();const key=mKey(mMonthDate(cursor));
+ mActiveMonth=key;mRebuild();window.scrollTo({top:0,behavior:'instant'});mSetMonth(key);
+}
+let manualSyncInProgress=false;
+async function syncVisibleData(){
+ if(manualSyncInProgress||busy||dragSavePending)return;
+ manualSyncInProgress=true;
+ lastAutomaticSyncAt=Date.now();
+ const buttons=[$('desktopSyncNow'),$('mobileSyncNow')];
+ buttons.forEach(b=>{b.disabled=true;b.setAttribute('aria-busy','true')});
+ status('同期中…');
+ try{await load();if(mIsMobile())mRebuild();}
+ finally{manualSyncInProgress=false;buttons.forEach(b=>{b.disabled=false;b.removeAttribute('aria-busy')});}
+}
+$('desktopSyncNow').onclick=syncVisibleData;
+$('mobileSyncNow').onclick=syncVisibleData;
+document.getElementById('mobileReload').onclick=syncVisibleData;
+// v3.36: automatically fetch updates once per minute while the schedule is idle.
+// Never replace data during editing, saving, dragging, or when another sync is active.
+const AUTO_SYNC_INTERVAL_MS=15*1000;
+let lastAutomaticSyncAt=Date.now();
+function autoSyncSafe(){
+ return !document.hidden&&!busy&&!memoBusy&&!cellNoteBusy&&!dragSavePending&&
+  !outsideAutoSavePending&&!manualSyncInProgress&&
+  !document.querySelector('dialog[open]')&&
+  !document.querySelector('input:focus,textarea:focus,select:focus,[contenteditable="true"]:focus');
+}
+async function runAutoSyncIfDue(){
+ if(Date.now()-lastAutomaticSyncAt<AUTO_SYNC_INTERVAL_MS||!autoSyncSafe())return;
+ lastAutomaticSyncAt=Date.now();
+ await syncVisibleData();
+}
+setInterval(runAutoSyncIfDue,5000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)runAutoSyncIfDue()});
+
+document.getElementById('mobileTools').onclick=()=>toggleAppMenu(true);
+// v3.7: tap-only mobile interaction. Touch scrolling is native; no long press or grips.
+mmonths.addEventListener('click',e=>{
+ if(Date.now()<mSwipeIgnoreUntil||e.target.closest('[data-cell-note-id]'))return;
+ const bar=e.target.closest('[data-m-task]'),day=e.target.closest('[data-m-date]');
+ if(bar){
+  // Resolve the date under the finger, including multi-day bars.
+  const week=bar.closest('.mobile-week');const rect=week?.getBoundingClientRect();
+  const col=rect?Math.max(0,Math.min(6,Math.floor((e.clientX-rect.left)/(rect.width/7)))):0;
+  const anchor=bar.dataset.mAnchor;const tapped=new Date(anchor+'T12:00:00');tapped.setDate(tapped.getDate()+col);
+  const task=state.tasks.find(t=>t.id===bar.dataset.mTask);
+  const ds=dateStr(tapped),chosen=task? (ds<task.start?task.start:ds>task.end?task.end:ds):ds;
+  mSelected={id:bar.dataset.mTask};mShowDetail(bar.dataset.mTask,chosen);return;
+ }
+ if(day){mSelected={date:day.dataset.mDate};mShowChoice(day.dataset.mDate);}
+});
+const originalMobileRender=render;
+render=function(){originalMobileRender();if(mIsMobile()&&state?.tasks)mRebuild()};
+const originalMobileMemos=renderMemos;
+renderMemos=function(){originalMobileMemos();mSyncMemo();mMeasureMemo()};
+const originalMobileLoad=load;
+load=async function(){await originalMobileLoad();if(mIsMobile())mRebuild();};
+window.addEventListener('resize',()=>{if(mIsMobile())mRebuild()});
+
+
+/* v3.1 menu and saved view settings */
+const prefGet=(k,d)=>{try{return localStorage.getItem(k)||d}catch(e){return d}};
+const prefSet=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}};
+let themePref=prefGet('schedule_theme','system'),layoutPref=prefGet('schedule_layout','auto');
+function isMobileLayout(){return layoutPref==='mobile'||(layoutPref==='auto'&&matchMedia('(max-width:800px)').matches)}
+function applyPrefs(){document.documentElement.scrollLeft=0;document.body.scrollLeft=0;const dark=themePref==='dark'||(themePref==='system'&&matchMedia('(prefers-color-scheme:dark)').matches);document.documentElement.dataset.theme=dark?'dark':'light';document.body.classList.toggle('force-desktop',layoutPref==='desktop');document.body.classList.toggle('force-mobile',layoutPref==='mobile');$('themeSelect').value=themePref;$('layoutSelect').value=layoutPref;requestAnimationFrame(()=>{if(isMobileLayout())mRebuild();syncHeaderHeight()});}
+function toggleAppMenu(open){$('appMenu').hidden=!open;$('menuBackdrop').hidden=!open;$('mobileHamburger').setAttribute('aria-expanded',String(open));$('desktopHamburger').setAttribute('aria-expanded',String(open));}
+$('desktopHamburger').onclick=$('mobileHamburger').onclick=()=>toggleAppMenu($('appMenu').hidden);
+$('closeAppMenu').onclick=$('menuBackdrop').onclick=()=>toggleAppMenu(false);
+$('themeSelect').onchange=e=>{themePref=e.target.value;prefSet('schedule_theme',themePref);applyPrefs()};
+$('layoutSelect').onchange=e=>{layoutPref=e.target.value;prefSet('schedule_layout',layoutPref);applyPrefs();window.scrollTo(0,0)};
+matchMedia('(prefers-color-scheme:dark)').addEventListener('change',applyPrefs);
+const menuActions={voice:openVoiceDialog,new:()=>openTask(),memo:()=>openMemo(),copy:openCopyDialog,people:()=>$('peopleBtn').click(),category:()=>$('categoryBtn').click(),report:()=>reportToggle(true),days:showWorkDays,print:()=>$('printBtn').click(),share:openShareDialog,reload:load};
+$('appMenu').querySelectorAll('[data-menu-action]').forEach(b=>b.onclick=()=>{toggleAppMenu(false);menuActions[b.dataset.menuAction]()});
+$('saveCalendarConfig').onclick=async()=>{if(!confirm('Googleカレンダーの同期先を保存しますか？'))return;try{await server('setCalendarSyncConfig',$('calendarId').value.trim());$('calendarSyncStatus').textContent='同期先を保存しました'}catch(e){alert(e.message)}};
+$('runCalendarSync').onclick=async()=>{if(!confirm('予定表の全予定をGoogleカレンダーへ反映しますか？（削除済み予定も同期先から削除します）'))return;try{const r=await server('syncCalendarNow');$('calendarSyncStatus').textContent=`同期完了：新規${r.created}件、更新${r.updated}件、削除${r.deleted}件`}catch(e){alert(e.message)}};
+server('getCalendarSyncConfig').then(r=>{$('calendarId').value=r.calendarId||''}).catch(()=>{});
+// SR master is configured centrally in GAS Script Properties, not per browser.
+async function srSourceAction(mode){
+ const status=$('srSourceStatus');status.textContent='確認中…';
+ try{
+  if(mode==='clear'&&!confirm('SR参照先の設定を解除し、旧年度の内蔵データに戻しますか？'))return;
+  const result=mode==='test'?await server('testSrSource',$('srSourceUrl').value.trim()):
+   mode==='save'?await server('setSrSource',$('srSourceUrl').value.trim()):await server('clearSrSource');
+  if(result.url!==undefined)$('srSourceUrl').value=result.url;
+  status.textContent=result.message||'完了しました';
+ }catch(e){status.textContent='エラー：'+(e.message||e);}
+}
+
+// Direct Excel upload. The backend converts the workbook to a Google Sheet.
+let srExcelUploading=false;
+const srDrop=$('srExcelDrop'),srFile=$('srExcelFile'),srUploadStatus=$('srExcelUploadStatus');
+srDrop.addEventListener('click',()=>{if(!srExcelUploading)srFile.click()});
+srDrop.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&!srExcelUploading){e.preventDefault();srFile.click()}});
+for(const eventName of ['dragenter','dragover'])srDrop.addEventListener(eventName,e=>{e.preventDefault();e.stopPropagation();srDrop.classList.add('drag-over')});
+for(const eventName of ['dragleave','drop'])srDrop.addEventListener(eventName,e=>{e.preventDefault();e.stopPropagation();srDrop.classList.remove('drag-over')});
+srDrop.addEventListener('drop',e=>{if(!srExcelUploading)uploadSrExcel(e.dataTransfer?.files?.[0])});
+srFile.addEventListener('change',()=>{uploadSrExcel(srFile.files?.[0]);srFile.value=''});
+async function uploadSrExcel(file){
+ if(!file)return;
+ if(!/\.xlsx$/i.test(file.name)){srUploadStatus.textContent='Excel（.xlsx）を選択してください。';return;}
+ if(file.size>10*1024*1024){srUploadStatus.textContent='10MB以下のExcelを選択してください。';return;}
+ if(!confirm('「'+file.name+'」を取り込み、全利用者のSR番号参照先を切り替えますか？'))return;
+ srExcelUploading=true;srDrop.classList.add('uploading');srUploadStatus.textContent='Excelを読み込み中…';
+ try{
+  const data=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(String(reader.result).split(',')[1]);reader.onerror=()=>reject(new Error('ファイルの読み込みに失敗しました'));reader.readAsDataURL(file)});
+  srUploadStatus.textContent='Googleドライブへアップロード・変換中…';
+  const result=await server('uploadSrExcel',{name:file.name,data});
+  $('srSourceUrl').value=result.url||'';
+  $('srSourceStatus').textContent=result.message||'参照先を変更しました';
+  srUploadStatus.textContent='取込完了：'+file.name;
+ }catch(err){srUploadStatus.textContent='取込失敗：'+(err.message||err);}
+ finally{srExcelUploading=false;srDrop.classList.remove('uploading');}
+}
+
+$('srSourceTest').onclick=()=>srSourceAction('test');
+$('srSourceSave').onclick=()=>{if(confirm('全利用者のSR参照先を変更しますか？'))srSourceAction('save');};
+$('srSourceClear').onclick=()=>srSourceAction('clear');
+server('getSrSource').then(r=>{$('srSourceUrl').value=r.url||'';$('srSourceStatus').textContent=r.message||''}).catch(e=>{$('srSourceStatus').textContent='設定を取得できません：'+e.message});
+
+
+/* v3.22: AI-free dictation parser. Dictation is provided by the OS keyboard. */
+let voiceDraft=null;
+function openVoiceDialog(){
+ voiceDraft=null;$('voiceText').value='';$('voiceError').textContent='';$('voicePreview').hidden=true;$('voiceConfirm').hidden=true;
+ $('voiceDialog').showModal();$('voiceText').focus();
+}
+$('mobileVoiceNew').onclick=openVoiceDialog;
+$('voiceClose').onclick=$('voiceCancel').onclick=()=>$('voiceDialog').close();
+$('voiceExample').onclick=()=>{$('voiceText').value='現場名、中央公民館。日時、10月22日から23日。作業者、坂本と小笠原。区分、点検。';$('voicePreview').hidden=true;$('voiceConfirm').hidden=true;};
+function parseVoiceSchedule(input){
+ const raw=String(input||'').normalize('NFKC').replace(/[\r\n]+/g,'。').replace(/[，,]/g,'、').replace(/[：:]/g,'、').replace(/\s+/g,' ').trim();
+ const errs=[];if(!raw)return {errs:['話した内容を入力してください。']};
+ // Longest labels first. Dictation frequently omits punctuation after field names.
+ const fieldRE=/(作業区分|作業者|担当者|現場名|作業名|件名|日付|日程|日時|期間|担当|区分|種類|場所|現場|メモ|備考)\s*(?:は|が|を|、|:|：)?\s*/g;
+ const map={作業区分:'category',作業者:'people',担当者:'people',現場名:'title',作業名:'title',件名:'title',日付:'date',日程:'date',日時:'date',期間:'date',担当:'people',区分:'category',種類:'category',場所:'title',現場:'title',メモ:'note',備考:'note'};
+ const hits=[...raw.matchAll(fieldRE)],fields={};
+ for(let i=0;i<hits.length;i++){
+  const hit=hits[i],key=map[hit[1]];
+  let value=raw.slice(hit.index+hit[0].length,i+1<hits.length?hits[i+1].index:raw.length).replace(/^[、。.\s]+|[、。.!！\s]+$/g,'').trim();
+  if(value)fields[key]=value;
+ }
+ const title=(fields.title||'').replace(/^(?:は|が|を)\s*/,'').trim();
+ if(!title)errs.push('現場名を認識できませんでした。例：「現場名、中央公民館」');
+ const today=new Date(),baseYear=Number(mActiveMonth?.slice(0,4))||today.getFullYear();
+ const dateText=(fields.date||raw).replace(/[。\s]/g,'').replace(/より/g,'から');
+ let start='',end='';
+ function iso(y,m,d){const v=new Date(y,m-1,d,12);return v.getFullYear()===y&&v.getMonth()===m-1&&v.getDate()===d?`${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`:null;}
+ function addDays(s,n){const d=new Date(s+'T12:00:00');d.setDate(d.getDate()+n);return dateStr(d);}
+ // Both "10月22日から23日" and "10月22日から10月23日".
+ const first=dateText.match(/(?:(\d{4})年)?(\d{1,2})月(\d{1,2})日?/);
+ if(first){
+  const y=Number(first[1]||baseYear),m=Number(first[2]),d=Number(first[3]);start=iso(y,m,d);
+  const tail=dateText.slice(first.index+first[0].length);
+  const range=tail.match(/(?:から|~|〜|～|－|-|より|と|、)?(?:(\d{4})年)?(?:(\d{1,2})月)?(\d{1,2})日?/);
+  if(range&&/(?:から|~|〜|～|－|-|より|と)/.test(tail.slice(0,range.index+range[0].length))){
+   let ey=Number(range[1]||y),em=Number(range[2]||m),ed=Number(range[3]);
+   if(!range[1]&&range[2]&&em<m)ey++;
+   if(!range[1]&&!range[2]&&ed<d){em++;if(em>12){em=1;ey++;}}
+   end=iso(ey,em,ed);
+  }else end=start;
+  const days=tail.match(/(?:から)?(\d{1,2})日間/);
+  if(days&&start)end=addDays(start,Number(days[1])-1);
+ }else{
+  const rel=dateText.match(/(今日|明日|明後日)(?:から)?(?:(\d{1,2})日間)?/);
+  if(rel){const d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()+({今日:0,明日:1,明後日:2})[rel[1]]);start=dateStr(d);end=addDays(start,Math.max(1,Number(rel[2]||1))-1);}
+ }
+ if(!start||!end||end<start)errs.push('日付を認識できませんでした。例：「日時、10月22日から23日」');
+ const peopleText=(fields.people||'').replace(/さん/g,'').replace(/(?:です|でお願いします|お願いします|です。)$/,'').trim();
+ const people=state.people.filter(name=>peopleText.includes(name.replace(/さん/g,'')));
+ if(!people.length)errs.push('作業者を認識できませんでした。登録済みの作業者名を指定してください。');
+ const tokens=peopleText.split(/(?:と|、|及び|および|・|\s)+/).map(x=>x.trim()).filter(Boolean);
+ const unknown=tokens.filter(x=>!people.some(n=>n.replace(/さん/g,'')===x));
+ if(unknown.length)errs.push('未登録または認識できない作業者: '+unknown.join('、'));
+ const category=fields.category?state.categories.find(c=>fields.category.includes(c.name))?.name:null;
+ if(fields.category&&!category)errs.push('区分を認識できませんでした。登録済みの作業区分を指定してください。');
+ return {errs,title,start,end,people,category:category||state.categories[0]?.name||'',note:fields.note||''};
+}
+$('voiceParse').onclick=()=>{
+ let result;
+ try{result=parseVoiceSchedule($('voiceText').value);}
+ catch(error){$('voiceError').textContent='解析処理でエラーが発生しました: '+error.message;return;}
+ voiceDraft=result.errs.length?null:result;
+ $('voiceError').textContent=result.errs.join('\n');$('voiceConfirm').hidden=!voiceDraft;
+ $('voicePreview').hidden=!voiceDraft;
+ if(voiceDraft)$('voicePreview').innerHTML='<strong>登録内容の確認</strong><p>現場名：'+esc(result.title)+'</p><p>期間：'+esc(result.start)+' ～ '+esc(result.end)+'</p><p>作業者：'+esc(result.people.join('、'))+'</p><p>区分：'+esc(result.category)+'</p><p class="muted">次の画面で修正できます。保存を押すまで登録されません。</p>';
+};
+$('voiceConfirm').onclick=()=>{
+ if(!voiceDraft)return;const v=voiceDraft;$('voiceDialog').close();openTask(null,v.start);
+ $('taskTitle').value=v.title;$('taskStart').value=v.start;$('taskEnd').value=v.end;$('taskNote').value=v.note;
+ populateCategories(v.category);
+ $('peopleChoices').querySelectorAll('input').forEach(input=>{input.checked=v.people.includes(input.value)});
+};
+$('mobileQuickNew').onclick=()=>{const d=mSelected?.date||dateStr(new Date());openTask(null,d);};
+// Use pointer event independent new-task entry: no double-tap is required.
+// Recalculate the fixed memo offset after layout switches and font-size changes.
+window.addEventListener('orientationchange',()=>requestAnimationFrame(()=>{mMeasureMemo();if(mIsMobile())mRebuild()}));
+applyPrefs();
+
+// External HTTPS hosted mobile edition: connect automatically to the existing GAS bridge.
+document.body.appendChild(bridgeFrame);
+try { connectBridge(DEFAULT_GAS_URL); }
+catch(error) { console.error('GAS接続エラー:', error); }
+</script></body></html>
